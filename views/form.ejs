@@ -19,6 +19,7 @@
 </head>
 <body>
     <div>
+        <h2>Primitive Objects</h2>
         <form action="/form" method="post">
             <label>Entity</label>
             <input type="text" id="entity" name="entity">
@@ -34,6 +35,37 @@
             <br>
             <label>Color</label>
             <input type="color" id="color" name="color">
+            <br>
+            <input type="submit">
+            <br>
+        </form>
+    </div>
+    <div>
+        <h2>3D Model Upload</h2>
+        <form action="/object" method="post" enctype="multipart/form-data">
+            <label>File</label>
+            <input type="file" id="gltffile" name="gltffile">
+            <br>
+            <label>Position X</label>
+            <input type="number" id="positionx" name="positionx" step="0.1">
+            <br>
+            <label>Position Y</label>
+            <input type="number" id="positiony" name="positiony" step="0.1">
+            <br>
+            <label>Position Z</label>
+            <input type="number" id="positionz" name="positionz" step="0.1">
+            <br>
+            <label>Rotation X</label>
+            <input type="number" id="rotationx" name="rotationx" step="0.1">
+            <br>
+            <label>Rotation Y</label>
+            <input type="number" id="rotationy" name="rotationy" step="0.1">
+            <br>
+            <label>Rotation Z</label>
+            <input type="number" id="rotationz" name="rotationz" step="0.1">
+            <br>
+            <label>Scale</label>
+            <input type="number" id="scale" name="scale">
             <br>
             <input type="submit">
             <br>
