@@ -5,19 +5,23 @@
     <style>
         div {
             padding: 20px;
+            float: left;
         }
         label, input {
             margin: 5px;
         }
-        #iframe {
-            padding: 20px;
+        .iframe {
             margin: 5px;
-            width: 500px;
-            height: 200px;
+            width: 600px;
+            height: 400px;
+            float: right;
         }
     </style>
 </head>
 <body>
+    <div>
+        <iframe id="iframe" class="iframe" src="http://localhost:8888/"></iframe>
+    </div>
     <div>
         <h2>Primitive Objects</h2>
         <form action="/form" method="post">
@@ -73,9 +77,6 @@
     </div>
     <div>
         <a href="/">Back to Scene</a>
-    </div>
-    <div id="iframe">
-        <iframe src="http://localhost:8888/"></iframe>
     </div>
 </body>
 </html>

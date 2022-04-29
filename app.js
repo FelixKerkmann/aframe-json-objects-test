@@ -11,6 +11,8 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 app.get('/listEntities', function (req, res) {
     fs.readFile( "data.json", 'utf8', function (err, data) {
@@ -22,23 +24,11 @@ app.get('/listEntities', function (req, res) {
 app.get('/form', function (req, res){
     res.render('form', );
 })
-
+/*
 app.get('/', function (req, res) {
     fs.readFile( "data.json", 'utf8', function (err, data) {
         let template = {'<>':'${entity}','position':'${positionx} ${positiony} ${positionz}','color':'${color}'}
-        console.log(template);
-        let html = json2html.render(data, template);
-        console.log(html);
-        res.render('view', {
-            entities: ejs.render(html)
-        });
-        //<a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-    });
-})
-/*
-app.get('/', function (req, res) {
-    fs.readFile( "object.json", 'utf8', function (err, data) {
-        let template = {'<>':'${entity}', 'gltf-model': 'url(/uploads/${id})', 'position':'${positionx} ${positiony} ${positionz}', 'rotation':'${rotationx} ${rotationy} ${positionz}','scale':'${scale} ${scale} ${scale}'};
+        console.log(data);
         console.log(template);
         let html = json2html.render(data, template);
         console.log(html);
@@ -49,6 +39,19 @@ app.get('/', function (req, res) {
     });
 })
 */
+app.get('/', function (req, res) {
+    fs.readFile( "objects.json", 'utf8', function (err, data) {
+        let template = {'<>':'${entity}', 'gltf-model': 'url(/uploads/${id})', 'position':'${positionx} ${positiony} ${positionz}', 'rotation':'${rotationx} ${rotationy} ${positionz}','scale':'${scale} ${scale} ${scale}'};
+        console.log(template);
+        let html = json2html.render(data, template);
+        console.log(html);
+        res.render('view', {
+            entities: ejs.render(html)
+        });
+        //<a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+    });
+})
+
 app.post('/form', function (req,res) {
     response = {
         entity:req.body.entity,
@@ -58,9 +61,9 @@ app.post('/form', function (req,res) {
         color:req.body.color
     }
     let cur = fs.readFileSync('data.json');
-    var objects = JSON.parse(cur);
-    objects.push(response);
-    var newData = JSON.stringify(objects);
+    let objects = JSON.parse(cur);
+    ;objects.push(response)
+    let newData = JSON.stringify(objects);
     fs.writeFileSync('data.json', newData);
     res.redirect('/');
 })
