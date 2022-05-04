@@ -57,13 +57,13 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
             modelsCollection.insertOne({
                 entity: "a-entity",
                 fname: req.file.originalname,
-                positionx: parseInt(req.body.positionx),
-                positiony: parseInt(req.body.positiony),
-                positionz: parseInt(req.body.positionz),
-                rotationx: parseInt(req.body.rotationx),
-                rotationy: parseInt(req.body.rotationy),
-                rotationz: parseInt(req.body.rotationz),
-                scale: parseInt(req.body.scale)
+                positionx: parseFloat(req.body.positionx),
+                positiony: parseFloat(req.body.positiony),
+                positionz: parseFloat(req.body.positionz),
+                rotationx: parseFloat(req.body.rotationx),
+                rotationy: parseFloat(req.body.rotationy),
+                rotationz: parseFloat(req.body.rotationz),
+                scale: parseFloat(req.body.scale)
             })
             res.redirect('/');
         })
