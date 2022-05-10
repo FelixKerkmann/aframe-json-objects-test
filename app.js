@@ -9,6 +9,19 @@ const DbConnectionString = 'mongodb+srv://aframe:Owi93zQUubpASo5V@cluster0.u4bj4
 const MongoClient = require('mongodb').MongoClient
 const app = express();
 
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+require('mongoose-double')(mongoose);
+const SchemaTypes = mongoose.Schema.Types;
+
+mongoose
+    .connect(DbConnectionString, { useNewUrlParser: true })
+    .catch(e => {
+        console.error('Connection error', e.message)
+    })
+const db = mongoose.connection
+module.exports = db;
+
 // View Engine Setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -20,6 +33,7 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
         app.use('/uploads', express.static(__dirname + '/uploads'));
         const db = client.db('aframe-gltf-models');
         const modelsCollection = db.collection('models');
+        const skybox = db.collection('skybox')
 
         app.get('/form', function (req, res){
             res.render('form', );
