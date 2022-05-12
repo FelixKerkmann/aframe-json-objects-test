@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <style>
+        div {
+            padding: 20px;
+            float: left;
+        }
+        label, input {
+            margin: 5px;
+        }
+        .iframe {
+            margin: 5px;
+            width: 600px;
+            height: 400px;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h2>3D Model Upload</h2>
+    <form action="/update" method="post" enctype="application/json">
+        <label>Position X</label>
+        <input type="number" id="positionx" name="positionx" step="any" value="<%- positionx %>">
+        <br>
+        <label>Position Y</label>
+        <input type="number" id="positiony" name="positiony" step="any" value="<%- positiony %>">
+        <br>
+        <label>Position Z</label>
+        <input type="number" id="positionz" name="positionz" step="any" value="<%- positionz %>">
+        <br>
+        <label>Rotation X</label>
+        <input type="number" id="rotationx" name="rotationx" step="any" value="<%- rotationx %>">
+        <br>
+        <label>Rotation Y</label>
+        <input type="number" id="rotationy" name="rotationy" step="any" value="<%- rotationy %>">
+        <br>
+        <label>Rotation Z</label>
+        <input type="number" id="rotationz" name="rotationz" step="any" value="<%- rotationz %>">
+        <br>
+        <label>Scale</label>
+        <input type="number" id="scale" name="scale" step="any" value="<%- scale %>">
+        <br>
+        <input type="hidden" name="id" value="<%- id %>">
+        <input type="submit">
+        <br>
+    </form>
+</div>
+<div>
+    <a href="/">Back to Scene</a>
+</div>
+</body>
+</html>
