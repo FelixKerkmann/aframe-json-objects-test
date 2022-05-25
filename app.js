@@ -176,7 +176,17 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
             });
         });
 
+        app.get('/stop', function (req, res) {
+            process.kill(process.pid, 'SIGTERM')
+        });
+
         app.listen();
+
+        process.on('SIGTERM', () => {
+            server.close(() => {
+                console.log('Process terminated')
+            });
+        });
     })
     .catch(console.error)
 
