@@ -11,7 +11,7 @@ const MongoClient = require('mongodb').MongoClient
 const app = express();
 
 const HOST = "127.0.0.1"
-const PORT = 32123
+const PORT = 8888
 
 // View Engine Setup
 app.set('views', path.join(__dirname, 'views'))
@@ -180,7 +180,7 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
         });
 
         app.listen(PORT, HOST,function () {
-            console.log(`Json Entities app listening at http://${HOST}:${PORT}`);
+            console.log(`App listening at http://${HOST}:${PORT}`);
         });
     })
     .catch(console.error)
