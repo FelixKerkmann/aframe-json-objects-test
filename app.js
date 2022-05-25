@@ -10,8 +10,8 @@ const DbConnectionString = 'mongodb+srv://aframe:Owi93zQUubpASo5V@cluster0.u4bj4
 const MongoClient = require('mongodb').MongoClient
 const app = express();
 
-const host = "127.0.0.1"
-const port = 3000
+const HOST = "127.0.0.1"
+const PORT = process.env.PORT || 3000
 
 // View Engine Setup
 app.set('views', path.join(__dirname, 'views'))
@@ -179,8 +179,8 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
             });
         });
 
-        app.listen(port, host,function () {
-            console.log(`Json Entities app listening at http://${host}:${port}`);
+        app.listen(PORT, HOST,function () {
+            console.log(`Json Entities app listening at http://${HOST}:${PORT}`);
         });
     })
     .catch(console.error)
