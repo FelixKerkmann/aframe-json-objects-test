@@ -11,7 +11,12 @@ const MongoClient = require('mongodb').MongoClient
 const app = express();
 
 const HOST = "127.0.0.1"
-const PORT = process.env.PORT || 3000
+let PORT
+if (process.env.PORT === undefined) {
+    PORT = 3000
+} else {
+    PORT = process.env.PORT
+}
 
 // View Engine Setup
 app.set('views', path.join(__dirname, 'views'))
