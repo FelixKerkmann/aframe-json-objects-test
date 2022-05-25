@@ -180,7 +180,7 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
             process.kill(process.pid, 'SIGTERM')
         });
 
-        app.listen();
+        const server = app.listen();
 
         process.on('SIGTERM', () => {
             server.close(() => {
