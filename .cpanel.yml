@@ -1,0 +1,8 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/innolog1/vsc.innology.ch/
+    - /bin/cp -R views $DEPLOYPATH
+    - /bin/cp -R uploads $DEPLOYPATH
+    - /bin/cp app.js $DEPLOYPATH
+    - /bin/cp package.json $DEPLOYPATH
