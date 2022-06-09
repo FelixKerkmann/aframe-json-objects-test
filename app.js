@@ -37,6 +37,7 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(express.static('public'));
         app.use('/uploads', express.static(__dirname + '/uploads'));
+        app.use('/resources', express.static(__dirname + '/resources'));
         const db = client.db('aframe-gltf-models');
         const modelsCollection = db.collection('models');
         const users = db.collection('users');

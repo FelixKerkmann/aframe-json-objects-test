@@ -11,16 +11,98 @@
         <img id="room-parkett" src="resources/skyboxes/room_parkett.jpg">
         <img id="room-white-wood" src="resources/skyboxes/room_white_wood.jpg">
         <img id="track" src="resources/skyboxes/track.jpg">
+        <img id="alaska" src="resources/skyboxes/alaska.jpg">
+        <img id="lake" src="resources/skyboxes/lake.jpeg">
     </a-assets>
 
-    <a-sky id="skybox" src="#hall"></a-sky>
+    <a-sky id="skybox" src="#alaska"></a-sky>
     <a-plane
             position="0 0 -4"
             rotation="-90 0 0"
             height="25"
             width="25"
             color="#85C1E9"
-            ></a-plane>
+    ></a-plane>
+
+    <!-- North wall-->
+    <a-box 	id="WallNorth"
+              position="0 1.5 -5"
+              rotation="0 0 0"
+              color="#CED9D4"
+              width="10"
+              height="3"
+              depth="0.25"
+              shadow="recieve:true; cast:true;"
+    ></a-box>
+    <!-- South wall-->
+    <a-box 	id="WallSouth"
+              position="0 1.5 5"
+              rotation="0 0 0"
+              color="#CED9D4"
+              width="10"
+              height="3"
+              depth="0.25"
+              shadow="recieve:true; cast:true;"
+    ></a-box>
+    <!-- West wall-->
+    <a-box 	id="WallWest"
+              position="-5 1.5 0"
+              rotation="0 90 0"
+              color="#CED9D4"
+              width="10"
+              height="3"
+              depth="0.25"
+              shadow="recieve:true; cast:true;"
+    ></a-box>
+    <!-- East wall-->
+    <a-entity	id="WallEast"
+                 position="5 0 0">
+        <a-box 	id="North"
+                  position="0 1.5 -3.5"
+                  rotation="0 90 0"
+                  color="#CED9D4"
+                  width="3"
+                  height="3"
+                  depth="0.25"
+                  shadow="recieve:true; cast:true;"
+        ></a-box>
+        <a-box 	id="South"
+                  position="0 1.5 3.5"
+                  rotation="0 90 0"
+                  color="#CED9D4"
+                  width="3"
+                  height="3"
+                  depth="0.25"
+                  shadow="recieve:true; cast:true;"
+        ></a-box>
+        <a-box 	id="Bottom"
+                  position="0 0.5 0"
+                  rotation="0 90 0"
+                  color="#CED9D4"
+                  width="4"
+                  height="1"
+                  depth="0.25"
+                  shadow="recieve:true; cast:true;"
+        ></a-box>
+        <a-box 	id="Top"
+                  position="0 2.5 0"
+                  rotation="0 90 0"
+                  color="#CED9D4"
+                  width="4"
+                  height="1"
+                  depth="0.25"
+                  shadow="recieve:true; cast:true;"
+        ></a-box>
+        <a-box 	id="Center"
+                  position="0 1.5 0"
+                  rotation="0 90 0"
+                  color="#CED9D4"
+                  width="2"
+                  height="1"
+                  depth="0.25"
+                  shadow="recieve:true; cast:true;"
+        ></a-box>
+    </a-entity>
 
     <%- entities %>
 
