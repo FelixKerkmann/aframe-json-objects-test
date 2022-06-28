@@ -19,14 +19,7 @@ app.use(session({
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    }
-});
+const storage = require('./private/configs/storage.config')
 
 const upload = multer({ storage: storage })
 
@@ -68,7 +61,7 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
 
         app.get('/form', function (req, res){
             if (req.session.loggedin) {
-                res.render('form', );
+                res.render('form');
             } else {
                 res.redirect('/login');
             }
@@ -314,7 +307,7 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
             res.redirect('/models');
         });
 
-        app.post('/delete', function (req, res) {
+        app.post('/delete/:id', function (req, res) {
             modelsCollection.deleteOne({"_id" : ObjectId(req.body.id)}, function (err, data) {
                 if(err){
                     console.log(err);
