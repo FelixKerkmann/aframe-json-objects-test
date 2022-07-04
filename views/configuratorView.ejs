@@ -2,23 +2,38 @@
 <html lang="en">
 <head>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="/resources/components/transformController.js"></script>
+    <script src="/resources/components/objectSelectorController.js" type="module"></script>
     <title><%- title %></title>
 </head>
 <body>
-<a-scene>
+<a-scene id="Configurator">
     <a-assets>
         <img id="alaska" src="/uploads/skyboxes/alaska.jpg">
         <img id="lake" src="/uploads/skyboxes/lake.jpeg">
         <img id="lake" src="/uploads/skyboxes/citySkybox.jpg">
     </a-assets>
 
+    <a-entity id="Camera"
+              position="0 1.5 0"
+              camera
+              look-controls
+              wasd-controls>
+        <a-cursor></a-cursor>
+    </a-entity>
+
+    <a-entity id="ObjectSelector"
+              object-selector>
+    </a-entity>
+
     <a-sky id="skybox" src="#alaska"></a-sky>
-    <a-plane
+    <a-plane id="floor"
             position="0 0 -4"
             rotation="-90 0 0"
             height="25"
             width="25"
             color="#85C1E9"
+            transform-controls
             ></a-plane>
 
     <!-- North wall-->
@@ -30,6 +45,7 @@
               height="3"
               depth="0.25"
               shadow="receive:true; cast:true;"
+              transform-controls
               ></a-box>
     <!-- South wall-->
     <a-box 	id="WallSouth"
@@ -40,6 +56,7 @@
               height="3"
               depth="0.25"
               shadow="receive:true; cast:true;"
+              transform-controls
               ></a-box>
     <!-- West wall-->
     <a-box 	id="WallWest"
@@ -50,6 +67,7 @@
               height="3"
               depth="0.25"
               shadow="receive:true; cast:true;"
+              transform-controls
               ></a-box>
     <!-- East wall-->
     <a-entity	id="WallEast"

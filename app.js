@@ -43,6 +43,7 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(express.static('public'));
         app.use('/uploads', express.static(__dirname + '/uploads'));
+        app.use('/resources/components', express.static(__dirname + '/resources/components'));
         const db = client.db(DATABASE_NAME);
         const modelsCollection = db.collection(MODELS_COLLECTION);
         const showroomsCollection = db.collection(SHOWROOMS_COLLECTION);
