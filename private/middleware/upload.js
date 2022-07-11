@@ -1,7 +1,7 @@
 const multer = require("multer");
 const util = require("util");
 const maxSize = 2*1024*1024
-const storage = multer.diskStorage({
+const multerstorage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './public/resources/uploads')
     },
@@ -9,8 +9,5 @@ const storage = multer.diskStorage({
         cb(null, file.originalname)
     }
 });
-let upload = multer({
-    storage: storage,
-    limits: {fileSize: maxSize},
-}).single('gltffile');
-module.exports = upload;
+
+module.exports = multerstorage;

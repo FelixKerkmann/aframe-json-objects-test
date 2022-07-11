@@ -2,7 +2,7 @@ const Model = require('../models/models')
 const json2html = require("node-json2html");
 const templates = require("../templates/model.template");
 const ejs = require("ejs");
-const upload = require("../middleware/upload");
+const multerstorage = require("../middleware/upload");
 const fs = require("fs");
 const multer = require("multer");
 
@@ -23,7 +23,10 @@ exports.findAll = (req, res) => {
 exports.create = (req, res) => {
     try {
         console.log(req.file)
-        //upload(req, res);
+        let upload = multer({
+            storage: multerstorage,
+            limits: {fileSize: maxSize},
+        }).single('gltffile');
         if (req.file === undefined) {
             return res.redirect('/createmodel');
         }
