@@ -10,7 +10,7 @@
     <form action="/register" method="post" enctype="application/json">
         <label for="email">
         </label>
-        <input type="text" name="email" placeholder="email" id="email" required>
+        <input type="email" name="email" placeholder="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
         <label for="password">
         </label>
         <input type="password" name="password" placeholder="Password" id="password" required>

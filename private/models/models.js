@@ -14,4 +14,5 @@ const modelsSchema = new Schema({
     scale: Number,
 });
 
-module.exports = mongoose.model('Models', modelsSchema);
+module.exports = modelsSchema
+// module.exports = mongoose.model('Models', modelsSchema);

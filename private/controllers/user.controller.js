@@ -1,18 +1,22 @@
-const ejs = require("ejs");
 const User = require('../models/user')
 const mongoose = require("mongoose");
+const fs = require('fs');
 
 exports.login = (req, res) => {
     res.render('login')
 }
 exports.check = (req, res) => {
-    User.findOne({ email : req.body.email}, (err, user) => {
+    User.exists({ email : req.body.email}, (err, user) => {
         if (err) {
+            console.log(user)
             res.status(404).send('not found')
-        } else if(user !== []) {
-            console.log(req.body)
+        } else if(user !== null) {
+            console.log(user)
+            req.session.loggedin = true
+            req.session.email = req.body.email
             res.redirect('/models')
         } else {
+            console.log(user)
             res.redirect('/login')
         }
     })
@@ -20,10 +24,12 @@ exports.check = (req, res) => {
 exports.register = (req, res) => {
     res.render('register')
 }
-exports.createuser = (req, res) => {
-    User.findOne({email : req.body.email}, (err, result) => {
+exports.createuser =(req, res) => {
+    console.log(req.body.email)
+    User.exists({email : req.body.email}, (err, result) => {
         if (err) {
-            res.status(404).send('not found')
+            console.log(err)
+            res.status(500).send('database error')
         } else if (result !== null) {
             console.log('email already exists')
             res.redirect('/register')
@@ -43,6 +49,11 @@ exports.createuser = (req, res) => {
                     res.redirect('/login')
                 }
             })
+            let dir = './public/resources/uploads/' + req.body.email;
+            if (!fs.existsSync(dir)){
+                fs.mkdirSync(dir);
+            }
+
         }
     })
 }

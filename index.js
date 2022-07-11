@@ -6,9 +6,9 @@ const router = require('./private/routes/model.route')
 const session = require("express-session")
 const path = require("path")
 const cors = require("cors")
+const db = require("./private/configs/db.config");
 
-const dbString = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOST}/${process.env.MONGO_DB}?retryWrites=true&w=majority`
-mongoose.connect(dbString, { useNewUrlParser: true})
+mongoose.connect(db.dbString, { useNewUrlParser: true})
 
 const app = express()
 
