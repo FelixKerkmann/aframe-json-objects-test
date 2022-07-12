@@ -1,28 +1,41 @@
 const User = require('../models/user')
 const mongoose = require("mongoose");
 const fs = require('fs');
+const ejs = require("ejs");
+const template = require('../templates/user.template')
 
 exports.login = (req, res) => {
-    res.render('login')
+    res.render('login', {
+        alerts: ''
+    })
 }
 exports.check = (req, res) => {
-    User.exists({ email : req.body.email}, (err, user) => {
+    User.findOne({ email : req.body.email}, (err, user) => {
         if (err) {
             console.log(user)
             res.status(404).send('not found')
         } else if(user !== null) {
-            console.log(user)
-            req.session.loggedin = true
-            req.session.email = req.body.email
-            res.redirect('/models')
+            if(user.password === req.body.password) {
+                req.session.loggedin = true
+                req.session.email = req.body.email
+                res.redirect('/showroom')
+            } else {
+                res.render('login', {
+                    alerts: ejs.render(template.alert('Wrong Credentials'))
+                })
+            }
+
         } else {
-            console.log(user)
-            res.redirect('/login')
+            res.render('login', {
+                alerts: ejs.render(template.alert('user does not exist'))
+            })
         }
     })
 }
 exports.register = (req, res) => {
-    res.render('register')
+    res.render('register', {
+        alerts: ''
+    })
 }
 exports.createuser =(req, res) => {
     console.log(req.body.email)
@@ -31,8 +44,9 @@ exports.createuser =(req, res) => {
             console.log(err)
             res.status(500).send('database error')
         } else if (result !== null) {
-            console.log('email already exists')
-            res.redirect('/register')
+            res.render('register', {
+                alerts: ejs.render(template.alert('user already exists'))
+            })
         } else {
             console.log(req.body)
             let user = new User()

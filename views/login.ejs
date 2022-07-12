@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Login</title>
-</head>
-<body>
+<%- include('header'); -%>
+
 <div class="login">
     <h1>Login</h1>
     <form action="/login" method="post" enctype="application/json">
@@ -16,7 +11,10 @@
         <input type="password" name="password" placeholder="Password" id="password" required>
         <input type="submit" value="Login">
     </form>
+
+    <%- alerts %>
+
     <a href="/register"> Registrieren </a>
 </div>
-</body>
-</html>
+
+<%- include('footer'); -%>

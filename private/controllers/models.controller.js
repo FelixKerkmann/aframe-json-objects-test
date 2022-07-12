@@ -3,9 +3,7 @@ const json2html = require("node-json2html");
 const templates = require("../templates/model.template");
 const ejs = require("ejs");
 const fs = require("fs");
-const multer = require("multer");
 const mongoose = require("mongoose");
-const db = require("../configs/db.config")
 const modelSchema = require('../models/models')
 
 exports.findAll = (req, res) => {
@@ -15,6 +13,7 @@ exports.findAll = (req, res) => {
             res.status(500).send('databese error')
         }
         else {
+            console.log(models)
             let html = json2html.render(models, templates.listmodeltemplate)
             res.render('models', {
                 models: ejs.render(html)
