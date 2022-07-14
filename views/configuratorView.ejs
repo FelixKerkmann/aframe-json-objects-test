@@ -1,127 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="/resources/components/transformController.js"></script>
-    <script src="/resources/components/objectSelectorController.js" type="module"></script>
+    <script src="/resources/components/selectable.js"></script>
+    <script src="/resources/components/objectSelectorController.js"></script>
+    <link rel="stylesheet" type="text/css" href="../resources/styles/configuratorView.css">
     <title><%- title %></title>
 </head>
 <body>
-<a-scene id="Configurator">
-    <a-assets>
-        <img id="alaska" src="/uploads/skyboxes/alaska.jpg">
-        <img id="lake" src="/uploads/skyboxes/lake.jpeg">
-        <img id="lake" src="/uploads/skyboxes/citySkybox.jpg">
-    </a-assets>
 
-    <a-entity id="Camera"
-              position="0 1.5 0"
-              camera
-              look-controls
-              wasd-controls>
-        <a-cursor></a-cursor>
-    </a-entity>
+<!-- Scene view -->
+<div id="sceneView">
+    <a-scene id="Configurator">
+        <a-assets>
+            <img id="alaska" src="/uploads/skyboxes/alaska.jpg">
+            <img id="lake" src="/uploads/skyboxes/lake.jpeg">
+            <img id="lake" src="/uploads/skyboxes/citySkybox.jpg">
+        </a-assets>
 
-    <a-entity id="ObjectSelector"
-              object-selector>
-    </a-entity>
-
-    <a-sky id="skybox" src="#alaska"></a-sky>
-    <a-plane id="floor"
-            position="0 0 -4"
-            rotation="-90 0 0"
-            height="25"
-            width="25"
-            color="#85C1E9"
-            transform-controls
-            ></a-plane>
-
-    <!-- North wall-->
-    <a-box 	id="WallNorth"
-              position="0 1.5 -5"
-              rotation="0 0 0"
-              color="#CED9D4"
-              width="10"
-              height="3"
-              depth="0.25"
-              shadow="receive:true; cast:true;"
-              transform-controls
-              ></a-box>
-    <!-- South wall-->
-    <a-box 	id="WallSouth"
-              position="0 1.5 5"
-              rotation="0 0 0"
-              color="#CED9D4"
-              width="10"
-              height="3"
-              depth="0.25"
-              shadow="receive:true; cast:true;"
-              transform-controls
-              ></a-box>
-    <!-- West wall-->
-    <a-box 	id="WallWest"
-              position="-5 1.5 0"
-              rotation="0 90 0"
-              color="#CED9D4"
-              width="10"
-              height="3"
-              depth="0.25"
-              shadow="receive:true; cast:true;"
-              transform-controls
-              ></a-box>
-    <!-- East wall-->
-    <a-entity	id="WallEast"
-                 position="5 0 0">
-        <a-box 	id="North"
-                  position="0 1.5 -3.5"
-                  rotation="0 90 0"
-                  color="#CED9D4"
-                  width="3"
-                  height="3"
-                  depth="0.25"
-                  shadow="receive:true; cast:true;"
-                  ></a-box>
-        <a-box 	id="South"
-                  position="0 1.5 3.5"
-                  rotation="0 90 0"
-                  color="#CED9D4"
-                  width="3"
-                  height="3"
-                  depth="0.25"
-                  shadow="receive:true; cast:true;"
-                  ></a-box>
-        <a-box 	id="Bottom"
-                  position="0 0.5 0"
-                  rotation="0 90 0"
-                  color="#CED9D4"
-                  width="4"
-                  height="1"
-                  depth="0.25"
-                  shadow="receive:true; cast:true;"
-                  ></a-box>
-        <a-box 	id="Top"
-                  position="0 2.5 0"
-                  rotation="0 90 0"
-                  color="#CED9D4"
-                  width="4"
-                  height="1"
-                  depth="0.25"
-                  shadow="receive:true; cast:true;"
-                  ></a-box>
-        <a-box 	id="Center"
+        <a-entity id="Camera"
                   position="0 1.5 0"
-                  rotation="0 90 0"
+                  camera
+                  look-controls
+                  wasd-controls>
+            <a-cursor></a-cursor>
+        </a-entity>
+
+        <a-entity id="ObjectSelector"
+                  objectselector>
+        </a-entity>
+
+        <a-sky id="skybox" src="#alaska"></a-sky>
+
+        <a-plane id="Floor"
+                 position="0 0 -4"
+                 rotation="-90 0 0"
+                 height="25"
+                 width="25"
+                 color="#85C1E9"
+                 selectable
+        ></a-plane>
+
+        <!-- North wall-->
+        <a-box 	id="Wall North"
+                  position="0 1.5 -5"
+                  rotation="0 0 0"
                   color="#CED9D4"
-                  width="2"
-                  height="1"
+                  width="10"
+                  height="3"
                   depth="0.25"
                   shadow="receive:true; cast:true;"
-                  ></a-box>
-    </a-entity>
+                  selectable
+        ></a-box>
+        <!-- South wall-->
+        <a-box 	id="Wall South"
+                  position="0 1.5 5"
+                  rotation="0 0 0"
+                  color="#CED9D4"
+                  width="10"
+                  height="3"
+                  depth="0.25"
+                  shadow="receive:true; cast:true;"
+                  selectable
+        ></a-box>
+        <!-- West wall-->
+        <a-box 	id="Wall West"
+                  position="-5 1.5 0"
+                  rotation="0 90 0"
+                  color="#CED9D4"
+                  width="10"
+                  height="3"
+                  depth="0.25"
+                  shadow="receive:true; cast:true;"
+                  selectable
+        ></a-box>
+        <!-- East wall-->
+        <a-entity	id="Wall East"
+                     position="5 0 0"
+                     selectable>
+            <a-box 	id="North"
+                      position="0 1.5 -3.5"
+                      rotation="0 90 0"
+                      color="#CED9D4"
+                      width="3"
+                      height="3"
+                      depth="0.25"
+                      shadow="receive:true; cast:true;"
+            ></a-box>
+            <a-box 	id="South"
+                      position="0 1.5 3.5"
+                      rotation="0 90 0"
+                      color="#CED9D4"
+                      width="3"
+                      height="3"
+                      depth="0.25"
+                      shadow="receive:true; cast:true;"
+            ></a-box>
+            <a-box 	id="Bottom"
+                      position="0 0.5 0"
+                      rotation="0 90 0"
+                      color="#CED9D4"
+                      width="4"
+                      height="1"
+                      depth="0.25"
+                      shadow="receive:true; cast:true;"
+            ></a-box>
+            <a-box 	id="Top"
+                      position="0 2.5 0"
+                      rotation="0 90 0"
+                      color="#CED9D4"
+                      width="4"
+                      height="1"
+                      depth="0.25"
+                      shadow="receive:true; cast:true;"
+            ></a-box>
+            <a-box 	id="Center"
+                      position="0 1.5 0"
+                      rotation="0 90 0"
+                      color="#CED9D4"
+                      width="2"
+                      height="1"
+                      depth="0.25"
+                      shadow="receive:true; cast:true;"
+            ></a-box>
+        </a-entity>
 
-    <%- entities %>
+        <%- entities %>
 
-</a-scene>
+    </a-scene>
+</div>
+
+<!-- Right panel -->
+<div id="rightPanel">
+    <p id="objectName" class="attributeTitle">Kein Objekt ausgewählt</p>
+
+    <p class="attributeTitle">Position</p>
+    <label for="positionX">X</label>
+    <input class="inputNumber" type="number" id="positionX" name="positionX">
+    <label for="positionY">Y</label>
+    <input class="inputNumber" type="number" id="positionY" name="positionY">
+    <label for="positionZ">Z</label>
+    <input class="inputNumber" type="number" id="positionZ" name="positionZ">
+
+    <p class="attributeTitle">Rotation</p>
+    <label for="rotationX">X</label>
+    <input class="inputNumber" type="number" id="rotationX" name="rotationX">
+    <label for="rotationY">Y</label>
+    <input class="inputNumber" type="number" id="rotationY" name="rotationY">
+    <label for="rotationZ">Z</label>
+    <input class="inputNumber" type="number" id="rotationZ" name="rotationZ">
+
+    <p class="attributeTitle">Scale</p>
+    <label for="scale">X, Y, Z</label>
+    <input class="inputNumber" type="number" id="scale" name="scale">
+</div>
+
 </body>
 </html>
 

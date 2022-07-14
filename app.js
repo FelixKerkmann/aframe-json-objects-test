@@ -44,6 +44,7 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
         app.use(express.static('public'));
         app.use('/uploads', express.static(__dirname + '/uploads'));
         app.use('/resources/components', express.static(__dirname + '/resources/components'));
+        app.use('/resources/styles', express.static(__dirname + '/resources/styles'));
         const db = client.db(DATABASE_NAME);
         const modelsCollection = db.collection(MODELS_COLLECTION);
         const showroomsCollection = db.collection(SHOWROOMS_COLLECTION);
@@ -163,10 +164,12 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
                     .then(results => {
                         let template = {
                             '<>': '${entity}',
+                            'id' : '${fname}',
                             'gltf-model': 'url(/uploads/${fname})',
                             'position': '${positionx} ${positiony} ${positionz}',
                             'rotation': '${rotationx} ${rotationy} ${rotationz}',
-                            'scale': '${scale} ${scale} ${scale}'
+                            'scale': '${scale} ${scale} ${scale}',
+                            'selectable' : 'name:${name}'
                         }
                         let html = json2html.render(results, template);
                         res.render(CONFIGURATOR_VIEW, {
@@ -327,10 +330,6 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
             console.log(`App listening at http://${HOST}:${PORT}`);
         });
 
-        function makeCopyOfCollectionAndInsert(from){
-            makeCopyOfCollection(from, from + " Copy");
-        }
-
         function makeCopyOfCollectionAndInsert(from, to){
             db.createCollection(to)
                 .then(() => {
@@ -348,8 +347,7 @@ MongoClient.connect(DbConnectionString, { useUnifiedTopology: true })
                         .catch(error => db.dropCollection(to));
                 })
                 .catch(error => {
-                    console.warn("Failed to copy " + from + ".");
-                    console.warn(error);
+                    console.warn("Failed to copy " + from + " to " + to + ".");
             });
         }
     });
