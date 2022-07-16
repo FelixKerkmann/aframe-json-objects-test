@@ -36,7 +36,7 @@ const ifLoggedin = (req,res,next) => {
 }
 
 router.route('/')
-    .get(ifNotLoggedin, indexcontroller.listAll)
+    .get(ifNotLoggedin, indexcontroller.redirect)
 
 router.route('/login')
     .get(ifLoggedin, usercontroller.login)
@@ -64,10 +64,17 @@ router.route('/createmodel')
     .get(ifNotLoggedin, modelcontroller.createModel)
 
 router.route('/delete/:id')
-    .post(ifNotLoggedin, modelcontroller.delete)
+    .post(ifNotLoggedin, showroomcontroller.delete)
 
 router.route('/showroom/:id')
     .get(ifNotLoggedin, showroomcontroller.findById)
+    .post(ifNotLoggedin, showroomcontroller.addObject)
+
+router.route('/upload')
+    .post(ifNotLoggedin, upload.single("gltffile"), modelcontroller.upload)
+
+router.route('/showroom/:id/view')
+    .get(ifNotLoggedin, modelcontroller.findAll)
 
 router.route('/showroom')
     .get(ifNotLoggedin, showroomcontroller.findAll)

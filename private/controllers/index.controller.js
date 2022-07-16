@@ -18,3 +18,7 @@ exports.listAll = (req, res) => {
         }
     })
 }
+
+exports.redirect = (eq, res) => {
+    res.redirect('/showroom')
+}

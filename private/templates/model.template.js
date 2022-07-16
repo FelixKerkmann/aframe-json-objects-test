@@ -16,7 +16,7 @@ exports.listmodeltemplate = {
             'html': [
                 {
                     '<>': 'li', 'html': [
-                        {'<>': 'h3', 'text': '${fname}'}
+                        {'<>': 'h3', 'text': '${mname}'}
                     ]
                 },
                 {
@@ -158,12 +158,4 @@ exports.listmodeltemplate = {
             ]
         }
     ]
-}
-
-exports.examplemodel = {
-    '<>': 'a-entity',
-    'gltf-model': 'url(/public/resources/uploads/${objects[1][0]})',
-    'position': '${positionx} ${positiony} ${positionz}',
-    'rotation': '${rotationx} ${rotationy} ${positionz}',
-    'scale': '${scale} ${scale} ${scale}'
 }

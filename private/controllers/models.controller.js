@@ -109,3 +109,9 @@ exports.delete = (req, res) => {
 exports.createModel = (req, res) => {
     res.render('createModelView');
 }
+
+exports.upload = (req, res) => {
+    console.log(req.file)
+    console.log(req.body)
+    res.redirect('/showroom')
+}

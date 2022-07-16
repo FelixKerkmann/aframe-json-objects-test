@@ -6,7 +6,7 @@ exports.listshowrooms = {
             'html': [
                 {
                     '<>': 'li', 'html': [
-                        {'<>': 'h3', 'text': '${name}'}
+                        {'<>': 'h3', 'text': '${sname}'}
                     ]
                 },
             ]
@@ -30,7 +30,7 @@ exports.listshowrooms = {
                             '<>': 'input',
                             'type': 'hidden',
                             'name': 'name',
-                            'value': '${name}',
+                            'value': '${sname}',
                             'style': 'visibility: hidden;'
                         },
                         {'<>': 'input', 'type': 'submit', 'value': 'delete'}

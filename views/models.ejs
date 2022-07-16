@@ -21,9 +21,34 @@
     </ol>
 </div>
 <div>
-    <a href="/createmodel">Upload 3D Model</a>
+    <button class="open-button" onclick="function toggleAddForm() {
+        if(document.getElementById('addForm').style.display === 'block') {
+            document.getElementById('addForm').style.display = 'none';
+        } else {
+            document.getElementById('addForm').style.display = 'block';
+        }
+    }
+    toggleAddForm()">Open Inventory</button>
+    <div class="form-popup" id="addForm">
+        <form action="/showroom/<%- id %>" class="form-container" method="post" enctype="application/json">
+            <h3>Add 3D Model</h3>
+            <label>3D Model</label>
+            <select name="files" id="files">
+                <%- selection %>
+            </select>
+            <br>
+            <label>3D Model Name</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <button type="submit" class="btn">Submit</button>
+            <button type="button" class="btn cancel" onclick="function closeAddForm() {
+                document.getElementById('addForm').style.display = 'none';
+            }
+            closeAddForm()">Cancel</button>
+        </form>
+    </div>
     <br>
-    <a href="/">Back to Scene</a>
+    <a href="/showroom">Back</a>
 </div>
 
 <%- include('footer'); -%>
