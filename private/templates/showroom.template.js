@@ -1,12 +1,12 @@
-exports.listshowrooms = {
+exports.listShowrooms = {
     '<>': 'ul', 'class': 'model', 'html': [
         {
             '<>': 'a',
-            'href': '/showroom/${_id}',
+            'href': '/showroom/${_id}/edit',
             'html': [
                 {
                     '<>': 'li', 'html': [
-                        {'<>': 'h3', 'text': '${name}'}
+                        {'<>': 'h3', 'text': '${showroomname}'}
                     ]
                 },
             ]
@@ -24,13 +24,6 @@ exports.listshowrooms = {
                             'type': 'hidden',
                             'name': 'id',
                             'value': '${_id}',
-                            'style': 'visibility: hidden;'
-                        },
-                        {
-                            '<>': 'input',
-                            'type': 'hidden',
-                            'name': 'name',
-                            'value': '${name}',
                             'style': 'visibility: hidden;'
                         },
                         {'<>': 'input', 'type': 'submit', 'value': 'delete'}

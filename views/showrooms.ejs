@@ -12,5 +12,53 @@
         <%- showrooms %>
     </ol>
 </div>
+<%- glbalert %>
+<button class="open-button" onclick="function toggleUpdateForm() {
+        if(document.getElementById('inventory').style.display === 'block') {
+            document.getElementById('inventory').style.display = 'none';
+        } else {
+            document.getElementById('inventory').style.display = 'block';
+        }
+    }
+    toggleUpdateForm()">Open Inventory</button>
+<div class="form-popup" id="inventory">
+    <h1>Inventory</h1>
+    <%- inventory %>
+    <form action="/upload" class="form-container" method="post" enctype="multipart/form-data">
+        <h3>Upload new 3D Model</h3>
+        <label>File</label>
+        <input type="file" id="gltffile" name="gltffile" accept=".glb, model/gltf-binary" required>
+        <br>
+        <br>
+        <button type="submit" class="btn">Upload</button>
+        <button type="button" class="btn cancel" onclick="function closeUpdateForm() {
+                document.getElementById('inventory').style.display = 'none';
+            }
+            closeUpdateForm()">Cancel</button>
+    </form>
+</div>
+<br>
+<button class="open-button" onclick="function toggleCreateForm() {
+        if(document.getElementById('newShowroom').style.display === 'block') {
+            document.getElementById('newShowroom').style.display = 'none';
+        } else {
+            document.getElementById('newShowroom').style.display = 'block';
+        }
+    }
+    toggleCreateForm()">New Showroom</button>
+<div class="form-popup" id="newShowroom">
+    <h1>Inventory</h1>
+    <form action="/showrooms" class="form-container" method="post" enctype="application/json">
+        <h3>New Showroom</h3>
+        <label>Name</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <button type="submit" class="btn">Add</button>
+        <button type="button" class="btn cancel" onclick="function closeCreateForm() {
+                document.getElementById('newShowroom').style.display = 'none';
+            }
+            closeCreateForm()">Cancel</button>
+    </form>
+</div>
 
 <%- include('footer'); -%>

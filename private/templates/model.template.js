@@ -1,12 +1,12 @@
-exports.aframemodeltemplate = {
+exports.aframeModelTemplate = {
     '<>': '${entity}',
-    'gltf-model': 'url(/public/resources/uploads/${fname})',
+    'gltf-model': 'url(/public/resources/uploads/${filename})',
     'position': '${positionx} ${positiony} ${positionz}',
     'rotation': '${rotationx} ${rotationy} ${positionz}',
     'scale': '${scale} ${scale} ${scale}'
 };
 
-exports.listmodeltemplate = {
+exports.listModelTemplate = {
     '<>': 'ul', 'class': 'model', 'html': [
         {
             '<>': 'form',
@@ -16,7 +16,7 @@ exports.listmodeltemplate = {
             'html': [
                 {
                     '<>': 'li', 'html': [
-                        {'<>': 'h3', 'text': '${fname}'}
+                        {'<>': 'h3', 'text': '${modelname}'}
                     ]
                 },
                 {
@@ -139,8 +139,8 @@ exports.listmodeltemplate = {
                         {
                             '<>': 'input',
                             'type': 'hidden',
-                            'name': 'fname',
-                            'value': '${fname}',
+                            'name': 'filename',
+                            'value': '${filename}',
                             'style': 'visibility: hidden;'
                         },
                         {'<>': 'input', 'type': 'submit', 'value': 'delete'}
@@ -152,18 +152,10 @@ exports.listmodeltemplate = {
             '<>': 'li', 'html': [
                 {
                     '<>': 'a',
-                    'href': '/public/resources/uploads/${fname}',
+                    'href': '/public/resources/uploads/${filename}',
                     'text': 'download'
                 }
             ]
         }
     ]
-}
-
-exports.examplemodel = {
-    '<>': 'a-entity',
-    'gltf-model': 'url(/public/resources/uploads/${objects[1][0]})',
-    'position': '${positionx} ${positiony} ${positionz}',
-    'rotation': '${rotationx} ${rotationy} ${positionz}',
-    'scale': '${scale} ${scale} ${scale}'
 }
