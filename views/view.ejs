@@ -2,12 +2,18 @@
 <html>
 <head>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="../public/components/input-listen.js"></script>
 </head>
 <body>
 <a-scene>
     <a-assets>
-        <img id="alaska" src="resources/skyboxes/alaska.jpg">
-        <img id="lake" src="resources/skyboxes/lake.jpeg">
+        <img id="hall" src="../public/resources/skyboxes/hall.jpg">
+        <img id="architecture" src="../public/resources/skyboxes/architecture.jpg">
+        <img id="room-parkett" src="../public/resources/skyboxes/room_parkett.jpg">
+        <img id="room-white-wood" src="../public/resources/skyboxes/room_white_wood.jpg">
+        <img id="track" src="../public/resources/skyboxes/track.jpg">
+        <img id="alaska" src="../public/resources/skyboxes/alaska.jpg">
+        <img id="lake" src="../public/resources/skyboxes/lake.jpeg">
     </a-assets>
 
     <a-sky id="skybox" src="#alaska"></a-sky>
@@ -17,7 +23,87 @@
             height="25"
             width="25"
             color="#85C1E9"
-            ></a-plane>
+    ></a-plane>
+
+    <!-- North wall-->
+    <a-box 	id="WallNorth"
+              position="0 1.5 -5"
+              rotation="0 0 0"
+              color="#CED9D4"
+              width="10"
+              height="3"
+              depth="0.25"
+              shadow="recieve:true; cast:true;"
+    ></a-box>
+    <!-- South wall-->
+    <a-box 	id="WallSouth"
+              position="0 1.5 5"
+              rotation="0 0 0"
+              color="#CED9D4"
+              width="10"
+              height="3"
+              depth="0.25"
+              shadow="recieve:true; cast:true;"
+    ></a-box>
+    <!-- West wall-->
+    <a-box 	id="WallWest"
+              position="-5 1.5 0"
+              rotation="0 90 0"
+              color="#CED9D4"
+              width="10"
+              height="3"
+              depth="0.25"
+              shadow="recieve:true; cast:true;"
+    ></a-box>
+    <!-- East wall-->
+    <a-entity	id="WallEast"
+                 position="5 0 0">
+        <a-box 	id="North"
+                  position="0 1.5 -3.5"
+                  rotation="0 90 0"
+                  color="#CED9D4"
+                  width="3"
+                  height="3"
+                  depth="0.25"
+                  shadow="recieve:true; cast:true;"
+        ></a-box>
+        <a-box 	id="South"
+                  position="0 1.5 3.5"
+                  rotation="0 90 0"
+                  color="#CED9D4"
+                  width="3"
+                  height="3"
+                  depth="0.25"
+                  shadow="recieve:true; cast:true;"
+        ></a-box>
+        <a-box 	id="Bottom"
+                  position="0 0.5 0"
+                  rotation="0 90 0"
+                  color="#CED9D4"
+                  width="4"
+                  height="1"
+                  depth="0.25"
+                  shadow="recieve:true; cast:true;"
+        ></a-box>
+        <a-box 	id="Top"
+                  position="0 2.5 0"
+                  rotation="0 90 0"
+                  color="#CED9D4"
+                  width="4"
+                  height="1"
+                  depth="0.25"
+                  shadow="recieve:true; cast:true;"
+        ></a-box>
+        <a-box 	id="Center"
+                  position="0 1.5 0"
+                  rotation="0 90 0"
+                  color="#CED9D4"
+                  width="2"
+                  height="1"
+                  depth="0.25"
+                  shadow="recieve:true; cast:true;"
+        ></a-box>
+    </a-entity>
 
     <!-- North wall-->
     <a-box 	id="WallNorth"
@@ -101,6 +187,29 @@
 
     <%- entities %>
 
+    <a-entity id="cameraRig">
+        <a-entity id="player" camera wasd-controls look-controls position="0 1.6 0"
+                  networked="template:#avatar-template;attachTemplateToLocal:false;" random-color>
+            <a-sphere class="head"
+                      visible="false"
+                      random-color
+            ></a-sphere>
+        </a-entity>
+        <a-entity id="ctlL"
+                  teleport-controls="cameraRig: #cameraRig; teleportOrigin: #player; startEvents: teleportstart; endEvents: teleportend"
+                  oculus-touch-controls="hand: left" input-listen>
+            <a-text value="X: Teleport" position="0 0.08 0"
+                    rotation="-90 0 0" scale="0.1 0.1 0.1" align="center" color="#FFFFFF"></a-text>
+            <a-sphere radius="0.01" position="0 0 -1.2" color="#FFFFFF"></a-sphere>
+        </a-entity>
+        <a-entity id="ctlR"
+                  teleport-controls="cameraRig: #cameraRig; teleportOrigin: #player; startEvents: teleportstart; endEvents: teleportend"
+                  oculus-touch-controls="hand: right" input-listen>
+            <a-text value="A: Teleport"
+                    position="0 0.08 0" rotation="-90 0 0" scale="0.1 0.1 0.1" align="center" color="#FFFFFF"></a-text>
+            <a-sphere radius="0.01" position="0 0 -1.2" color="#FFFFFF"></a-sphere>
+        </a-entity>
+    </a-entity>
 </a-scene>
 </body>
 </html>

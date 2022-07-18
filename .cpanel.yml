@@ -1,0 +1,10 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/innolog1/vsc.innology.ch/
+    - /bin/cp -R views $DEPLOYPATH
+    - /bin/cp -R private $DEPLOYPATH
+    - /bin/cp -R public $DEPLOYPATH
+    - /bin/cp index.js $DEPLOYPATH
+    - /bin/cp .env $DEPLOYPATH
+    - /bin/cp package.json $DEPLOYPATH
