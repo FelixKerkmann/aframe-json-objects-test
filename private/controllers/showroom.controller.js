@@ -35,8 +35,6 @@ exports.findAllShowrooms = (req, res) => {
         const showroomsHtml = json2html.render(showrooms, showroomTemplate.listShowrooms)
         const inventoryHtml = json2html.render(files, inventoryTemplate.listModels)
         const message = req.query.glbalert === '1' ? '<p class="alert">Only glb files allowed</p>' : '<br>'
-        console.log(message)
-        console.log(req.query)
         res.render('showrooms', {
             showrooms: ejs.render(showroomsHtml),
             inventory: ejs.render(inventoryHtml),

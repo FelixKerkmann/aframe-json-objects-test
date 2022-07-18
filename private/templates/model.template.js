@@ -4,8 +4,7 @@ exports.aframeModelTemplate = {
     'position': '${positionx} ${positiony} ${positionz}',
     'rotation': '${rotationx} ${rotationy} ${positionz}',
     'scale': '${scale} ${scale} ${scale}'
-};
-
+}
 exports.listModelTemplate = {
     '<>': 'ul', 'class': 'model', 'html': [
         {

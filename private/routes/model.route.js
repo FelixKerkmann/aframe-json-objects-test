@@ -3,10 +3,7 @@ const router = require('express').Router()
 const indexController = require('../controllers/index.controller')
 const showroomController = require('../controllers/showroom.controller')
 const userController = require('../controllers/user.controller')
-const testController = require('../controllers/test.controller')
 const multer = require('../middleware/upload')
-
-
 
 // Function to check if user is logged in, if not redirect to login page
 const ifNotLoggedIn = (req, res, next) => {
