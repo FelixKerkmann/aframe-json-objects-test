@@ -7,10 +7,10 @@
     <script src="/public/components/objectSelectorController.js"></script>
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
 </head>
-<body>
+<body onload="initialiseObjectSelection()">
 
 <!-- Scene view -->
-<div id="sceneView">
+<div id="sceneView" class="wide" >
     <a-scene>
         <a-assets>
             <img id="hall" src="../public/resources/skyboxes/hall.jpg">
@@ -20,7 +20,7 @@
             <img id="track" src="../public/resources/skyboxes/track.jpg">
             <img id="alaskaSkybox" src="../public/resources/skyboxes/alaska.jpg">
             <img id="lakeSkybox" src="../public/resources/skyboxes/lake.jpeg">
-            <img id="citySkybox" src="/uploads/skyboxes/citySkybox.jpg">
+            <img id="citySkybox" src="../public/resources/skyboxes/citySkybox.jpg">
         </a-assets>
 
         <a-sky id="skybox" src="#alaskaSkybox"></a-sky>
@@ -83,29 +83,128 @@
 </div>
 
 <!-- Right panel -->
-<div id="rightPanel">
+<div id="rightPanel" class="disabled">
     <p id="objectName" class="attributeTitle">Kein Objekt ausgewählt</p>
 
     <p class="attributeTitle">Position</p>
     <label for="positionX">X</label>
-    <input class="inputNumber" type="number" id="positionX" name="positionX">
+    <input class="inputNumber" type="number" id="positionX" name="positionX"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
     <label for="positionY">Y</label>
-    <input class="inputNumber" type="number" id="positionY" name="positionY">
+    <input class="inputNumber" type="number" id="positionY" name="positionY"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
     <label for="positionZ">Z</label>
-    <input class="inputNumber" type="number" id="positionZ" name="positionZ">
+    <input class="inputNumber" type="number" id="positionZ" name="positionZ"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
 
     <p class="attributeTitle">Rotation</p>
     <label for="rotationX">X</label>
-    <input class="inputNumber" type="number" id="rotationX" name="rotationX">
+    <input class="inputNumber" type="number" id="rotationX" name="rotationX"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
     <label for="rotationY">Y</label>
-    <input class="inputNumber" type="number" id="rotationY" name="rotationY">
+    <input class="inputNumber" type="number" id="rotationY" name="rotationY"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
     <label for="rotationZ">Z</label>
-    <input class="inputNumber" type="number" id="rotationZ" name="rotationZ">
-
+    <input class="inputNumber" type="number" id="rotationZ" name="rotationZ"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
     <p class="attributeTitle">Scale</p>
     <label for="scale">X, Y, Z</label>
-    <input class="inputNumber" type="number" id="scale" name="scale">
+    <input class="inputNumber" type="number" id="scale" name="scale"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
 </div>
+
+
+<script>
+    const NO_ELEMENT_SELECTED = "Kein Objekt ausgewählt";
+
+    let objectSelector;
+    let oldValue;
+
+    function initialiseObjectSelection(){
+        objectSelector = document.querySelector('#ObjectSelector');
+
+        // It has to the "keyup" event because "keydown" doesn't register some keys like escape
+        window.addEventListener("keyup", function (event) {
+            if (event.key === 'Escape') {
+                document.querySelector('#ObjectSelector').emit('changeSelection',
+                    {
+                        selectedObject: null
+                    });
+            }
+        });
+    }
+
+    function storeOldValue(key){
+        // TODO: Remove? Is it still possible to call this function while no item is selected?
+        if(noItemSelected()){
+            console.warn("Ignoring storeOldValue with key " + key + ", because there is no element selected.")
+            return;
+        }
+        oldValue = document.getElementById(key).value;
+    }
+
+    function emitOnValueChange(key) {
+        const newValue       = document.getElementById(key).value;
+        // TODO: Remove? Is it still possible to call this function while no item is selected?
+        if(noItemSelected()){
+            console.warn("Ignoring onValueChange with key " + key + ", because there is no element selected.");
+            return;
+        }
+
+        console.log("Fire \"onValueChange\" with key: " + key + ", old value: " + oldValue + ", new value: " + newValue);
+
+        objectSelector.emit("onValueChange",
+            {
+                'key': key,
+                'oldValue': oldValue,
+                'newValue': newValue
+            });
+    }
+
+    function emitOnValueSubmit(key) {
+        const newValue       = document.getElementById(key).value;
+
+        // TODO: Remove? Is it still possible to call this function while no item is selected?
+        if(noItemSelected()){
+            console.warn("Ignoring onValueSubmit with key " + key + ", because there is no element selected.");
+            return;
+        }
+
+        if(oldValue === newValue){
+            console.warn("Ignoring onValueChange with key " + key + ", because value did not change.");
+            return;
+        }
+
+        console.log("Fire \"onValueSubmit\" with key: " + key + ", old value: " + oldValue + ", new value: " + newValue);
+
+        objectSelector.emit("onValueSubmit",
+            {
+                'key': key,
+                'oldValue': oldValue,
+                'newValue': newValue
+            });
+
+        oldValue = null;
+    }
+
+    function noItemSelected(){
+        return document.getElementById("objectName").textContent === NO_ELEMENT_SELECTED;
+    }
+</script>
 
 </body>
 </html>

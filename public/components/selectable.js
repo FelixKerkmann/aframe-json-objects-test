@@ -8,7 +8,7 @@ AFRAME.registerComponent('selectable', {
     init: function(){
         this.data.objectSelectorController = document.querySelector('#ObjectSelector');
         this.el.addEventListener('click', () => {
-            console.log("Click on " + this.el.id);
+            console.log("Click on " + this.data.name);
             this.data.objectSelectorController.emit('changeSelection', {selectedObject: this.el});
         })
     }
