@@ -1,8 +1,8 @@
 const showroomSchema = require('../models/showroom')
 const mongoose = require("mongoose")
+const util = require("../util/util")
 const json2html = require("node-json2html")
 const ejs = require("ejs")
-const fs = require("fs")
 const modelTemplate = require("../templates/model.template")
 const inventoryTemplate = require("../templates/inventory.template")
 const showroomTemplate = require("../templates/showroom.template")
@@ -14,7 +14,7 @@ exports.showroomView = (req, res) => {
         if(err) {
             return res.status(404).send('not found')
         }
-        const files = getFiles(req.session.email)
+        const files = util.getFilesByEmail(req.session.email)
         const modelsHtml = json2html.render(showroom.objects, modelTemplate.listModelTemplate)
         const selectionHtml = json2html.render(files, inventoryTemplate.selection)
         res.render('models', {
@@ -29,10 +29,9 @@ exports.findAllShowrooms = (req, res) => {
     const Showroom = mongoose.model(req.session.email, showroomSchema);
     Showroom.find((err, showrooms) => {
         if (err) {
-            return res.status(500).send('database error')
+            return res.status(500).send('Database error')
         }
-        // TODO: Define behavior at missing directory
-        const files = getFiles(req.session.email)
+        const files = util.getFilesByEmail(req.session.email)
         const showroomsHtml = json2html.render(showrooms, showroomTemplate.listShowrooms)
         const inventoryHtml = json2html.render(files, inventoryTemplate.listModels)
         const message = req.query.glbalert === '1' ? '<p class="alert">Only glb files allowed</p>' : '<br>'
@@ -113,14 +112,4 @@ exports.newShowroom = (req, res) => {
         res.redirect('/showrooms')
     })
 
-}
-
-function getFiles(email) {
-    let files = []
-    const folder = 'public/resources/uploads/' + email + '/'
-    fs.readdirSync(folder).forEach(file => {
-        const fileObject = { 'filename' : file }
-        files.push(fileObject)
-    })
-    return files
 }
