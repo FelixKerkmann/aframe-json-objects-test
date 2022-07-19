@@ -2,9 +2,11 @@ exports.aframeModelTemplate = {
     '<>': '${entity}',
     'gltf-model': 'url(/public/resources/uploads/${filename})',
     'position': '${positionx} ${positiony} ${positionz}',
-    'rotation': '${rotationx} ${rotationy} ${positionz}',
-    'scale': '${scale} ${scale} ${scale}'
+    'rotation': '${rotationx} ${rotationy} ${rotationz}',
+    'scale': '${scale} ${scale} ${scale}',
+    'selectable' : 'name:${modelname}'
 }
+
 exports.listModelTemplate = {
     '<>': 'ul', 'class': 'model', 'html': [
         {

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Delete <%- showroom %></title>
+        <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+        <style>
+            div {
+                padding: 20px;
+                float: left;
+            }
+            label, input {
+                margin: 5px;
+            }
+            .iframe {
+                margin: 5px;
+                width: 600px;
+                height: 400px;
+                float: right;
+            }
+        </style>
+    </head>
+    <body>
+    <h1>Delete <%- showroom %></h1>
+    <div>
+        <iframe id="iframe" class="iframe" src="/showroom/<%- showroom%>">></iframe>
+    </div>
+    <h2>Are you sure to delete <%- showroom%>?</h2>
+    <form action="/deleteShowroom" method="post" enctype="application/json">
+        <input type="hidden" name="name" value="<%- showroom %>" visibility="hidden">
+        <input type="submit" value="Yes">
+    </form>
+    <form action="/" method="get" enctype="application/json">
+        <input type="submit" value="No">
+    </form>
+    </body>
+</html>

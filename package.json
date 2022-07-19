@@ -17,7 +17,8 @@
     "mongodb": "^4.5.0",
     "mongoose": "^6.4.0",
     "multer": "^1.4.4",
-    "node-json2html": "^2.2.1"
+    "node-json2html": "^2.2.1",
+    "three": "^0.142.0"
   },
   "keywords": [],
   "author": "",

@@ -1,7 +1,7 @@
 const User = require('../models/user')
 const mongoose = require("mongoose");
-const fs = require('fs');
 const ejs = require("ejs");
+const util = require("../util/util")
 const userTemplate = require('../templates/user.template')
 
 exports.login = (req, res) => {
@@ -53,11 +53,14 @@ exports.createUser =(req, res) => {
         user._id = mongoose.Types.ObjectId();
         user.save((err, _) => {
             if (err) {
-                console.error("could not save user: " + err)
-                return res.status(412).send(err)
+                console.error("Could not save user: " + err)
+                return res.render("register", {
+                    alerts: ejs.render(userTemplate.alert("Invalid email address : " + req.body.email))
+                })
             }
             try {
-                createDir(req.body.email)
+                util.createDirectoryFromEmail(req.body.email)
+
             } catch (e) {
                 User.findByIdAndDelete(user._id, (err, _) => {
                     if(err) {
@@ -68,7 +71,6 @@ exports.createUser =(req, res) => {
                 return res.render('register', {
                     alerts: ejs.render(userTemplate.alert('unable to create directory'))
                 })
-
             }
             res.redirect('/login')
         })
@@ -90,11 +92,3 @@ exports.findAll = (req, res) => {
       res.status(200).json(users)
     })
 }
-
-function createDir(email) {
-    const dir = './public/resources/uploads/' + email;
-    if (!fs.existsSync(dir)){
-        fs.mkdirSync(dir);
-    }
-}
-
