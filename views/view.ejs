@@ -11,7 +11,9 @@
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
 </head>
 <body onload="initialiseObjectSelection()">
-
+<script>
+    window.onload = initSocket
+</script>
 <!-- Scene view -->
 <div id="sceneView" class="wide" >
     <a-scene>
@@ -127,6 +129,12 @@
            onfocusin="storeOldValue(this.id)"
            onchange="emitOnValueChange(this.id)"
            onfocusout="emitOnValueSubmit(this.id)">
+    <ul id="messages"></ul>
+    <div id="form" action="">
+        <input id="input" autocomplete="off" onfocusout="emitEvent()"/>
+    </div>
+    <input type="hidden" id="useremail" name="useremail" value="<%- useremail %>"/>
+    <input type="hidden" id="showroomid" name="showroomid" value="<%- showroomid %>"/>
 </div>
 
 </body>

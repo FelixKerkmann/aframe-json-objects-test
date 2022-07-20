@@ -85,6 +85,8 @@ exports.showScene = (req, res) => {
         result.forEach(object => object.filename = req.session.email + '/' + object.filename)
         const modelHtml = json2html.render(result, modelTemplate.aframeModelTemplate)
         res.render('view', {
+            useremail : req.session.email,
+            showroomid : req.params.id,
             entities : ejs.render(modelHtml)
         });
     })

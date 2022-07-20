@@ -1,47 +1,33 @@
-console.log("start of code")
-
 let socket = io();
 
-function start() {
-    console.log("start function")
+function initSocket() {
+
     let messages = document.getElementById('messages');
-    let form = document.getElementById('form');
     let input = document.getElementById('input');
 
-    form.addEventListener('test', function(e) {
-        console.log("in listener")
-        //e.preventDefault();
-        /*if (input.value) {
-            socket.emit('update value', input.value);
-            input.value = '';
-        }*/
-    });
+    input.addEventListener('test', (e) => socket.emit('update value', e.detail))
 
     socket.on('update value', function(msg) {
         let item = document.createElement('li');
         item.textContent = msg;
         messages.appendChild(item);
         window.scrollTo(0, document.body.scrollHeight);
-        console.log("end of function")
     });
 }
 
-function test() {
-    let x = document.getElementById('form');
-    let input = document.getElementById('input');
-    console.log(input.value)
-    console.log(x)
-    x.emit("test", {})
+function emitEvent () {
+    document.getElementById('input').dispatchEvent(new CustomEvent('test', {
+        detail: {
+            'email' : 'email',
+            'showroom' : 'showroom',
+            'name' : 'testname',
+            'value' : 'testvalue',
+            'key' : 'testkey'
+        }
+    }))
 }
 
-document.onload = () => start()
-
-console.log("end of code")
 /*
-let form = document.getElementById('autosave');
-let selectedObject = document.getElementsByName('');
-let attribute = onmouseleave(ev);
-let input = document.getElementsByName(attribute)
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();

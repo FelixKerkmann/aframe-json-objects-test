@@ -37,19 +37,24 @@ io.on('connection', (socket) => {
         console.log("disconnected")
         return
     }
-
-    socket.on('update value', (obj, key, value) => {
-        io.emit('update value', obj, key, value)
-        console.log("test", obj, key, value)
-    })
     */
+    socket.on('update value', (obj) => {
+        console.log("obj : ", obj)
+
+        io.emit('update value', obj)
+    })
+    /*
     socket.on('update value', (value) => {
         io.emit('update value', value)
         console.log("test", value)
     })
-
+    */
 })
 
 server.listen(8888, '127.0.0.1', () => {
     console.log('listening at http://127.0.0.1:8888')
 })
+
+function updateDb(object) {
+
+}
