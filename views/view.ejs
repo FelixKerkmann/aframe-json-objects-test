@@ -7,12 +7,13 @@
     <script src="/public/components/objectSelectorController.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/public/js/showroom-client.js"></script>
+    <script src="/public/js/transferValue.js"></script>
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
 </head>
-<body>
+<body onload="initialiseObjectSelection()">
 
 <!-- Scene view -->
-<div id="sceneView">
+<div id="sceneView" class="wide" >
     <a-scene>
         <a-assets>
             <img id="hall" src="../public/resources/skyboxes/hall.jpg">
@@ -84,36 +85,48 @@
 </div>
 
 <!-- Right panel -->
-<div id="rightPanel">
-    <form id="autosave" action="">
-        <label id="objectName" class="attributeTitle">Kein Objekt ausgewählt</label>
-        <input type="hidden" id="objectNameInput" class="attributeTitle" value="">
-        <p class="attributeTitle">Position</p>
-        <label for="positionX">X</label>
-        <input class="inputNumber" type="number" id="positionX" name="positionX" step="any">
-        <label for="positionY">Y</label>
-        <input class="inputNumber" type="number" id="positionY" name="positionY" step="any">
-        <label for="positionZ">Z</label>
-        <input class="inputNumber" type="number" id="positionZ" name="positionZ" step="any">
+<div id="rightPanel" class="disabled">
+    <p id="objectName" class="attributeTitle">Kein Objekt ausgewählt</p>
 
-        <p class="attributeTitle">Rotation</p>
-        <label for="rotationX">X</label>
-        <input class="inputNumber" type="number" id="rotationX" name="rotationX" step="any">
-        <label for="rotationY">Y</label>
-        <input class="inputNumber" type="number" id="rotationY" name="rotationY" step="any">
-        <label for="rotationZ">Z</label>
-        <input class="inputNumber" type="number" id="rotationZ" name="rotationZ" step="any">
+    <p class="attributeTitle">Position</p>
+    <label for="positionX">X</label>
+    <input class="inputNumber" type="number" id="positionX" name="positionX"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
+    <label for="positionY">Y</label>
+    <input class="inputNumber" type="number" id="positionY" name="positionY"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
+    <label for="positionZ">Z</label>
+    <input class="inputNumber" type="number" id="positionZ" name="positionZ"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
 
-        <p class="attributeTitle">Scale</p>
-        <label for="scale">X, Y, Z</label>
-        <input class="inputNumber" type="number" id="scale" name="scale" step="any">
-        <input type="submit">
-    </form>
-    <hr>
-    <ul id="messages"></ul>
-    <div id="form">
-        <input id="input" autocomplete="off" onfocusout="test()" />
-    </div>
+    <p class="attributeTitle">Rotation</p>
+    <label for="rotationX">X</label>
+    <input class="inputNumber" type="number" id="rotationX" name="rotationX"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
+    <label for="rotationY">Y</label>
+    <input class="inputNumber" type="number" id="rotationY" name="rotationY"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
+    <label for="rotationZ">Z</label>
+    <input class="inputNumber" type="number" id="rotationZ" name="rotationZ"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
+    <p class="attributeTitle">Scale</p>
+    <label for="scale">X, Y, Z</label>
+    <input class="inputNumber" type="number" id="scale" name="scale"
+           onfocusin="storeOldValue(this.id)"
+           onchange="emitOnValueChange(this.id)"
+           onfocusout="emitOnValueSubmit(this.id)">
 </div>
 
 </body>

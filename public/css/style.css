@@ -109,7 +109,12 @@
     width: 75%;
 }
 
+#sceneView.wide {
+    width: 100%;
+}
+
 #rightPanel {
+    visibility: visible;
     position: fixed;
     top: 0;
     right: 0;
@@ -118,6 +123,10 @@
     padding: 0px 25px 0px 25px;
     box-sizing: border-box;
     background-color: #EEEEEE;
+}
+
+#rightPanel.disabled {
+    visibility: hidden;
 }
 
 .attributeTitle {
