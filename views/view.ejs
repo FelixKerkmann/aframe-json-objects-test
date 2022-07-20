@@ -5,6 +5,8 @@
     <script src="../public/components/input-listen.js"></script>
     <script src="/public/components/selectable.js"></script>
     <script src="/public/components/objectSelectorController.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/js/showroom-client.js"></script>
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
 </head>
 <body>
@@ -20,7 +22,6 @@
             <img id="track" src="../public/resources/skyboxes/track.jpg">
             <img id="alaskaSkybox" src="../public/resources/skyboxes/alaska.jpg">
             <img id="lakeSkybox" src="../public/resources/skyboxes/lake.jpeg">
-            <img id="citySkybox" src="/uploads/skyboxes/citySkybox.jpg">
         </a-assets>
 
         <a-sky id="skybox" src="#alaskaSkybox"></a-sky>
@@ -84,27 +85,35 @@
 
 <!-- Right panel -->
 <div id="rightPanel">
-    <p id="objectName" class="attributeTitle">Kein Objekt ausgewählt</p>
+    <form id="autosave" action="">
+        <label id="objectName" class="attributeTitle">Kein Objekt ausgewählt</label>
+        <input type="hidden" id="objectNameInput" class="attributeTitle" value="">
+        <p class="attributeTitle">Position</p>
+        <label for="positionX">X</label>
+        <input class="inputNumber" type="number" id="positionX" name="positionX" step="any">
+        <label for="positionY">Y</label>
+        <input class="inputNumber" type="number" id="positionY" name="positionY" step="any">
+        <label for="positionZ">Z</label>
+        <input class="inputNumber" type="number" id="positionZ" name="positionZ" step="any">
 
-    <p class="attributeTitle">Position</p>
-    <label for="positionX">X</label>
-    <input class="inputNumber" type="number" id="positionX" name="positionX">
-    <label for="positionY">Y</label>
-    <input class="inputNumber" type="number" id="positionY" name="positionY">
-    <label for="positionZ">Z</label>
-    <input class="inputNumber" type="number" id="positionZ" name="positionZ">
+        <p class="attributeTitle">Rotation</p>
+        <label for="rotationX">X</label>
+        <input class="inputNumber" type="number" id="rotationX" name="rotationX" step="any">
+        <label for="rotationY">Y</label>
+        <input class="inputNumber" type="number" id="rotationY" name="rotationY" step="any">
+        <label for="rotationZ">Z</label>
+        <input class="inputNumber" type="number" id="rotationZ" name="rotationZ" step="any">
 
-    <p class="attributeTitle">Rotation</p>
-    <label for="rotationX">X</label>
-    <input class="inputNumber" type="number" id="rotationX" name="rotationX">
-    <label for="rotationY">Y</label>
-    <input class="inputNumber" type="number" id="rotationY" name="rotationY">
-    <label for="rotationZ">Z</label>
-    <input class="inputNumber" type="number" id="rotationZ" name="rotationZ">
-
-    <p class="attributeTitle">Scale</p>
-    <label for="scale">X, Y, Z</label>
-    <input class="inputNumber" type="number" id="scale" name="scale">
+        <p class="attributeTitle">Scale</p>
+        <label for="scale">X, Y, Z</label>
+        <input class="inputNumber" type="number" id="scale" name="scale" step="any">
+        <input type="submit">
+    </form>
+    <hr>
+    <ul id="messages"></ul>
+    <div id="form">
+        <input id="input" autocomplete="off" onfocusout="test()" />
+    </div>
 </div>
 
 </body>
