@@ -10,9 +10,9 @@
     <script src="/public/js/transferValue.js"></script>
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
 </head>
-<body onload="initialiseObjectSelection()">
+<body>
 <script>
-    window.onload = initSocket
+    window.onload = initialiseObjectSelection;
 </script>
 <!-- Scene view -->
 <div id="sceneView" class="wide" >
@@ -136,7 +136,6 @@
     <input type="hidden" id="useremail" name="useremail" value="<%- useremail %>"/>
     <input type="hidden" id="showroomid" name="showroomid" value="<%- showroomid %>"/>
 </div>
-
 </body>
 </html>
 

@@ -10,6 +10,7 @@ const session = require("express-session")
 const path = require("path")
 const cors = require("cors")
 const db = require("./private/configs/db.config")
+const showroomSchema = require("./private/models/showroom");
 
 mongoose.connect(db.dbString, { useNewUrlParser: true})
 
@@ -30,31 +31,36 @@ app.use('/', router)
 
 
 io.on('connection', (socket) => {
-    console.log('socket connection')
-    /*
-    if(socket.handshake.url !== '/showroom/*') {
-        socket.disconnect();
-        console.log("disconnected")
-        return
-    }
-    */
-    socket.on('update value', (obj) => {
-        console.log("obj : ", obj)
+    console.log('socket connection established')
 
-        io.emit('update value', obj)
+    socket.on('updateValue', (mail, showroom, name, key, value) => {
+        console.log('[socket.on] ' + mail + ', ' + showroom + ', ' + name + ', ' + key + ', ' + value);
+        // Write in DB
+        //const Showroom = mongoose.model(mail, showroomSchema)
+        // Showroom.find({_id : showroom, objects.modelname : name}, (err, result) => {
+        //     if (err) {
+        //         console.log("Unable to add Object, error: " + err)
+        //         return res.send(err)
+        //     }
+        //     console.log(result);
+        // });
+
+        // })
+        // const Showroom = mongoose.model(mail, showroomSchema)
+        // Showroom.updateOne(
+        //     {_id : showroom }, {
+        //                 $set: {
+        //                     "objects.: {
+        //                         modelname : name,
+        //                         key : value
+        //                     }
+        //                 }
+        //     });
+        //
+        // io.emit('updateValueDone', name, key, value)
     })
-    /*
-    socket.on('update value', (value) => {
-        io.emit('update value', value)
-        console.log("test", value)
-    })
-    */
 })
 
 server.listen(8888, '127.0.0.1', () => {
     console.log('listening at http://127.0.0.1:8888')
 })
-
-function updateDb(object) {
-
-}

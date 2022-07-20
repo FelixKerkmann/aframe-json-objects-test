@@ -49,7 +49,7 @@ AFRAME.registerComponent('objectselector', {
             console.log('Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in database.');
 
             try {
-                this.transferChangesToServer(key, newValue);
+                this.transferChangesToServer(event.detail);
             } catch (exception) {
                 console.error('Failed to upate "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in database due:\n' +
                     exception + '\n' +
@@ -143,7 +143,8 @@ AFRAME.registerComponent('objectselector', {
         }
     },
 
-    transferChangesToServer : function(key, value){
-        throw "transferChangesToServer(key, value) is not implemented yet."
+    transferChangesToServer : function(eventDetails){
+        sendToServer(eventDetails.name, eventDetails.key, eventDetails.newValue);
+        throw "transferChangesToServer(objectInformation) is not implemented yet."
     }
 });

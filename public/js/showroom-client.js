@@ -1,46 +1,15 @@
+const MAIL = 'useremail'
+const SHOWROOM = 'showroomid'
 let socket = io();
 
-function initSocket() {
+socket.on('updateValueDone', (name, key, value) => {
+    console.log('[answerFromServer] ' + name + ', ' + key + ', ' + value);
+});
 
-    let messages = document.getElementById('messages');
-    let input = document.getElementById('input');
+function sendToServer(name, key, value){
+    console.log('[sendToServer] ' + name + ', ' + key + ', ' + value)
+    const mail = document.getElementById(MAIL).value;
+    const showroom = document.getElementById(SHOWROOM).value;
 
-    input.addEventListener('test', (e) => socket.emit('update value', e.detail))
-
-    socket.on('update value', function(msg) {
-        let item = document.createElement('li');
-        item.textContent = msg;
-        messages.appendChild(item);
-        window.scrollTo(0, document.body.scrollHeight);
-    });
+    socket.emit('updateValue', mail, showroom, name, key, value);
 }
-
-function emitEvent () {
-    document.getElementById('input').dispatchEvent(new CustomEvent('test', {
-        detail: {
-            'email' : 'email',
-            'showroom' : 'showroom',
-            'name' : 'testname',
-            'value' : 'testvalue',
-            'key' : 'testkey'
-        }
-    }))
-}
-
-/*
-
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if(input.value) {
-        socket.emit('update value', { obj: selectedObject, key: attribute, value: input.value})
-    }
-})
-
-socket.on('connect', () => {
-    socket.emit('update value', {obj: "test obj", key: "test key", value: "test value"})
-})
-
-socket.on('update value', (obj, key, value) => {
-    console.log("success")
-})
-*/
