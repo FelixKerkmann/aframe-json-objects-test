@@ -5,6 +5,7 @@
     <script src="../public/components/input-listen.js"></script>
     <script src="/public/components/selectable.js"></script>
     <script src="/public/components/objectSelectorController.js"></script>
+    <script src="/public/js/transferValue.js"></script>
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
 </head>
 <body onload="initialiseObjectSelection()">
@@ -126,85 +127,6 @@
            onchange="emitOnValueChange(this.id)"
            onfocusout="emitOnValueSubmit(this.id)">
 </div>
-
-
-<script>
-    const NO_ELEMENT_SELECTED = "Kein Objekt ausgewählt";
-
-    let objectSelector;
-    let oldValue;
-
-    function initialiseObjectSelection(){
-        objectSelector = document.querySelector('#ObjectSelector');
-
-        // It has to the "keyup" event because "keydown" doesn't register some keys like escape
-        window.addEventListener("keyup", function (event) {
-            if (event.key === 'Escape') {
-                document.querySelector('#ObjectSelector').emit('changeSelection',
-                    {
-                        selectedObject: null
-                    });
-            }
-        });
-    }
-
-    function storeOldValue(key){
-        // TODO: Remove? Is it still possible to call this function while no item is selected?
-        if(noItemSelected()){
-            console.warn("Ignoring storeOldValue with key " + key + ", because there is no element selected.")
-            return;
-        }
-        oldValue = document.getElementById(key).value;
-    }
-
-    function emitOnValueChange(key) {
-        const newValue       = document.getElementById(key).value;
-        // TODO: Remove? Is it still possible to call this function while no item is selected?
-        if(noItemSelected()){
-            console.warn("Ignoring onValueChange with key " + key + ", because there is no element selected.");
-            return;
-        }
-
-        console.log("Fire \"onValueChange\" with key: " + key + ", old value: " + oldValue + ", new value: " + newValue);
-
-        objectSelector.emit("onValueChange",
-            {
-                'key': key,
-                'oldValue': oldValue,
-                'newValue': newValue
-            });
-    }
-
-    function emitOnValueSubmit(key) {
-        const newValue       = document.getElementById(key).value;
-
-        // TODO: Remove? Is it still possible to call this function while no item is selected?
-        if(noItemSelected()){
-            console.warn("Ignoring onValueSubmit with key " + key + ", because there is no element selected.");
-            return;
-        }
-
-        if(oldValue === newValue){
-            console.warn("Ignoring onValueChange with key " + key + ", because value did not change.");
-            return;
-        }
-
-        console.log("Fire \"onValueSubmit\" with key: " + key + ", old value: " + oldValue + ", new value: " + newValue);
-
-        objectSelector.emit("onValueSubmit",
-            {
-                'key': key,
-                'oldValue': oldValue,
-                'newValue': newValue
-            });
-
-        oldValue = null;
-    }
-
-    function noItemSelected(){
-        return document.getElementById("objectName").textContent === NO_ELEMENT_SELECTED;
-    }
-</script>
 
 </body>
 </html>

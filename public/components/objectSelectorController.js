@@ -23,11 +23,14 @@ AFRAME.registerComponent('objectselector', {
 
         this.el.addEventListener('onValueChange', (event) => {
             const selection = this.data.selectedObject;
-            const name      = selection.getAttribute('selectable').name;
+            const name      = event.detail.name;
             const key       = event.detail.key;
             const oldValue  = event.detail.oldValue;
             const newValue  = event.detail.newValue;
-
+            if (selection === null || selection.getAttribute('selectable').name !== name) {
+                console.error('Ignoring due to name mismatch: ' + 'Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in scene.');
+                return
+            }
             console.log('Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in scene.');
 
             this.setValue(key, newValue);
@@ -35,11 +38,14 @@ AFRAME.registerComponent('objectselector', {
 
         this.el.addEventListener('onValueSubmit', (event) => {
             const selection = this.data.selectedObject;
-            const name = selection.getAttribute('selectable').name;
+            const name = event.detail.name;
             const key = event.detail.key;
             const oldValue = event.detail.oldValue;
             const newValue = event.detail.newValue;
-
+            if (selection === null || selection.getAttribute('selectable').name !== name) {
+                console.error('Ignoring due to name mismatch: ' + 'Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in scene.');
+                return
+            }
             console.log('Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in database.');
 
             try {
@@ -51,14 +57,13 @@ AFRAME.registerComponent('objectselector', {
 
                 this.setValue(key, oldValue);
             }
-            document.getElementById(key).value = oldValue;
+            this.updateRightPanel()
         });
     },
 
     deselectOldSelection : function(){
         const oldSelection = this.data.selectedObject;
         if(oldSelection !== null){
-            oldSelection.setAttribute('isSelected', false);
             this.data.selectedObject = null;
             console.log(oldSelection.getAttribute(SELECTABLE_COMPONENT).name + ' was de-selected.');
         }
@@ -70,7 +75,6 @@ AFRAME.registerComponent('objectselector', {
         }
 
         this.data.selectedObject = newSelection;
-        newSelection.setAttribute('isSelected', true);
         console.log(this.data.selectedObject.getAttribute(SELECTABLE_COMPONENT).name + ' was selected.');
         this.updateRightPanel();
     },
@@ -93,13 +97,13 @@ AFRAME.registerComponent('objectselector', {
         const selection = this.data.selectedObject;
         let objectName =  selection.getAttribute(SELECTABLE_COMPONENT).name;
 
-        const positionX = selection.getAttribute('position').getComponent(0);
-        const positionY = selection.getAttribute('position').getComponent(1);
-        const positionZ = selection.getAttribute('position').getComponent(2);
-        const rotationX = selection.getAttribute('rotation')['x'];
-        const rotationY = selection.getAttribute('rotation')['y'];
-        const rotationZ = selection.getAttribute('rotation')['z'];
-        const scale = selection.getAttribute('scale').getComponent(0);
+        const positionX = selection.object3D.position.x;
+        const positionY = selection.object3D.position.y;
+        const positionZ = selection.object3D.position.z;
+        const rotationX = THREE.Math.radToDeg(selection.object3D.rotation.x);
+        const rotationY = THREE.Math.radToDeg(selection.object3D.rotation.y);
+        const rotationZ = THREE.Math.radToDeg(selection.object3D.rotation.z);
+        const scale = selection.object3D.scale.x;
 
         document.getElementById('objectName').textContent = objectName;
         document.getElementById('positionX').value = positionX.toString();
