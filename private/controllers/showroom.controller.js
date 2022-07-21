@@ -46,7 +46,7 @@ exports.findAllShowrooms = (req, res) => {
     })
 }
 
-exports.addObject = (req, res) =>{
+exports.addObject = (req, res) => {
     const userEmail = req.session.email
     const Showroom = mongoose.model(userEmail, showroomSchema)
     const myId = mongoose.Types.ObjectId();
@@ -55,16 +55,24 @@ exports.addObject = (req, res) =>{
         filename : req.body.files,
         modelname : req.body.name,
     }
-    Showroom.updateOne(
-        {_id : req.params.id},
-        { $push: {objects : [newObject] }},
-        function (err, _) {
-            if(err) {
-                console.log("Unable to add Object, error: " + err)
-                return res.send(err)
+    Showroom.findOne({_id: req.params.id}, (err, showroom) => {
+        if (err) {
+            console.log(err)
+        }
+        const exists = showroom.objects.find(obj => obj.modelname === req.body.name)
+        console.log(exists)
+        if(exists !== undefined) {
+            return res.send('modelname already exists')
+        }
+        showroom.objects.push(newObject);
+        showroom.save((err, _) => {
+            if (err) {
+                console.error("failed to save new 3DModel: " + err)
+                return res.status(412).send(err)
             }
             res.redirect('/showroom/' + req.params.id + '/edit')
         })
+    })
 }
 
 exports.delete = (req, res) => {
@@ -147,6 +155,9 @@ module.exports.updateModel = async function updateModel(mail, showroom, name, ke
     if (newValue === null || newValue === undefined) {
         throw 'Value "' + newValue + '" is an invalid value';
     }
+    if (key === 'scale' && newValue <= 0) {
+        throw "scale must be grater than 0"
+    }
     let currentShowroom = await Showroom.findOne({_id: showroom}).catch((error) => {
         caughtError = 'Failed to get showroom for update on ' + mail + ' with showroomId ' + showroom + 'due:\n' + error;
     });
@@ -213,6 +224,6 @@ function findObjectAndUpdateAttribute(objects, name, key, oldValue, newValue){
 }
 
 function debug(){
-    return  process.argv.find((element) => {return element === "debug-updateDB"}) != null;
+    return  process.argv.find((element) => {return element === "debug-updateDB"}) !== undefined;
 }
 
