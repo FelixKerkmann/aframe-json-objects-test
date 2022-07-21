@@ -12,6 +12,17 @@ socket.on('updateSuccess', (name, key, oldValue, newValue) => {
     console.log('Update ' + updateToString(name, key, oldValue, newValue) + ' deployed successfully in database.');
 })
 
+socket.on('removeSuccess', () => {
+    location.reload()
+})
+
+socket.on('removeFailed', name => {
+    document.querySelector(OBJECT_SELECTOR).dispatchEvent(new CustomEvent('onFailedRemove',
+        {
+            detail: { name: name }
+        }))
+})
+
 function updateToString(name, key, newValue, oldValue){
     return '"' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue;
 }
@@ -29,11 +40,15 @@ function createOnFailedUpdateEvent(name, key, oldValue, newValue){
         });
 }
 
-function sendToServer(name, key, oldValue, newValue) {
-    console.log('Send update: ' + updateToString(name, key, newValue, oldValue) + ' to server.')
-
+function sendUpdateToServer(name, key, oldValue, newValue){
+    console.log('Send update: ' + name + ', ' + key + ', ' + oldValue + ', ' + newValue + ' to server.')
     const mail = document.getElementById(MAIL).value;
     const showroom = document.getElementById(SHOWROOM).value;
-
     socket.emit('updateValue', mail, showroom, name, key, oldValue, newValue);
+}
+
+function sendRemoveToServer(name) {
+    const mail = document.getElementById(MAIL).value;
+    const showroom = document.getElementById(SHOWROOM).value;
+    socket.emit('removeObject', mail, showroom, name)
 }

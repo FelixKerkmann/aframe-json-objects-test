@@ -16,3 +16,7 @@ exports.getFilesByEmail = (email) => {
     })
     return files
 }
+
+exports.updateToString = (name, key, oldValue, newValue) => {
+    return '"' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue;
+}

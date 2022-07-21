@@ -59,3 +59,11 @@ function getValueFromField(key){
     }
     return value;
 }
+
+function emitRemoveObject() {
+    objectSelector.emit('onRemoveSubmit',
+        {
+            'name' : document.getElementById("objectName").textContent
+        })
+}
+

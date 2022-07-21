@@ -1,12 +1,15 @@
-const showroomSchema = require('../models/showroom')
 const mongoose = require("mongoose")
-const util = require("../util/util")
 const json2html = require("node-json2html")
 const ejs = require("ejs")
+const prompt = require("prompt-sync")({ sigint: true });
+const util = require("../util/util")
+const showroomSchema = require('../models/showroom')
 const modelTemplate = require("../templates/model.template")
 const inventoryTemplate = require("../templates/inventory.template")
 const showroomTemplate = require("../templates/showroom.template")
 
+
+//REST Functions
 // response edit-view of a showroom
 exports.showroomView = (req, res) => {
     const Showroom = mongoose.model(req.session.email, showroomSchema)
@@ -84,7 +87,10 @@ exports.showScene = (req, res) => {
         const result = models.objects
         result.forEach(object => object.filename = req.session.email + '/' + object.filename)
         const modelHtml = json2html.render(result, modelTemplate.aframeModelTemplate)
+        const files = util.getFilesByEmail(req.session.email)
+        const selectionHtml = json2html.render(files, inventoryTemplate.selection)
         res.render('view', {
+            selection: ejs.render(selectionHtml),
             useremail : req.session.email,
             showroomid : req.params.id,
             entities : ejs.render(modelHtml)
@@ -114,3 +120,99 @@ exports.newShowroom = (req, res) => {
         res.redirect('/showrooms')
     })
 }
+
+// Socket Functions
+exports.removeModel = (mail, showroom, name) => {
+    const Showroom = mongoose.model(mail, showroomSchema);
+    let result = null
+    Showroom.updateOne({ _id : showroom },
+        { $pull: { objects : { modelname : name} } },
+        { safe: true}, (err, _) => {
+            if(err){
+                result = err;
+            }
+        })
+    return result
+}
+
+module.exports.updateModel = async function updateModel(mail, showroom, name, key, oldValue, newValue) {
+    const Showroom = mongoose.model(mail, showroomSchema);
+    let caughtError;
+
+    if(debug()){
+        if(prompt('Throw invalid newValue?[y|any]') === 'y'){
+            throw '[Test] Invalid newValue';
+        }
+    }
+    if (newValue === null || newValue === undefined) {
+        throw 'Value "' + newValue + '" is an invalid value';
+    }
+    let currentShowroom = await Showroom.findOne({_id: showroom}).catch((error) => {
+        caughtError = 'Failed to get showroom for update on ' + mail + ' with showroomId ' + showroom + 'due:\n' + error;
+    });
+    if(debug()){
+        if(prompt('Throw fail to get showroom?[y|any]') === 'y'){
+            throw '[Test] Failed to get showroom.';
+        }
+    }
+    if (caughtError) {
+        throw caughtError;
+    }
+    try {
+        findObjectAndUpdateAttribute(currentShowroom.objects, name, key, oldValue, newValue);
+    } catch (exception) {
+        throw 'Failed to update "' + key + '" for object "' + name + '" due:\n' + exception;
+    }
+    await currentShowroom.save((error, _) => {
+        if (error) {
+            caughtError = 'Failed to update showroom from "' + mail + '" with showroom ID "' + showroom + '"due:\n' + error;
+        }
+    });
+    if(debug()){
+        if(prompt('Throw fail to update showroom?[y|any]') === 'y'){
+            throw '[Test] Failed to update showroom.';
+        }
+    }
+    if (caughtError) {
+        throw caughtError;
+    }
+
+}
+
+function findObjectAndUpdateAttribute(objects, name, key, oldValue, newValue){
+    let caughtError;
+    let found = false;
+    objects.forEach((object) => {
+        if(object["modelname"] === name){
+            found = true;
+            if(object[key] !== oldValue){
+                console.warn(typeof object[key] + ' vs ' + typeof oldValue)
+                caughtError = 'The old value of "' + key + '" should be ' + oldValue + ' but is ' + object[key] + ' instead.';
+                oldValue = object[key]; // Transmit the current value on the database to the client
+            }
+            object[key] = newValue;
+        }
+    });
+
+    if(debug()){
+        if(prompt('Throw no object with this name?[y|any]') === 'y'){
+            throw '[Test] No object with name.';
+        }
+    }
+    if(!found){
+        throw 'There is no object with name "' + name + '"';
+    }
+    if(debug()){
+        if(prompt('Throw oldValue is incorrect?[y|any]') === 'y'){
+            throw '[Test] Old value is incorrect.';
+        }
+    }
+    if(caughtError){
+        throw caughtError;
+    }
+}
+
+function debug(){
+    return  process.argv.find((element) => {return element === "debug-updateDB"}) != null;
+}
+

@@ -38,6 +38,10 @@ router.route('/logout')
 router.route('/users')
     .get(ifNotLoggedIn, userController.findAll)
 
+router.route('/showrooms')
+    .get(ifNotLoggedIn, showroomController.findAllShowrooms)
+    .post(ifNotLoggedIn, showroomController.newShowroom)
+
 router.route('/delete/:id')
     .post(ifNotLoggedIn, showroomController.delete)
 
@@ -51,8 +55,5 @@ router.route('/upload')
 router.route('/showroom/:id')
     .get(ifNotLoggedIn, showroomController.showScene)
 
-router.route('/showrooms')
-    .get(ifNotLoggedIn, showroomController.findAllShowrooms)
-    .post(ifNotLoggedIn, showroomController.newShowroom)
 
 module.exports = router

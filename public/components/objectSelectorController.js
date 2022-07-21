@@ -58,7 +58,7 @@ AFRAME.registerComponent('objectselector', {
 
             console.log('Update ' + updateToString(name, key, oldValue, newValue) +  ' in database.');
 
-            sendToServer(name, key, oldValue, newValue);
+            sendUpdateToServer(name, key, oldValue, newValue);
 
             this.updateRightPanel();
         });
@@ -81,7 +81,17 @@ AFRAME.registerComponent('objectselector', {
             this.setValue(key, oldValue);
 
             this.updateRightPanel();
-        })
+        });
+
+        this.el.addEventListener('onRemoveSubmit', (event) => {
+            const name = event.detail.name;
+            sendRemoveToServer(name);
+        });
+
+        this.el.addEventListener('onFailedRemove', (event) => {
+            const name = event.detail.name;
+            alert("failed to remove: " + name)
+        });
     },
 
     deselectOldSelection : function(){
