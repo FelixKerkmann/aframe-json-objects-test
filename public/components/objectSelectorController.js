@@ -42,23 +42,29 @@ AFRAME.registerComponent('objectselector', {
             const key = event.detail.key;
             const oldValue = event.detail.oldValue;
             const newValue = event.detail.newValue;
+
             if (selection === null || selection.getAttribute('selectable').name !== name) {
                 console.error('Ignoring due to name mismatch: ' + 'Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in scene.');
                 return
             }
             console.log('Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in database.');
 
-            try {
-                this.transferChangesToServer(event.detail);
-            } catch (exception) {
-                console.error('Failed to upate "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in database due:\n' +
-                    exception + '\n' +
-                    'Therefore reset "' + key + '" of ' + name + ' back to ' + oldValue);
+            sendToServer(name, key, oldValue, newValue);
 
-                this.setValue(key, oldValue);
-            }
-            this.updateRightPanel()
+            this.updateRightPanel();
         });
+
+        this.el.addEventListener('onFailedUpdate', (event) => {
+            const name = event.detail.name;
+            const key = event.detail.key;
+            const oldValue = event.detail.oldValue;
+            const newValue = event.detail.newValue;
+
+            console.error('Reset ' + this.updateToString(event.detail));
+
+            this.setValue(key, oldValue);
+            this.updateRightPanel();
+        })
     },
 
     deselectOldSelection : function(){
@@ -143,8 +149,7 @@ AFRAME.registerComponent('objectselector', {
         }
     },
 
-    transferChangesToServer : function(eventDetails){
-        sendToServer(eventDetails.name, eventDetails.key, eventDetails.newValue);
-        throw "transferChangesToServer(objectInformation) is not implemented yet."
+    updateToString : function(updateDetails){
+        return '"' + updateDetails.key + '" of "' + updateDetails.name + '" from ' + updateDetails.oldValue + ' to ' + updateDetails.newValue;
     }
 });

@@ -33,33 +33,50 @@ app.use('/', router)
 io.on('connection', (socket) => {
     console.log('socket connection established')
 
-    socket.on('updateValue', (mail, showroom, name, key, value) => {
-        console.log('[socket.on] ' + mail + ', ' + showroom + ', ' + name + ', ' + key + ', ' + value);
-        // Write in DB
-        //const Showroom = mongoose.model(mail, showroomSchema)
-        // Showroom.find({_id : showroom, objects.modelname : name}, (err, result) => {
-        //     if (err) {
-        //         console.log("Unable to add Object, error: " + err)
-        //         return res.send(err)
-        //     }
-        //     console.log(result);
-        // });
+    socket.on('updateValue', (mail, showroom, name, key, oldValue, newValue) => {
+        console.log('Server receive:  ' + mail + ', ' + showroom + ', ' + name + ', ' + key + ', ' + oldValue + ', ' + newValue);
 
-        // })
-        // const Showroom = mongoose.model(mail, showroomSchema)
-        // Showroom.updateOne(
-        //     {_id : showroom }, {
-        //                 $set: {
-        //                     "objects.: {
-        //                         modelname : name,
-        //                         key : value
-        //                     }
-        //                 }
-        //     });
-        //
-        // io.emit('updateValueDone', name, key, value)
+        // Write in DB
+        io.emit('updateFailed', name, key, oldValue, newValue);
+
+        // TODO: Check of update is valid
+        // name is correct
+        // oldValue is equal
+        // newValue is valid number
+
+        const Showroom = mongoose.model(mail, showroomSchema);
+        try{
+            Showroom.findOne({_id: showroom}, (error, currentShowroom) => {
+                if (error) {
+                    console.error('Failed to get showroom for update on ' + mail + ' with showroomId ' + showroom + ':\n' + error);
+                    throw error;
+                }
+
+                findObjectAndUpdateAttribute(currentShowroom.objects, name, key, newValue);
+
+                currentShowroom.save((error, _) => {
+                    if (error) {
+                        console.error('Failed to update showroom for update on ' + mail + ' with showroomId ' + showroom + ':\b' + error);
+                        throw error;
+                    }
+
+                    console.log(currentShowroom.showroomname + " was updated successfully");
+                    io.emit('updateSuccess', name, key, oldValue, newValue);
+                })
+            });
+        }catch (e){
+            io.emit('updateFailed', name, key, oldValue, newValue);
+        }
+})})
+
+
+function findObjectAndUpdateAttribute(objects, name, key, newValue){
+    objects.forEach((object) => {
+        if(object["modelname"] === name){
+            object[key] = newValue;
+        }
     })
-})
+}
 
 server.listen(8888, '127.0.0.1', () => {
     console.log('listening at http://127.0.0.1:8888')

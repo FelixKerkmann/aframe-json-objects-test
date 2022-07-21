@@ -14,12 +14,20 @@ function initialiseObjectSelection() {
     });
 }
 
+// TODO: Remove storeOldValue
 function storeOldValue(key) {
     oldValue = document.getElementById(key).value;
 }
 
+// TODO: Only emit event
 function emitOnValueChange(key) {
     const newValue = document.getElementById(key).value;
+
+    // TODO: If input is empty should be treated better
+    if (newValue === '') {
+        console.warn("Ignoring onValueChange with key " + key + ", because new value is null.");
+        return;
+    }
 
     console.log("Fire \"onValueChange\" with key: " + key + ", old value: " + oldValue + ", new value: " + newValue);
 
@@ -31,9 +39,15 @@ function emitOnValueChange(key) {
             'newValue': newValue
         });
 }
-
+// TODO: Only emit event
 function emitOnValueSubmit(key) {
     const newValue = document.getElementById(key).value;
+
+    // TODO: If input is empty should be treated better
+    if (newValue === '') {
+        console.warn("Ignoring onValueChange with key " + key + ", because new value is null.");
+        return;
+    }
 
     if (oldValue === newValue) {
         console.warn("Ignoring onValueChange with key " + key + ", because value did not change.");
@@ -53,3 +67,4 @@ function emitOnValueSubmit(key) {
     oldValue = null;
 }
 
+// TODO: Write function for event creation

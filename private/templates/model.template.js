@@ -1,8 +1,8 @@
 exports.aframeModelTemplate = {
     '<>': '${entity}',
     'gltf-model': 'url(/public/resources/uploads/${filename})',
-    'position': '${positionx} ${positiony} ${positionz}',
-    'rotation': '${rotationx} ${rotationy} ${rotationz}',
+    'position': '${positionX} ${positionY} ${positionZ}',
+    'rotation': '${rotationX} ${rotationY} ${rotationZ}',
     'scale': '${scale} ${scale} ${scale}',
     'selectable' : 'name:${modelname}'
 }
@@ -25,10 +25,10 @@ exports.listModelTemplate = {
                         {
                             '<>': 'input',
                             'type': 'number',
-                            'id': '${_id}_positionx',
-                            'name': 'positionx',
+                            'id': '${_id}_positionX',
+                            'name': 'positionX',
                             'step': 'any',
-                            'value': '${positionx}'
+                            'value': '${positionX}'
                         }
                     ]
                 },
@@ -37,10 +37,10 @@ exports.listModelTemplate = {
                         {
                             '<>': 'input',
                             'type': 'number',
-                            'id': '${_id}_positiony',
-                            'name': 'positiony',
+                            'id': '${_id}_positionY',
+                            'name': 'positionY',
                             'step': 'any',
-                            'value': '${positiony}'
+                            'value': '${positionY}'
                         }
                     ]
                 },
@@ -49,10 +49,10 @@ exports.listModelTemplate = {
                         {
                             '<>': 'input',
                             'type': 'number',
-                            'id': '${_id}_positionz',
-                            'name': 'positionz',
+                            'id': '${_id}_positionZ',
+                            'name': 'positionZ',
                             'step': 'any',
-                            'value': '${positionz}'
+                            'value': '${positionZ}'
                         }
                     ]
                 },
@@ -61,10 +61,10 @@ exports.listModelTemplate = {
                         {
                             '<>': 'input',
                             'type': 'number',
-                            'id': '${_id}_rotationx',
-                            'name': 'rotationx',
+                            'id': '${_id}_rotationX',
+                            'name': 'rotationX',
                             'step': 'any',
-                            'value': '${rotationx}'
+                            'value': '${rotationX}'
                         }
                     ]
                 },
@@ -73,10 +73,10 @@ exports.listModelTemplate = {
                         {
                             '<>': 'input',
                             'type': 'number',
-                            'id': '${_id}_rotationy',
-                            'name': 'rotationy',
+                            'id': '${_id}_rotationY',
+                            'name': 'rotationY',
                             'step': 'any',
-                            'value': '${rotationy}'
+                            'value': '${rotationY}'
                         }
                     ]
                 },
@@ -85,10 +85,10 @@ exports.listModelTemplate = {
                         {
                             '<>': 'input',
                             'type': 'number',
-                            'id': '${_id}_rotationz',
-                            'name': 'rotationz',
+                            'id': '${_id}_rotationZ',
+                            'name': 'rotationZ',
                             'step': 'any',
-                            'value': '${rotationz}'
+                            'value': '${rotationZ}'
                         }
                     ]
                 },
