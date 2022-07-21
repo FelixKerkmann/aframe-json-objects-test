@@ -22,32 +22,41 @@ AFRAME.registerComponent('objectselector', {
         });
 
         this.el.addEventListener('onValueChange', (event) => {
-            const selection = this.data.selectedObject;
             const name      = event.detail.name;
             const key       = event.detail.key;
             const oldValue  = event.detail.oldValue;
             const newValue  = event.detail.newValue;
-            if (selection === null || selection.getAttribute('selectable').name !== name) {
-                console.error('Ignoring due to name mismatch: ' + 'Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in scene.');
-                return
+
+            if (this.isInvalidSelection(name)) {
+                console.error('Ignoring update ' + updateToString(name, key, oldValue, newValue) + ' in scene because "'
+                    + name + '" is not the selected object.');
+                return;
             }
-            console.log('Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in scene.');
+
+            console.log('Update ' + updateToString(name, key, oldValue, newValue) +  ' in scene.');
 
             this.setValue(key, newValue);
         });
 
         this.el.addEventListener('onValueSubmit', (event) => {
-            const selection = this.data.selectedObject;
-            const name = event.detail.name;
-            const key = event.detail.key;
-            const oldValue = event.detail.oldValue;
-            const newValue = event.detail.newValue;
+            const name      = event.detail.name;
+            const key       = event.detail.key;
+            const oldValue  = event.detail.oldValue;
+            const newValue  = event.detail.newValue;
 
-            if (selection === null || selection.getAttribute('selectable').name !== name) {
-                console.error('Ignoring due to name mismatch: ' + 'Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in scene.');
-                return
+            if (this.isInvalidSelection(name)) {
+                console.error('Ignoring update ' + updateToString(name, key, oldValue, newValue) + ' in database because '
+                    + name + '" is not the selected object.');
+                return;
             }
-            console.log('Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' in database.');
+
+            if (newValue === oldValue) {
+                console.warn('Ignoring update ' + updateToString(name, key, oldValue, newValue) + ' in database because '
+                    + ' newValue(' + newValue + ') = oldValue(' + oldValue + ').');
+                return;
+            }
+
+            console.log('Update ' + updateToString(name, key, oldValue, newValue) +  ' in database.');
 
             sendToServer(name, key, oldValue, newValue);
 
@@ -55,14 +64,22 @@ AFRAME.registerComponent('objectselector', {
         });
 
         this.el.addEventListener('onFailedUpdate', (event) => {
-            const name = event.detail.name;
-            const key = event.detail.key;
-            const oldValue = event.detail.oldValue;
-            const newValue = event.detail.newValue;
+            const name      = event.detail.name;
+            const key       = event.detail.key;
+            const oldValue  = event.detail.oldValue;
+            const newValue  = event.detail.newValue;
 
-            console.error('Reset ' + this.updateToString(event.detail));
+            console.error('Reset ' + updateToString(name, key, oldValue, newValue));
 
+            if(this.data.selectedObject === null || name !== this.data.selectedObject.getAttribute(SELECTABLE_COMPONENT).name){
+                location.reload();
+                return;
+            }
+
+            // If the selected object is changed before getting the response, the wrong object will be manipulated...
+            // Should use something like setValueOfObjectByName(name, key, value) which modifies the attribute not based on current selection
             this.setValue(key, oldValue);
+
             this.updateRightPanel();
         })
     },
@@ -149,7 +166,7 @@ AFRAME.registerComponent('objectselector', {
         }
     },
 
-    updateToString : function(updateDetails){
-        return '"' + updateDetails.key + '" of "' + updateDetails.name + '" from ' + updateDetails.oldValue + ' to ' + updateDetails.newValue;
+    isInvalidSelection : function (name){
+        return this.data.selectedObject === null || this.data.selectedObject.getAttribute(SELECTABLE_COMPONENT).name !== name
     }
 });

@@ -4,8 +4,20 @@ const OBJECT_SELECTOR = '#ObjectSelector'
 let socket = io();
 
 socket.on('updateFailed', (name, key, oldValue, newValue) => {
-    console.error('Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' failed to update in database.');
-    document.querySelector(OBJECT_SELECTOR).dispatchEvent(new CustomEvent('onFailedUpdate',
+    console.error('Update ' + updateToString(name, key, oldValue, newValue) + ' failed to update in database.');
+    document.querySelector(OBJECT_SELECTOR).dispatchEvent(createOnFailedUpdateEvent(name, key, oldValue, newValue));
+})
+
+socket.on('updateSuccess', (name, key, oldValue, newValue) => {
+    console.log('Update ' + updateToString(name, key, oldValue, newValue) + ' deployed successfully in database.');
+})
+
+function updateToString(name, key, newValue, oldValue){
+    return '"' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue;
+}
+
+function createOnFailedUpdateEvent(name, key, oldValue, newValue){
+    return new CustomEvent('onFailedUpdate',
         {
             detail:
                 {
@@ -14,16 +26,12 @@ socket.on('updateFailed', (name, key, oldValue, newValue) => {
                     oldValue: oldValue,
                     newValue: newValue
                 }
-        }
-    ))
-})
+        });
+}
 
-socket.on('updateSuccess', (name, key, oldValue, newValue) => {
-    console.log('Update "' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue + ' deployed successfully in database.');
-})
+function sendToServer(name, key, oldValue, newValue) {
+    console.log('Send update: ' + updateToString(name, key, newValue, oldValue) + ' to server.')
 
-function sendToServer(name, key, oldValue, newValue){
-    console.log('Send update: ' + name + ', ' + key + ', ' + oldValue + ', ' + newValue + ' to server.')
     const mail = document.getElementById(MAIL).value;
     const showroom = document.getElementById(SHOWROOM).value;
 

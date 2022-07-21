@@ -1,12 +1,21 @@
+const OBJECT_NAME_ID = 'objectName'
+const OBJECT_SELECTOR_ID = '#ObjectSelector'
+const ON_VALUE_CHANGE = 'onValueChange'
+const ON_VALUE_SUBMIT = 'onValueSubmit'
 let objectSelector;
 let oldValue;
 
 function initialiseObjectSelection() {
-    objectSelector = document.querySelector('#ObjectSelector');
+    objectSelector = document.querySelector(OBJECT_SELECTOR_ID);
+
+    if(objectSelector === null || objectSelector === undefined){
+        throw 'Failed to initialise object selection. Not found "' + OBJECT_SELECTOR_ID + '" (' + objectSelector + ').';
+    }
+
     // It has to the "keyup" event because "keydown" doesn't register some keys like escape
     window.addEventListener("keyup", function (event) {
         if (event.key === 'Escape') {
-            document.querySelector('#ObjectSelector').emit('changeSelection',
+            objectSelector.emit('changeSelection',
                 {
                     selectedObject: null
                 });
@@ -14,57 +23,39 @@ function initialiseObjectSelection() {
     });
 }
 
-// TODO: Remove storeOldValue
 function storeOldValue(key) {
-    oldValue = document.getElementById(key).value;
+    oldValue = getValueFromField(key);
 }
 
-// TODO: Only emit event
 function emitOnValueChange(key) {
-    const newValue = document.getElementById(key).value;
-
-    // TODO: If input is empty should be treated better
-    if (newValue === '') {
-        console.warn("Ignoring onValueChange with key " + key + ", because new value is null.");
-        return;
-    }
-
-    console.log("Fire \"onValueChange\" with key: " + key + ", old value: " + oldValue + ", new value: " + newValue);
-
-    objectSelector.emit("onValueChange",
-        {
-            'name' : document.getElementById("objectName").textContent,
-            'key': key,
-            'oldValue': oldValue,
-            'newValue': newValue
-        });
+    const eventDetails = createEventDetailsForKey(key);
+    console.log('Emit "' + ON_VALUE_CHANGE + '" with key: ' + eventDetails.key + ', old value: ' + eventDetails.oldValue + ', new value: ' + eventDetails.newValue + '.');
+    objectSelector.emit(ON_VALUE_CHANGE, eventDetails);
 }
-// TODO: Only emit event
+
 function emitOnValueSubmit(key) {
-    const newValue = document.getElementById(key).value;
-
-    // TODO: If input is empty should be treated better
-    if (newValue === '') {
-        console.warn("Ignoring onValueChange with key " + key + ", because new value is null.");
-        return;
-    }
-
-    if (oldValue === newValue) {
-        console.warn("Ignoring onValueChange with key " + key + ", because value did not change.");
-        return;
-    }
-
-    console.log("Fire \"onValueSubmit\" with key: " + key + ", old value: " + oldValue + ", new value: " + newValue);
-
-    objectSelector.emit("onValueSubmit",
-        {
-            'name' : document.getElementById("objectName").textContent,
-            'key': key,
-            'oldValue': oldValue,
-            'newValue': newValue
-        });
-
+    const eventDetails = createEventDetailsForKey(key);
+    console.log('Emit "' + ON_VALUE_SUBMIT + '" with key: ' + eventDetails.key + ', old value: ' + eventDetails.oldValue + ', new value: ' + eventDetails.newValue + '.');
+    objectSelector.emit(ON_VALUE_SUBMIT, eventDetails);
     oldValue = null;
 }
 
-// TODO: Write function for event creation
+function createEventDetailsForKey(key){
+    const newValue  = getValueFromField(key);
+    const name      = document.getElementById(OBJECT_NAME_ID).textContent;
+
+    return {
+            'name' :    name,
+            'key':      key,
+            'oldValue': oldValue,
+            'newValue': newValue
+        };
+}
+
+function getValueFromField(key){
+    let value    = document.getElementById(key).value;
+    if(document.getElementById(key).type === 'number'){
+        value = parseFloat(value);
+    }
+    return value;
+}

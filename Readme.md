@@ -18,4 +18,8 @@ npm install
 npm start
 ```
 
+It is possible to debug with flags.
+``` shell
+npm start -- debug-updateDB
+```
 Application runs local on [127.0.0.1:8888](http://127.0.0.1:8888)
