@@ -5,12 +5,13 @@ const app = express()
 const server = require('http').createServer(app);
 const io = require("socket.io")(server)
 const bodyParser = require('body-parser')
-const router = require('./private/routes/model.route')
 const session = require("express-session")
 const path = require("path")
 const cors = require("cors")
+const router = require('./private/routes/model.route')
 const db = require("./private/configs/db.config")
-const showroomSchema = require("./private/models/showroom");
+const showroomSchema = require("./private/models/showroom")
+const showroomController = require('./private/controllers/showroom.controller')
 
 mongoose.connect(db.dbString, { useNewUrlParser: true})
 
@@ -39,7 +40,7 @@ io.on('connection', (socket) => {
         // Write in DB
         io.emit('updateFailed', name, key, oldValue, newValue);
 
-        // TODO: Check of update is valid
+        // TODO: Check if update is valid
         // name is correct
         // oldValue is equal
         // newValue is valid number
@@ -67,7 +68,17 @@ io.on('connection', (socket) => {
         }catch (e){
             io.emit('updateFailed', name, key, oldValue, newValue);
         }
-})})
+    })
+
+    socket.on('removeObject', (mail, showroom, name) => {
+        if(showroomController.removeModel(mail, showroom, name) === null) {
+            io.emit('removeSuccess')
+        } else {
+            io.emit('removeFailed', name)
+        }
+    })
+
+})
 
 
 function findObjectAndUpdateAttribute(objects, name, key, newValue){

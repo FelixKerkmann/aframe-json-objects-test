@@ -7,6 +7,7 @@ const modelTemplate = require("../templates/model.template")
 const inventoryTemplate = require("../templates/inventory.template")
 const showroomTemplate = require("../templates/showroom.template")
 
+//REST Functions
 // response edit-view of a showroom
 exports.showroomView = (req, res) => {
     const Showroom = mongoose.model(req.session.email, showroomSchema)
@@ -84,7 +85,10 @@ exports.showScene = (req, res) => {
         const result = models.objects
         result.forEach(object => object.filename = req.session.email + '/' + object.filename)
         const modelHtml = json2html.render(result, modelTemplate.aframeModelTemplate)
+        const files = util.getFilesByEmail(req.session.email)
+        const selectionHtml = json2html.render(files, inventoryTemplate.selection)
         res.render('view', {
+            selection: ejs.render(selectionHtml),
             useremail : req.session.email,
             showroomid : req.params.id,
             entities : ejs.render(modelHtml)
@@ -113,4 +117,18 @@ exports.newShowroom = (req, res) => {
         }
         res.redirect('/showrooms')
     })
+}
+
+// Socket Functions
+exports.removeModel = (mail, showroom, name) => {
+    const Showroom = mongoose.model(mail, showroomSchema);
+    let result = null
+    Showroom.updateOne({ _id : showroom },
+        { $pull: { objects : { modelname : name} } },
+        { safe: true}, (err, _) => {
+            if(err){
+                result = err;
+            }
+        })
+    return result
 }

@@ -68,3 +68,10 @@ function emitOnValueSubmit(key) {
 }
 
 // TODO: Write function for event creation
+
+function emitRemoveObject() {
+    objectSelector.emit('onRemoveSubmit',
+        {
+            'name' : document.getElementById("objectName").textContent
+        })
+}
