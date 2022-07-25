@@ -74,13 +74,18 @@ function initialiseObjectSelection() {
 }
 
 function storeOldValue(key){
-    oldValue = getValueFromField(key);
+    const value = getValueFromField(key);
+    if(value === undefined){
+        return;
+    }
+    oldValue = value;
     emitOnValueSubmit(key); // If object is moved with gizmo before, all (changed) values should be updated
 }
 
 function emitOnValuesChange(key) {
-    if(isNaN(getValueFromField(key))){
-        document.getElementById(key).value = oldValue;
+    const value = getValueFromField(key);
+    if(value === undefined){
+        return;
     }
     const eventDetails = createEventDetailsForKey(key);
     console.log('Emit "' + ON_VALUES_CHANGE_EVENT + '" with key: ' + eventDetails.key + ', value: ' + eventDetails.newValue + '.');
@@ -112,10 +117,15 @@ function createEventDetailsForKey(key){
         };
 }
 
+/**
+ * Extract the value of the element with the id of parameter.
+ * @param {string} key ID of the html element.
+ * @returns {number | undefined} Value of the element or undefined of the value is not a number.
+ */
 function getValueFromField(key){
-    let value    = document.getElementById(key).value;
-    if(document.getElementById(key).type === 'number'){
-        value = parseFloat(value);
+    let value = parseFloat(document.getElementById(key).value);
+    if(isNaN(value)){
+        return undefined;
     }
     return value;
 }
@@ -176,33 +186,13 @@ function onValuesChangedHandler(event) {
         return;
     }
 
-    let allChangesAreEqual = true;
-    for(let i = 0; i < oldValues.length; ++i){
-        if(oldValues[i] === newValues[i]){
-            keys[i]      = null;
-            oldValues[i] = null;
-            newValues[i] = null;
-        }
-    }
-
-    keys = keys.filter( key => key !== null);
-    oldValues = oldValues.filter( oldValue => oldValue !== null);
-    newValues = newValues.filter( newValue => newValue !== null);
-
-    if (allChangesAreEqual) {
-        console.warn('Ignoring update ' + updateValuesToString(keys, oldValues, newValues) + ' in scene because '
-            + ' no changes are made.');
-        return;
-    }
-
     console.log('Update ' + updateValuesToString(keys, oldValues, newValues) +  ' in scene.');
 
     for(let i = 0; i < keys.length; ++i){
         setValueOfCurrentSelection(keys[i], newValues[i])
     }
 }
-// TODO: Make a updateObjectInSceneFunction
-// TODO: Needs update in scene as well
+
 function onValueSubmitHandler(event) {
     const name      = event.detail.name;
     const keys      = ['positionX', 'positionY', 'positionZ', 'rotationX', 'rotationY', 'rotationZ', 'scale'];
@@ -218,9 +208,9 @@ function onValueSubmitHandler(event) {
 
     keys.forEach((key) => {
         const oldValue =  getOldValueByKey(key);
-        const newValue =  parseFloat(document.getElementById(key).value);
+        const newValue = getValueFromField(key)
 
-        if(oldValue !== newValue){
+        if(oldValue !== newValue && newValue !== undefined){
             changedKeys.push(key);
             oldValues.push(oldValue);
             newValues.push(newValue);
@@ -229,8 +219,8 @@ function onValueSubmitHandler(event) {
 
     if(changedKeys.length > 0){
         sendUpdateValuesToServer(name, changedKeys, oldValues, newValues);
+        updateSelectionCopy();
     }
-    updateSelectionCopy();
 }
 
 function onUpdateValuesFailedHandler(event) {
@@ -244,16 +234,17 @@ function onUpdateValuesFailedHandler(event) {
 
     // If the selected object is changed before getting the response
     if(objectToUpdate === null || name !== objectToUpdate.getAttribute(SELECTABLE_COMPONENT).name){
-        objectToUpdate = document.querySelector('#' + name);
+        objectToUpdate = document.getElementById(name);
     }
 
     if(objectToUpdate === null){
-        location.reload();
         console.error('Reload because object to redo update is not found in scene.');
+        location.reload();
     }else{
         for(let i = 0; i < keys.length; ++i){
             setValueOfObject(objectToUpdate, keys[i], oldValues[i]);
         }
+        updateSelectionCopy();
     }
 }
 
@@ -298,6 +289,11 @@ function selectObject(newSelection){
 
 function updateSelectionCopy(){
     const selection = currentSelection;
+
+    if(selection === null){
+        return;
+    }
+
     const position =  selection.getAttribute('position');
     const rotation =  new THREE.Vector3(
         THREE.Math.radToDeg(selection.object3D.rotation.x),

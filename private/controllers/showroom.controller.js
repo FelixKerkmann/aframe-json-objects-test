@@ -150,13 +150,14 @@ module.exports.updateModel = async function updateModel(mail, showroom, name, ke
     let caughtError;
 
     askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'Invalid newValue');
-    ///TODO: Make checks
+
     for(let i = 0; i < keys.length; ++i){
         if (newValues[i] === null || newValues[i] === undefined) {
             throw 'Value "' + newValues[i] + '" is an invalid value';
         }
+
         if (keys[i] === 'scale' && newValues[i] <= 0) {
-            throw "scale must be grater than 0"
+            throw "Scale must be grater than 0"
         }
     }
 
@@ -212,7 +213,7 @@ function findObjectAndUpdateAttributes(objects, name, keys, oldValues, newValues
         }
     });
 
-    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'No object with name.');
+    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'No object with name');
 
     if(!found){
         throw 'There is no object with name "' + name + '"';

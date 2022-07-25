@@ -44,7 +44,6 @@ function sendUpdateValuesToServer(name, keys, oldValues, newValues){
     socket.emit('updateValues', mail, showroom, name, keys, oldValues, newValues);
 }
 
-// TODO: Put in utility?
 function updateValuesToString(keys, oldValues, newValues){
     let result = '';
     for(let i = 0; i < keys.length; ++i){
