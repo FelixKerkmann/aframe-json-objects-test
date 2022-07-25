@@ -17,6 +17,10 @@ exports.getFilesByEmail = (email) => {
     return files
 }
 
-exports.updateToString = (name, key, oldValue, newValue) => {
-    return '"' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue;
+exports.updateValuesToString = (keys, oldValues, newValues) => {
+    let result = '';
+    for(let i = 0; i < keys.length; ++i){
+        result += keys[i] + ' from ' + oldValues[i] + ' to ' + newValues[i] + '\n';
+    }
+    return result;
 }

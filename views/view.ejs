@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="../public/components/input-listen.js"></script>
     <script src="/public/components/selectable.js"></script>
-    <script src="/public/components/objectSelectorController.js"></script>
+    <script type="importmap">
+      {
+      "imports": {
+       "three": "https://cdn.skypack.dev/three@0.139.2/build/three.module",
+          "three/": "https://cdn.skypack.dev/three@0.139.2/"
+      }
+     }
+    </script>
+    <script src="/public/components/objectSelectorComponent.js" type="module"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/public/js/showroom-client.js"></script>
-    <script src="/public/js/transferValue.js"></script>
+    <script src="/public/js/objectSelectorController.js"></script>
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
 </head>
 <body>
@@ -72,9 +80,7 @@
             </a-entity>
         </a-entity>
 
-        <a-entity id="ObjectSelector"
-                  objectselector>
-        </a-entity>
+        <a-entity id="ObjectSelector"></a-entity>
 
         <a-entity gltf-model="url(/public/resources/uploads/rooms/DemoRaumDiffuseOnlyCompressed.glb)"
                   position="0 0 0"
@@ -83,6 +89,7 @@
         </a-entity>
 
         <%- entities %>
+
     </a-scene>
 </div>
 
@@ -94,40 +101,40 @@
     <label for="positionX">X</label>
     <input class="inputNumber" type="number" id="positionX" name="positionX"
            onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValueChange(this.id)"
+           onchange="emitOnValuesChange(this.id)"
            onfocusout="emitOnValueSubmit(this.id)">
     <label for="positionY">Y</label>
     <input class="inputNumber" type="number" id="positionY" name="positionY"
            onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValueChange(this.id)"
+           onchange="emitOnValuesChange(this.id)"
            onfocusout="emitOnValueSubmit(this.id)">
     <label for="positionZ">Z</label>
     <input class="inputNumber" type="number" id="positionZ" name="positionZ"
            onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValueChange(this.id)"
+           onchange="emitOnValuesChange(this.id)"
            onfocusout="emitOnValueSubmit(this.id)">
 
     <p class="attributeTitle">Rotation</p>
     <label for="rotationX">X</label>
     <input class="inputNumber" type="number" id="rotationX" name="rotationX"
            onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValueChange(this.id)"
+           onchange="emitOnValuesChange(this.id)"
            onfocusout="emitOnValueSubmit(this.id)">
     <label for="rotationY">Y</label>
     <input class="inputNumber" type="number" id="rotationY" name="rotationY"
            onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValueChange(this.id)"
+           onchange="emitOnValuesChange(this.id)"
            onfocusout="emitOnValueSubmit(this.id)">
     <label for="rotationZ">Z</label>
     <input class="inputNumber" type="number" id="rotationZ" name="rotationZ"
            onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValueChange(this.id)"
+           onchange="emitOnValuesChange(this.id)"
            onfocusout="emitOnValueSubmit(this.id)">
     <p class="attributeTitle">Scale</p>
     <label for="scale">X, Y, Z</label>
     <input class="inputNumber" type="number" id="scale" name="scale"
            onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValueChange(this.id)"
+           onchange="emitOnValuesChange(this.id)"
            onfocusout="emitOnValueSubmit(this.id)">
     <input type="hidden" id="useremail" name="useremail" value="<%- useremail %>"/>
     <input type="hidden" id="showroomid" name="showroomid" value="<%- showroomid %>"/>

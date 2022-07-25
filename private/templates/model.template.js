@@ -1,5 +1,6 @@
 exports.aframeModelTemplate = {
     '<>': '${entity}',
+    'id' : '${modelname}',
     'gltf-model': 'url(/public/resources/uploads/${filename})',
     'position': '${positionX} ${positionY} ${positionZ}',
     'rotation': '${rotationX} ${rotationY} ${rotationZ}',

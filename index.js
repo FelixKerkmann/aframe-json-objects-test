@@ -34,20 +34,19 @@ app.use('/', router)
 io.on('connection', (socket) => {
     console.log('Socket connection established');
 
-    socket.on('updateValue', async (mail, showroom, name, key, oldValue, newValue) => {
-        console.log('Received update request: ' + util.updateToString(name, key, oldValue, newValue) +
-            ' for user "' + mail + '" on showroom with ID "' + showroom + '".');
+    socket.on('updateValues', async (mail, showroom, name, keys, oldValues, newValues) => {
+        console.log('Received update request:\n' + util.updateValuesToString(keys, oldValues, newValues) +
+            'For user "' + mail + '" on showroom with ID "' + showroom + '".');
 
-
-        try {
-            await showroomController.updateModel(mail, showroom, name, key, oldValue, newValue);
-            console.log('Successfully executed update: ' + util.updateToString(name, key, oldValue, newValue) +
-                ' for user "' + mail + '" on showroom with ID "' + showroom + '".');
-            io.emit('updateSuccess', name, key, oldValue, newValue);
-        } catch (exception) {
-            console.log('Failed to execute update: ' + util.updateToString(name, key, oldValue, newValue) +
-                ' for user "' + mail + '" on showroom with ID "' + showroom + '" due:\n' + exception);
-            io.emit('updateFailed', name, key, oldValue, newValue);
+        try{
+            await showroomController.updateModel(mail, showroom, name, keys, oldValues, newValues);
+            console.log('Successfully executed update:\n' + util.updateValuesToString(keys, oldValues, newValues) +
+                'for user "' + mail + '" on showroom with ID "' + showroom + '".');
+            io.emit('updateValuesSuccess', name, keys, oldValues, newValues);
+        }catch(exception){
+            console.log('Failed to executed update:\n' + util.updateValuesToString(keys, oldValues, newValues) +
+                'for user "' + mail + '" on showroom with ID "' + showroom + '" due:\n' + exception);
+            io.emit('updateValuesFailed', name, keys, oldValues, newValues);
         }
     })
 

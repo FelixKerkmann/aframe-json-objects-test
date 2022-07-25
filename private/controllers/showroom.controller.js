@@ -8,6 +8,8 @@ const modelTemplate = require("../templates/model.template")
 const inventoryTemplate = require("../templates/inventory.template")
 const showroomTemplate = require("../templates/showroom.template")
 
+const DEBUG_FLAG_UPDATE_DB = 'debug-updateDB';
+const FLOAT_COMPARING_DIFFERENCE = 0.0001;
 
 //REST Functions
 // response edit-view of a showroom
@@ -143,87 +145,95 @@ exports.removeModel = (mail, showroom, name) => {
     return result
 }
 
-module.exports.updateModel = async function updateModel(mail, showroom, name, key, oldValue, newValue) {
+module.exports.updateModel = async function updateModel(mail, showroom, name, keys, oldValues, newValues) {
     const Showroom = mongoose.model(mail, showroomSchema);
     let caughtError;
 
-    if(debug()){
-        if(prompt('Throw invalid newValue?[y|any]') === 'y'){
-            throw '[Test] Invalid newValue';
+    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'Invalid newValue');
+    ///TODO: Make checks
+    for(let i = 0; i < keys.length; ++i){
+        if (newValues[i] === null || newValues[i] === undefined) {
+            throw 'Value "' + newValues[i] + '" is an invalid value';
+        }
+        if (keys[i] === 'scale' && newValues[i] <= 0) {
+            throw "scale must be grater than 0"
         }
     }
-    if (newValue === null || newValue === undefined) {
-        throw 'Value "' + newValue + '" is an invalid value';
-    }
-    if (key === 'scale' && newValue <= 0) {
-        throw "scale must be grater than 0"
-    }
+
     let currentShowroom = await Showroom.findOne({_id: showroom}).catch((error) => {
         caughtError = 'Failed to get showroom for update on ' + mail + ' with showroomId ' + showroom + 'due:\n' + error;
     });
-    if(debug()){
-        if(prompt('Throw fail to get showroom?[y|any]') === 'y'){
-            throw '[Test] Failed to get showroom.';
-        }
-    }
+
+    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'Fail to get showroom');
+
     if (caughtError) {
         throw caughtError;
     }
+
     try {
-        findObjectAndUpdateAttribute(currentShowroom.objects, name, key, oldValue, newValue);
+        findObjectAndUpdateAttributes(currentShowroom.objects, name, keys, oldValues, newValues);
     } catch (exception) {
-        throw 'Failed to update "' + key + '" for object "' + name + '" due:\n' + exception;
+        throw 'Failed to update object "' + name + '" due:\n' + exception;
     }
     await currentShowroom.save((error, _) => {
         if (error) {
             caughtError = 'Failed to update showroom from "' + mail + '" with showroom ID "' + showroom + '"due:\n' + error;
         }
     });
-    if(debug()){
-        if(prompt('Throw fail to update showroom?[y|any]') === 'y'){
-            throw '[Test] Failed to update showroom.';
-        }
-    }
+
+    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'Failed to update showroom');
+
     if (caughtError) {
         throw caughtError;
     }
-
 }
 
-function findObjectAndUpdateAttribute(objects, name, key, oldValue, newValue){
-    let caughtError;
+function findObjectAndUpdateAttributes(objects, name, keys, oldValues, newValues){
+    let caughtError = '';
     let found = false;
     objects.forEach((object) => {
         if(object["modelname"] === name){
             found = true;
-            if(object[key] !== oldValue){
-                console.warn(typeof object[key] + ' vs ' + typeof oldValue)
-                caughtError = 'The old value of "' + key + '" should be ' + oldValue + ' but is ' + object[key] + ' instead.';
-                oldValue = object[key]; // Transmit the current value on the database to the client
+            for(let i = 0; i < keys.length; ++i){
+                let oldValuesAreEqual = false;
+                switch (typeof object[keys[i]]){
+                    case 'string':
+                        oldValuesAreEqual = object[keys[i]] !== oldValues[i];
+                        break;
+                    case 'number' :
+                        oldValuesAreEqual = Math.abs(object[keys[i]] - oldValues[i]) < FLOAT_COMPARING_DIFFERENCE;
+                }
+                if(!oldValuesAreEqual){
+                    caughtError += 'The value of "' + keys[i] + '" in database is ' + object[keys[i]] + ' but got ' +  oldValues[i] + ' instead.';
+                    oldValues[i] = object[keys[i]]; // Transmit the current value on the database to the client
+                }
+                object[keys[i]] = newValues[i];
             }
-            object[key] = newValue;
         }
     });
 
-    if(debug()){
-        if(prompt('Throw no object with this name?[y|any]') === 'y'){
-            throw '[Test] No object with name.';
-        }
-    }
+    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'No object with name.');
+
     if(!found){
         throw 'There is no object with name "' + name + '"';
     }
-    if(debug()){
-        if(prompt('Throw oldValue is incorrect?[y|any]') === 'y'){
-            throw '[Test] Old value is incorrect.';
-        }
-    }
+
+    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'Old value is incorrect');
+
     if(caughtError){
         throw caughtError;
     }
 }
 
-function debug(){
-    return  process.argv.find((element) => {return element === "debug-updateDB"}) !== undefined;
+function askToThrowExceptionWhenDebuggingFlagIsSet(flag, text){
+    if(debugFlagIsSet(flag)){
+        if(prompt('Throw ' + text + '?[y|any]') === 'y'){
+            throw '[Test] ' + text;
+        }
+    }
+}
+
+function debugFlagIsSet(flag){
+    return  process.argv.find((element) => {return element === flag}) !== undefined;
 }
 

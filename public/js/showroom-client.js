@@ -3,14 +3,28 @@ const SHOWROOM = 'showroomid'
 const OBJECT_SELECTOR = '#ObjectSelector'
 let socket = io();
 
-socket.on('updateFailed', (name, key, oldValue, newValue) => {
-    console.error('Update ' + updateToString(name, key, oldValue, newValue) + ' failed to update in database.');
-    document.querySelector(OBJECT_SELECTOR).dispatchEvent(createOnFailedUpdateEvent(name, key, oldValue, newValue));
+socket.on('updateValuesSuccess', (name, keys, oldValues, newValues) => {
+    console.log('Update ' + updateValuesToString(keys, oldValues, newValues) + ' deployed successfully in database.');
 })
 
-socket.on('updateSuccess', (name, key, oldValue, newValue) => {
-    console.log('Update ' + updateToString(name, key, oldValue, newValue) + ' deployed successfully in database.');
+socket.on('updateValuesFailed', (name, keys, oldValues, newValues) => {
+    console.log('Failed to updating values of ' + name + ':\n' + updateValuesToString(keys, oldValues, newValues) + 'in database.')
+
+    document.querySelector(OBJECT_SELECTOR).dispatchEvent(createOnFailedUpdateValuesEvent(name, keys, oldValues, newValues));
 })
+
+function createOnFailedUpdateValuesEvent(name, keys, oldValues, newValues){
+    return new CustomEvent('onFailedUpdateValues',
+        {
+            detail:
+                {
+                    name: name,
+                    keys: keys,
+                    oldValues: oldValues,
+                    newValues: newValues
+                }
+        });
+}
 
 socket.on('removeSuccess', () => {
     location.reload()
@@ -23,28 +37,20 @@ socket.on('removeFailed', name => {
         }))
 })
 
-function updateToString(name, key, newValue, oldValue){
-    return '"' + key + '" of "' + name + '" from ' + oldValue + ' to ' + newValue;
-}
-
-function createOnFailedUpdateEvent(name, key, oldValue, newValue){
-    return new CustomEvent('onFailedUpdate',
-        {
-            detail:
-                {
-                    name: name,
-                    key: key,
-                    oldValue: oldValue,
-                    newValue: newValue
-                }
-        });
-}
-
-function sendUpdateToServer(name, key, oldValue, newValue){
-    console.log('Send update: ' + name + ', ' + key + ', ' + oldValue + ', ' + newValue + ' to server.')
+function sendUpdateValuesToServer(name, keys, oldValues, newValues){
+    console.log('Send update of values of ' + name + ':\n' + updateValuesToString(keys, oldValues, newValues) + 'to server.')
     const mail = document.getElementById(MAIL).value;
     const showroom = document.getElementById(SHOWROOM).value;
-    socket.emit('updateValue', mail, showroom, name, key, oldValue, newValue);
+    socket.emit('updateValues', mail, showroom, name, keys, oldValues, newValues);
+}
+
+// TODO: Put in utility?
+function updateValuesToString(keys, oldValues, newValues){
+    let result = '';
+    for(let i = 0; i < keys.length; ++i){
+        result += keys[i] + ' from ' + oldValues[i] + ' to ' + newValues[i] + '\n';
+    }
+    return result;
 }
 
 function sendRemoveToServer(name) {
