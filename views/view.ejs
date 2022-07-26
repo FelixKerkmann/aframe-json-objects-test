@@ -21,6 +21,22 @@
 <body>
 <<script>
     window.onload = initialiseObjectSelection;
+
+    function toggleNavbar(elem) {
+        let arr = ['modelView', 'addModel', 'inventory']
+        arr.forEach(o => {
+            console.log(o)
+            if(elem === o) {
+                console.log(document.getElementById(o))
+                document.getElementById(o).style.visibility = 'visible'
+                document.getElementById(o).style.height = 'auto'
+            } else {
+                document.getElementById(o).style.visibility = 'hidden'
+                document.getElementById(o).style.height = '0px'
+            }
+        })
+    }
+
 </script>
 <!-- Scene view -->
 <div id="sceneView" class="wide" >
@@ -93,87 +109,86 @@
     </a-scene>
 </div>
 
+<!-- TODO: Styling, Visibility Problem with Outer and Inner Elements -->
 <!-- Right panel -->
 <div id="rightPanel" class="disabled">
-    <p id="objectName" class="attributeTitle">Kein Objekt ausgewählt</p>
+    <div class="navbar">
+        <ul>
+            <li><button onclick="toggleNavbar('modelView')">ModelView</button></li>
+            <li><button onclick="toggleNavbar('addModel')">Add Model</button></li>
+            <li><button onclick="toggleNavbar('inventory')">Inventory</button></li>
+        </ul>
+    </div>
+    <div id="modelView">
+        <p id="objectName" class="attributeTitle">Kein Objekt ausgewählt</p>
 
-    <p class="attributeTitle">Position</p>
-    <label for="positionX">X</label>
-    <input class="inputNumber" type="number" id="positionX" name="positionX"
-           onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValuesChange(this.id)"
-           onfocusout="emitOnValueSubmit(this.id)">
-    <label for="positionY">Y</label>
-    <input class="inputNumber" type="number" id="positionY" name="positionY"
-           onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValuesChange(this.id)"
-           onfocusout="emitOnValueSubmit(this.id)">
-    <label for="positionZ">Z</label>
-    <input class="inputNumber" type="number" id="positionZ" name="positionZ"
-           onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValuesChange(this.id)"
-           onfocusout="emitOnValueSubmit(this.id)">
+        <p class="attributeTitle">Position</p>
+        <label for="positionX">X</label>
+        <input class="inputNumber" type="number" id="positionX" name="positionX"
+               onfocusin="storeOldValue(this.id)"
+               onchange="emitOnValueChange(this.id)"
+               onfocusout="emitOnValueSubmit(this.id)">
+        <label for="positionY">Y</label>
+        <input class="inputNumber" type="number" id="positionY" name="positionY"
+               onfocusin="storeOldValue(this.id)"
+               onchange="emitOnValueChange(this.id)"
+               onfocusout="emitOnValueSubmit(this.id)">
+        <label for="positionZ">Z</label>
+        <input class="inputNumber" type="number" id="positionZ" name="positionZ"
+               onfocusin="storeOldValue(this.id)"
+               onchange="emitOnValueChange(this.id)"
+               onfocusout="emitOnValueSubmit(this.id)">
 
-    <p class="attributeTitle">Rotation</p>
-    <label for="rotationX">X</label>
-    <input class="inputNumber" type="number" id="rotationX" name="rotationX"
-           onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValuesChange(this.id)"
-           onfocusout="emitOnValueSubmit(this.id)">
-    <label for="rotationY">Y</label>
-    <input class="inputNumber" type="number" id="rotationY" name="rotationY"
-           onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValuesChange(this.id)"
-           onfocusout="emitOnValueSubmit(this.id)">
-    <label for="rotationZ">Z</label>
-    <input class="inputNumber" type="number" id="rotationZ" name="rotationZ"
-           onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValuesChange(this.id)"
-           onfocusout="emitOnValueSubmit(this.id)">
-    <p class="attributeTitle">Scale</p>
-    <label for="scale">X, Y, Z</label>
-    <input class="inputNumber" type="number" id="scale" name="scale"
-           onfocusin="storeOldValue(this.id)"
-           onchange="emitOnValuesChange(this.id)"
-           onfocusout="emitOnValueSubmit(this.id)">
-    <input type="hidden" id="useremail" name="useremail" value="<%- useremail %>"/>
-    <input type="hidden" id="showroomid" name="showroomid" value="<%- showroomid %>"/>
+        <p class="attributeTitle">Rotation</p>
+        <label for="rotationX">X</label>
+        <input class="inputNumber" type="number" id="rotationX" name="rotationX"
+               onfocusin="storeOldValue(this.id)"
+               onchange="emitOnValueChange(this.id)"
+               onfocusout="emitOnValueSubmit(this.id)">
+        <label for="rotationY">Y</label>
+        <input class="inputNumber" type="number" id="rotationY" name="rotationY"
+               onfocusin="storeOldValue(this.id)"
+               onchange="emitOnValueChange(this.id)"
+               onfocusout="emitOnValueSubmit(this.id)">
+        <label for="rotationZ">Z</label>
+        <input class="inputNumber" type="number" id="rotationZ" name="rotationZ"
+               onfocusin="storeOldValue(this.id)"
+               onchange="emitOnValueChange(this.id)"
+               onfocusout="emitOnValueSubmit(this.id)">
+        <p class="attributeTitle">Scale</p>
+        <label for="scale">X, Y, Z</label>
+        <input class="inputNumber" type="number" id="scale" name="scale"
+               onfocusin="storeOldValue(this.id)"
+               onchange="emitOnValueChange(this.id)"
+               onfocusout="emitOnValueSubmit(this.id)">
+        <input type="hidden" id="useremail" name="useremail" value="<%- useremail %>"/>
+        <input type="hidden" id="showroomid" name="showroomid" value="<%- showroomid %>"/>
 
-    <div>
-        <button class="open-button" onclick="function toggleAddForm() {
-        if(document.getElementById('addForm').style.display === 'block') {
-            document.getElementById('addForm').style.display = 'none';
-        } else {
-            document.getElementById('addForm').style.display = 'block';
-        }
-    }
-    toggleAddForm()">Add 3D-Object</button>
-        <div class="form-popup" id="addForm">
-            <form action="/showroom/<%- showroomid %>/edit" class="form-container" method="post" enctype="application/json">
-                <h3>Add 3D Model</h3>
-                <label>3D Model</label>
-                <select name="files" id="files">
-                    <%- selection %>
-                </select>
-                <br>
-                <label>3D Model Name</label>
-                <input type="text" id="name" name="name" required>
-                <br>
-                <button type="submit" class="btn">Submit</button>
-                <button type="button" class="btn cancel" onclick="function closeAddForm() {
-                document.getElementById('addForm').style.display = 'none';
-            }
-            closeAddForm()">Cancel</button>
-            </form>
-        </div>
+        <button type="submit" class="btn" onclick="emitRemoveObject()">Remove Object</button>
         <br>
         <a href="/showrooms">Back</a>
         <br>
-        <a href="/showroom/<%- showroomid %>">Show Scene</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <div id="addModel" style="visibility: hidden">
+        <form action="/showroom/<%- showroomid %>/edit" class="form-container" method="post" enctype="application/json">
+            <h3>Add 3D Model</h3>
+            <label>3D Model</label>
+            <select name="files" id="files">
+                <%- selection %>
+            </select>
+            <br>
+            <label>3D Model Name</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+        <br>
+        <a href="/showrooms">Back</a>
         <br>
         <a href="/logout">Logout</a>
     </div>
-    <button type="submit" class="btn" onclick="emitRemoveObject()">Remove Object</button>
+    <div id="inventory" style="visibility: hidden">Inventory</div>
 </div>
 </body>
 </html>
