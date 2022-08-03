@@ -59,14 +59,12 @@
 
 /* Add styles to the form container */
 .form-container {
-    max-width: 300px;
     padding: 10px;
-    background-color: white;
 }
 
 /* Full-width input fields */
 .form-container input[type=text], .form-container input[type=password] {
-    width: 100%;
+    width: -webkit-fill-available;
     padding: 15px;
     margin: 5px 0 22px 0;
     border: none;
@@ -144,7 +142,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #f1f1f1;
 }
 
 .navbar li {
@@ -165,5 +163,38 @@
 
 .navbar .active {
     background-color: #04AA6D;
+}
+
+#addModel{
+    position: absolute;
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFFFFF;
+}
+
+#addElementButton{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 80px;
+    height: 80px;
+    background-color: #04AA6D;
+    font-size: 50px;
+    font-weight: lighter;
+    color: white;
+    text-align: center;
+    border-radius: 40px;
+}
+
+#removeObjectButton{
+    margin: 10px 0px;
+    background-color: #ff7777;
+    color: white;
+    border-radius: 5px;
+    width: -webkit-fill-available;
+    height: 30px;
 }
 
