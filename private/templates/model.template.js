@@ -5,7 +5,8 @@ exports.aframeModelTemplate = {
     'position': '${positionX} ${positionY} ${positionZ}',
     'rotation': '${rotationX} ${rotationY} ${rotationZ}',
     'scale': '${scale} ${scale} ${scale}',
-    'selectable' : 'name:${modelname}'
+    'selectable' : 'name:${modelname}',
+    'shadow' : 'cast:true receive:true',
 }
 
 exports.listModelTemplate = {
