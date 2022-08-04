@@ -9,6 +9,23 @@ exports.aframeModelTemplate = {
     'shadow' : 'cast:true receive:true',
 }
 
+exports.aframeAssetModel = {
+    '<>': '${entity}',
+    'id' : 'entity_${objectNumber}',
+    'gltf-model': '#${objectNumber}',
+    'position': '${positionX} ${positionY} ${positionZ}',
+    'rotation': '${rotationX} ${rotationY} ${rotationZ}',
+    'scale': '${scale} ${scale} ${scale}',
+    'selectable' : 'name:${modelname}',
+    'shadow' : 'cast:true receive:true',
+}
+
+exports.aframeAssets = {
+    '<>' : 'a-asset-item',
+    'id' : '${objectNumber}',
+    'src' : '/public/resources/uploads/${filename}'
+}
+
 exports.listModelTemplate = {
     '<>': 'ul', 'class': 'model', 'html': [
         {

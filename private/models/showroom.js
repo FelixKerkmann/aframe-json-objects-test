@@ -17,6 +17,7 @@ const showroomSchema = new Schema({
         rotationY: { type: Number, default: 0},
         rotationZ: { type: Number, default: 0},
         scale: { type: Number, default: 1},
+        objectNumber: String,
     }],
 });
 
