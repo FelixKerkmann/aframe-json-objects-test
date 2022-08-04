@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
 </head>
 <body>
-<<script>
+<script>
     window.onload = () => {
         initialiseObjectSelection();
         setAllBackfaces();
@@ -44,7 +44,7 @@
 </script>
 <!-- Scene view -->
 <div id="sceneView" class="wide" >
-    <a-scene shadow="type: pcfsoft">
+    <a-scene shadow="type: pcfsoft" cursor="rayOrigin: mouse">
         <a-assets>
             <img id="hall" src="../public/resources/skyboxes/hall.jpg">
             <img id="architecture" src="../public/resources/skyboxes/architecture.jpg">
@@ -69,7 +69,6 @@
                           visible="false"
                           random-color
                 ></a-sphere>
-                <a-cursor></a-cursor>
             </a-entity>
             <a-entity id="ctlL"
                       teleport-controls="cameraRig: #cameraRig; teleportOrigin: #player; startEvents: teleportstart; endEvents: teleportend"
