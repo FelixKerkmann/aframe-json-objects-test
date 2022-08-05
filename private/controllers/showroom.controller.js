@@ -65,7 +65,6 @@ exports.addObject = (req, res) => {
             _id : myId,
             filename : req.body.files,
             modelname : req.body.name,
-            objectNumber : 'Nr_' + showroom.objects.length
         }
         showroom.objects.push(newObject);
         showroom.save((err, _) => {

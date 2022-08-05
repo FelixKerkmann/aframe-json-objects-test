@@ -11,8 +11,8 @@ exports.aframeModelTemplate = {
 
 exports.aframeAssetModel = {
     '<>': '${entity}',
-    'id' : 'entity_${objectNumber}',
-    'gltf-model': '#${objectNumber}',
+    'id' : 'entity_${_id}',
+    'gltf-model': '#${_id}',
     'position': '${positionX} ${positionY} ${positionZ}',
     'rotation': '${rotationX} ${rotationY} ${rotationZ}',
     'scale': '${scale} ${scale} ${scale}',
@@ -22,7 +22,7 @@ exports.aframeAssetModel = {
 
 exports.aframeAssets = {
     '<>' : 'a-asset-item',
-    'id' : '${objectNumber}',
+    'id' : '${_id}',
     'src' : '/public/resources/uploads/${filename}'
 }
 
