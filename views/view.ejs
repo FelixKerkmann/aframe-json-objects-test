@@ -20,14 +20,21 @@
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
 </head>
 <body>
+
 <script>
     window.onload = () => {
         initialiseObjectSelection();
-        setAllBackfaces();
+
+        window.addEventListener("keyup", function (event) {
+            if (event.key === DESELECT_KEY) {
+                const addModelhtmlElement = document.getElementById("addModel");
+                addModelhtmlElement.style.visibility = 'hidden';
+            }
+        });
     }
 
     function toggleNavbar(elem) {
-        let arr = ['modelView', 'addModel', 'inventory']
+        let arr = ['modelView', 'inventory']
         arr.forEach(o => {
             console.log(o)
             if(elem === o) {
@@ -39,6 +46,16 @@
                 document.getElementById(o).style.height = '0px'
             }
         })
+    }
+
+    const addModelId = 'addModel';
+    function toggleAddNewObject() {
+        const addModelhtmlElement = document.getElementById(addModelId);
+        if(addModelhtmlElement.style.visibility === 'visible'){
+            addModelhtmlElement.style.visibility = 'hidden';
+        }else{
+            addModelhtmlElement.style.visibility = 'visible';
+        }
     }
 
 </script>
@@ -132,7 +149,6 @@
     <div class="navbar">
         <ul>
             <li><button onclick="toggleNavbar('modelView')">ModelView</button></li>
-            <li><button onclick="toggleNavbar('addModel')">Add Model</button></li>
             <li><button onclick="toggleNavbar('inventory')">Inventory</button></li>
         </ul>
     </div>
@@ -180,32 +196,28 @@
                onfocusout="emitOnValueSubmit(this.id)">
         <input type="hidden" id="useremail" name="useremail" value="<%- useremail %>"/>
         <input type="hidden" id="showroomid" name="showroomid" value="<%- showroomid %>"/>
-
-        <button type="submit" class="btn" onclick="emitRemoveObject()">Remove Object</button>
-        <br>
-        <a href="/showrooms">Back</a>
-        <br>
-        <a href="/logout">Logout</a>
-    </div>
-    <div id="addModel" style="visibility: hidden">
-        <form action="/showroom/<%- showroomid %>/edit" class="form-container" method="post" enctype="application/json">
-            <h3>Add 3D Model</h3>
-            <label>3D Model</label>
-            <select name="files" id="files">
-                <%- selection %>
-            </select>
-            <br>
-            <label>3D Model Name</label>
-            <input type="text" id="name" name="name" required>
-            <br>
-            <button type="submit" class="btn">Submit</button>
-        </form>
-        <br>
-        <a href="/showrooms">Back</a>
-        <br>
-        <a href="/logout">Logout</a>
+        </br>
+        <button id="removeObjectButton" type="submit" onclick="emitRemoveObject()">Remove Object</button>
     </div>
     <div id="inventory" style="visibility: hidden">Inventory</div>
+</div>
+
+<button id="addElementButton" onclick="toggleAddNewObject()">+</button>
+
+<div id="addModel" style="visibility: hidden">
+    <form action="/showroom/<%- showroomid %>/edit" class="form-container" method="post" enctype="application/json">
+        <h3>Add 3D Model</h3>
+        <label>3D Model:</label>
+        <select name="files" id="files">
+            <%- selection %>
+        </select>
+        <br>
+        <label>Name:</label>
+        <br>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <button type="submit" class="btn">Submit</button>
+    </form>
 </div>
 </body>
 </html>

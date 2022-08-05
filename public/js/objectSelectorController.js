@@ -463,6 +463,9 @@ function hideRightPanel(){
     sceneView.className = SCENE_FULLSCREEN;
     const rightPanel = document.getElementById(RIGHT_PANEL_CONTAINER);
     rightPanel.className = RIGHT_PANEL_DISABLED;
+    // TODO: Refactor!
+    document.getElementById('modelView').style.visibility = 'hidden';
+    document.getElementById('inventory').style.visibility = 'hidden';
 }
 
 function displayRightPanel(){
@@ -470,6 +473,9 @@ function displayRightPanel(){
     sceneView.classList.remove(SCENE_FULLSCREEN);
     const rightPanel = document.getElementById(RIGHT_PANEL_CONTAINER);
     rightPanel.classList.remove(RIGHT_PANEL_DISABLED);
+    // TODO: Refactor! Just disable modelView, or remove inventory?
+    document.getElementById('modelView').style.visibility = 'visible';
+    document.getElementById('inventory').style.visibility = 'hidden';
 }
 
 function isInvalidSelection(name){
