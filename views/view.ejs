@@ -24,6 +24,7 @@
 <script>
     window.onload = () => {
         initialiseObjectSelection();
+        setAllBackfaces();
 
         window.addEventListener("keyup", function (event) {
             if (event.key === DESELECT_KEY) {
