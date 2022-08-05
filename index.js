@@ -32,8 +32,7 @@ app.use('/', router)
 
 
 io.on('connection', (socket) => {
-    console.log('Socket connection established');
-
+    console.log('New connection from: ' + socket.handshake.address);
     socket.on('updateValues', async (mail, showroom, name, keys, oldValues, newValues) => {
         console.log('Received update request:\n' + util.updateValuesToString(keys, oldValues, newValues) +
             'For user "' + mail + '" on showroom with ID "' + showroom + '".');

@@ -3,6 +3,14 @@ const SHOWROOM = 'showroomid'
 const OBJECT_SELECTOR = '#ObjectSelector'
 let socket = io();
 
+socket.on("connect", () => {
+    console.log("Client Socket connection established")
+})
+
+socket.on("disconnect", () => {
+    location.reload()
+})
+
 socket.on('updateValuesSuccess', (name, keys, oldValues, newValues) => {
     console.log('Update ' + updateValuesToString(keys, oldValues, newValues) + ' deployed successfully in database.');
 })
