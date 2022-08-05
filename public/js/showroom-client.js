@@ -3,9 +3,8 @@ const SHOWROOM = 'showroomid'
 const OBJECT_SELECTOR = '#ObjectSelector'
 let socket = io();
 
-
 socket.on("connect", () => {
-    console.log("socket connection established")
+    console.log("Client Socket connection established")
 })
 
 socket.on("disconnect", () => {
