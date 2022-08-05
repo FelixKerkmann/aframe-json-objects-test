@@ -51,12 +51,6 @@ exports.findAllShowrooms = (req, res) => {
 exports.addObject = (req, res) => {
     const userEmail = req.session.email
     const Showroom = mongoose.model(userEmail, showroomSchema)
-    const myId = mongoose.Types.ObjectId();
-    const newObject = {
-        _id : myId,
-        filename : req.body.files,
-        modelname : req.body.name,
-    }
     Showroom.findOne({_id: req.params.id}, (err, showroom) => {
         if (err) {
             console.log(err)
@@ -65,6 +59,12 @@ exports.addObject = (req, res) => {
         console.log(exists)
         if(exists !== undefined) {
             return res.send('modelname already exists')
+        }
+        const myId = mongoose.Types.ObjectId();
+        const newObject = {
+            _id : myId,
+            filename : req.body.files,
+            modelname : req.body.name,
         }
         showroom.objects.push(newObject);
         showroom.save((err, _) => {
@@ -96,10 +96,12 @@ exports.showScene = (req, res) => {
         }
         const result = models.objects
         result.forEach(object => object.filename = req.session.email + '/' + object.filename)
-        const modelHtml = json2html.render(result, modelTemplate.aframeModelTemplate)
+        const assetHtml = json2html.render(result, modelTemplate.aframeAssets)
+        const modelHtml = json2html.render(result, modelTemplate.aframeAssetModel)
         const files = util.getFilesByEmail(req.session.email)
         const selectionHtml = json2html.render(files, inventoryTemplate.selection)
         res.render('view', {
+            assets : ejs.render(assetHtml),
             selection: ejs.render(selectionHtml),
             useremail : req.session.email,
             showroomid : req.params.id,
