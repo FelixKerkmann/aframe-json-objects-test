@@ -30,6 +30,16 @@ exports.listShowrooms = {
                             ]
                         }
                     ]
+                },
+                {
+                    '<>': 'li', 'html': [
+                        {
+                            '<>': 'a',
+                            'class' : 'button button-outline',
+                            'href': '/vr/${_id}',
+                            'text': 'VR mode'
+                        },
+                    ]
                 }
             ]
         }

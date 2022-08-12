@@ -49,6 +49,9 @@ router.route('/showroom/:id/edit')
     .get(ifNotLoggedIn, showroomController.showroomView)
     .post(ifNotLoggedIn, showroomController.addObject)
 
+router.route('/vr/:id')
+    .get(ifNotLoggedIn, showroomController.showVR)
+
 router.route('/upload')
     .post(ifNotLoggedIn, multer.upload.single("gltffile") , showroomController.upload)
 

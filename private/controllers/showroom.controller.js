@@ -112,6 +112,23 @@ exports.showScene = (req, res) => {
     })
 }
 
+exports.showVR = (req, res) => {
+    const Showroom = mongoose.model(req.session.email, showroomSchema)
+    Showroom.findById( req.params.id, (err, models) => {
+        if (err) {
+            return res.status(500).send('database error')
+        }
+        const result = models.objects
+        result.forEach(object => object.filename = req.session.email + '/' + object.filename)
+        const assetHtml = json2html.render(result, modelTemplate.aframeAssets)
+        const modelHtml = json2html.render(result, modelTemplate.aframeAssetModel)
+        res.render('vrview', {
+            assets : ejs.render(assetHtml),
+            entities : ejs.render(modelHtml)
+        });
+    })
+}
+
 exports.upload = (req, res) => {
     if(req.file !== undefined) {
         return res.redirect('/showrooms')
