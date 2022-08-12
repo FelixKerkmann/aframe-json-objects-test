@@ -72,7 +72,7 @@ exports.addObject = (req, res) => {
                 console.error("failed to save new 3DModel: " + err)
                 return res.status(412).send(err)
             }
-            res.redirect('/showroom/' + req.params.id + '/edit')
+            res.redirect('/showroom/' + req.params.id)
         })
     })
 }
@@ -100,9 +100,11 @@ exports.showScene = (req, res) => {
         const modelHtml = json2html.render(result, modelTemplate.aframeAssetModel)
         const files = util.getFilesByEmail(req.session.email)
         const selectionHtml = json2html.render(files, inventoryTemplate.selection)
+        const inventoryHtml = json2html.render(files, inventoryTemplate.listModels)
         res.render('view', {
             assets : ejs.render(assetHtml),
             selection: ejs.render(selectionHtml),
+            inventory: ejs.render(inventoryHtml),
             useremail : req.session.email,
             showroomid : req.params.id,
             entities : ejs.render(modelHtml)

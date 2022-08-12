@@ -18,6 +18,7 @@
     <script src="/public/js/showroom-client.js"></script>
     <script src="/public/js/objectSelectorController.js"></script>
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../public/css/milligram.min.css">
 </head>
 <body>
 
@@ -34,19 +35,22 @@
         });
     }
 
-    function toggleNavbar(elem) {
-        let arr = ['modelView', 'inventory']
-        arr.forEach(o => {
-            console.log(o)
-            if(elem === o) {
-                console.log(document.getElementById(o))
-                document.getElementById(o).style.visibility = 'visible'
-                document.getElementById(o).style.height = 'auto'
-            } else {
-                document.getElementById(o).style.visibility = 'hidden'
-                document.getElementById(o).style.height = '0px'
-            }
-        })
+    function toggleNavbar() {
+        if(document.getElementById("modelView").style.visibility === 'visible') {
+            document.getElementById("modelView").style.visibility = 'hidden'
+            document.getElementById("modelView").style.height = '0px'
+            document.getElementById("inventory").style.visibility = 'visible'
+            document.getElementById("inventory").style.height = 'auto'
+            document.getElementById("nav-modelView").className = ""
+            document.getElementById("nav-inventory").className = "active"
+        } else {
+            document.getElementById("inventory").style.visibility = 'hidden'
+            document.getElementById("inventory").style.height = '0px'
+            document.getElementById("modelView").style.visibility = 'visible'
+            document.getElementById("modelView").style.height = 'auto'
+            document.getElementById("nav-modelView").className = "active"
+            document.getElementById("nav-inventory").className = ""
+        }
     }
 
     const addModelId = 'addModel';
@@ -146,12 +150,15 @@
 
 <!-- TODO: Styling, Visibility Problem with Outer and Inner Elements -->
 <!-- Right panel -->
-<div id="rightPanel" class="disabled">
+<div class="gizmo-mode">
+    <a onclick="changeSelection('translation')">Pos</a>
+    <a onclick="changeSelection('rotation')">Rot</a>
+    <a onclick="changeSelection('scale')">Scale</a>
+</div>
+<div id="rightPanel" class="">
     <div class="navbar">
-        <ul>
-            <li><button onclick="toggleNavbar('modelView')">ModelView</button></li>
-            <li><button onclick="toggleNavbar('inventory')">Inventory</button></li>
-        </ul>
+        <a class="active" id="nav-modelView" onclick="toggleNavbar()">ModelView</a>
+        <a class="" id="nav-inventory" onclick="toggleNavbar()">Inventory</a>
     </div>
     <div id="modelView">
         <p id="objectName" class="attributeTitle">Kein Objekt ausgewählt</p>
@@ -200,7 +207,31 @@
         </br>
         <button id="removeObjectButton" type="submit" onclick="emitRemoveObject()">Remove Object</button>
     </div>
-    <div id="inventory" style="visibility: hidden">Inventory</div>
+    <div id="inventory" style="visibility: hidden">
+            <h3>Inventory</h3>
+            <%- inventory %>
+            <button class="" onclick="function toggleUpdateForm() {
+                        if(document.getElementById('upload-model').style.display === 'block') {
+                            document.getElementById('upload-model').style.display = 'none';
+                        } else {
+                            document.getElementById('upload-model').style.display = 'block';
+                        }
+                    }
+                    toggleUpdateForm()">Upload 3D-Modell</button>
+            <div id="upload-model">
+                <form action="/upload" class="" method="post" enctype="multipart/form-data">
+                    <label>.glb - file</label>
+                    <input type="file" id="gltffile" name="gltffile" accept=".glb, model/gltf-binary" required>
+                    <br>
+                    <br>
+                    <button type="submit" class="btn-accept">Upload</button>
+                    <button type="button" class="btn-cancel" onclick="function closeUpdateForm() {
+                            document.getElementById('upload-model').style.display = 'none';
+                        }
+                        closeUpdateForm()">Cancel</button>
+                </form>
+            </div>
+    </div>
 </div>
 
 <button id="addElementButton" onclick="toggleAddNewObject()">+</button>

@@ -1,20 +1,24 @@
 <%- include('header'); -%>
 
-<div class="login">
-    <h1>Register</h1>
-    <form action="/register" method="post" enctype="application/json">
-        <label for="email">
-        </label>
-        <input type="email" name="email" placeholder="email" id="email" required>
-        <label for="password">
-        </label>
-        <input type="password" name="password" placeholder="Password" id="password" required>
-        <input type="submit" value="Register">
-    </form>
+<div class="container">
+    <div class="row">
+        <div class="column column-50 column-offset-25 login">
+            <h1>Register</h1>
+            <form action="/register" method="post" enctype="application/json">
+                <label for="email">
+                </label>
+                <input type="email" name="email" placeholder="email" id="email" required>
+                <label for="password">
+                </label>
+                <input type="password" name="password" placeholder="Password" id="password" required>
+                <input type="submit" value="Register">
+            </form>
 
-    <%- alerts %>
+            <%- alerts %>
 
-    <a href="/login"> Login </a>
+            <a href="/login"> Login </a>
+        </div>
+    </div>
 </div>
 
 <%- include('footer'); -%>

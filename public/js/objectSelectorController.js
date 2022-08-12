@@ -73,6 +73,10 @@ function initialiseObjectSelection() {
     });
 }
 
+function changeSelection(select) {
+    objectSelector.emit(ON_MANIPULATION_MODE_EVENT, {'mode': select});
+}
+
 function storeOldValue(key){
     const value = getValueFromField(key);
     if(value === undefined){
