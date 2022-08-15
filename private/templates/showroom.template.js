@@ -44,9 +44,9 @@ exports.listShowrooms = {
                 {
                     '<>': 'li', 'html': [
                         {
-                            '<>': 'button',
+                            '<>': 'a',
                             'class' : 'button button-outline',
-                            'onclick': 'rename(${_id}, ${showroomname})',
+                            'href': '/rename/${_id}',
                             'text': 'Rename'
                         },
                     ]

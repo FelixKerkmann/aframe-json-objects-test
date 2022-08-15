@@ -1,0 +1,15 @@
+<%- include('header'); -%>
+
+<div class="rename-form">
+    <div class="rename-content">
+        <form action="/showroom/<%- showroomid %>" class="form-container" method="post" enctype="application/json">
+            <label>Rename Showroom</label>
+            <input type="text" id="sname" name="sname" value=" <%- oldname %>" autofocus required>
+            <br>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+        <a class="button btn-cancel" href="/showrooms">Cancel</a>
+    </div>
+</div>
+
+<%- include('footer'); -%>

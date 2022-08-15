@@ -45,6 +45,9 @@ router.route('/showrooms')
 router.route('/delete/:id')
     .post(ifNotLoggedIn, showroomController.delete)
 
+router.route('/rename/:id')
+    .get(ifNotLoggedIn, showroomController.renameShowroomView)
+
 router.route('/showroom/:id/edit')
     .get(ifNotLoggedIn, showroomController.showroomView)
     .post(ifNotLoggedIn, showroomController.addObject)

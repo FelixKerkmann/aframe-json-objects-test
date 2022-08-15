@@ -48,6 +48,32 @@ exports.findAllShowrooms = (req, res) => {
     })
 }
 
+exports.renameShowroomView = (req, res) => {
+    const Showroom = mongoose.model(req.session.email, showroomSchema)
+    Showroom.findById(req.params.id, (err, showroom) => {
+        if(err) {
+            return res.status(404).send('not found')
+        }
+        res.render('popup', {
+            showroomid : req.params.id,
+            oldname : showroom.showroomname
+        })
+    })
+}
+
+exports.renameShowroom = (req, res) => {
+    const userEmail = req.session.email
+    const Showroom = mongoose.model(userEmail, showroomSchema)
+    Showroom.updateOne({_id: req.params.id},
+        { $set: { showroomname : req.body.sname}  },
+        { safe: true}, (err, _) => {
+            if(err){
+                return res.status(412).send(err)
+            }
+            res.redirect('/showrooms')
+        })
+}
+
 exports.addObject = (req, res) => {
     const userEmail = req.session.email
     const Showroom = mongoose.model(userEmail, showroomSchema)
@@ -99,19 +125,6 @@ exports.delete = (req, res) => {
            return res.status(404).send("not found")
         }
         res.redirect('/showrooms')
-    })
-}
-
-exports.renameShowroom = (req, res) => {
-    const userEmail = req.session.email
-    const Showroom = mongoose.model(userEmail, showroomSchema)
-    Showroom.updateOne({_id: req.params.id},
-        { $set: { showroomname : req.body.sname}  },
-        { safe: true}, (err, _) => {
-            if(err){
-                return res.status(412).send(err)
-            }
-            res.redirect('/showroom/' + req.params.id)
     })
 }
 
