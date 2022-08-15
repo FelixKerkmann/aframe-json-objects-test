@@ -81,7 +81,8 @@ exports.addObject = (req, res) => {
         if (err) {
             console.log(err)
         }
-        const exists = showroom.objects.find(obj => obj.modelname === req.body.name)
+        let convmodelname = req.body.name.replace(/\s/g, '_')
+        const exists = showroom.objects.find(obj => obj.modelname === convmodelname)
         if(exists !== undefined) {
             return res.send('modelname already exists')
         }
@@ -89,7 +90,7 @@ exports.addObject = (req, res) => {
         const newObject = {
             _id : myId,
             filename : req.body.files,
-            modelname : req.body.name,
+            modelname : convmodelname,
         }
         showroom.objects.push(newObject);
         showroom.save((err, _) => {
