@@ -35,22 +35,26 @@
         });
     }
 
-    function toggleNavbar() {
-        if(document.getElementById("modelView").style.visibility === 'visible') {
-            document.getElementById("modelView").style.visibility = 'hidden'
-            document.getElementById("modelView").style.height = '0px'
-            document.getElementById("inventory").style.visibility = 'visible'
-            document.getElementById("inventory").style.height = 'auto'
-            document.getElementById("nav-modelView").className = ""
-            document.getElementById("nav-inventory").className = "active"
-        } else {
-            document.getElementById("inventory").style.visibility = 'hidden'
-            document.getElementById("inventory").style.height = '0px'
-            document.getElementById("modelView").style.visibility = 'visible'
-            document.getElementById("modelView").style.height = 'auto'
-            document.getElementById("nav-modelView").className = "active"
-            document.getElementById("nav-inventory").className = ""
-        }
+    function toggleNavbar(elem) {
+        let arr = ['nav-modelView', 'nav-inventory', 'nav-models']
+        arr.forEach((o => {
+            console.log(o)
+            if(elem === o) {
+                let selected = document.getElementById(o)
+                selected.className = 'active'
+                selected = document.getElementById(o.substring(4))
+                selected.style.visibility = 'visible'
+                selected.style.height = 'auto'
+
+            } else {
+                let deselected = document.getElementById(o)
+                deselected.className = ''
+                deselected = document.getElementById(o.substring(4))
+                deselected.style.visibility = 'hidden'
+                deselected.style.height = '0px'
+
+            }
+        }))
     }
 
     const addModelId = 'addModel';
@@ -157,8 +161,9 @@
 </div>
 <div id="rightPanel" class="">
     <div class="navbar">
-        <a class="active" id="nav-modelView" onclick="toggleNavbar()">ModelView</a>
-        <a class="" id="nav-inventory" onclick="toggleNavbar()">Inventory</a>
+        <a class="active" id="nav-modelView" onclick="toggleNavbar('nav-modelView')">Selected</a>
+        <a class="" id="nav-models" onclick="toggleNavbar('nav-models')">Models</a>
+        <a class="" id="nav-inventory" onclick="toggleNavbar('nav-inventory')">Inventory</a>
     </div>
     <div id="modelView">
         <p id="objectName" class="attributeTitle">Kein Objekt ausgewählt</p>
@@ -206,6 +211,10 @@
         <input type="hidden" id="showroomid" name="showroomid" value="<%- showroomid %>"/>
         </br>
         <button id="removeObjectButton" type="submit" onclick="emitRemoveObject()">Remove Object</button>
+    </div>
+    <div id="models">
+        <h3>Models</h3>
+        <%- models %>
     </div>
     <div id="inventory" style="visibility: hidden">
             <h3>Inventory</h3>

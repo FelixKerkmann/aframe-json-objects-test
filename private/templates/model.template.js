@@ -26,6 +26,11 @@ exports.aframeAssets = {
     'src' : '/public/resources/uploads/${filename}'
 }
 
+exports.modelNameList = {
+    '<>' : 'li',
+    'text' : '${modelname}'
+}
+
 exports.listModelTemplate = {
     '<>': 'ul', 'class': 'model', 'html': [
         {

@@ -138,6 +138,7 @@ exports.showScene = (req, res) => {
         result.forEach(object => object.filename = req.session.email + '/' + object.filename)
         const assetHtml = json2html.render(result, modelTemplate.aframeAssets)
         const modelHtml = json2html.render(result, modelTemplate.aframeAssetModel)
+        const modelListHtml = json2html.render(result, modelTemplate.modelNameList)
         const files = util.getFilesByEmail(req.session.email)
         const selectionHtml = json2html.render(files, inventoryTemplate.selection)
         const inventoryHtml = json2html.render(files, inventoryTemplate.listModels)
@@ -145,6 +146,7 @@ exports.showScene = (req, res) => {
             assets : ejs.render(assetHtml),
             selection: ejs.render(selectionHtml),
             inventory: ejs.render(inventoryHtml),
+            models: ejs.render(modelListHtml),
             useremail : req.session.email,
             showroomid : req.params.id,
             entities : ejs.render(modelHtml)
