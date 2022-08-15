@@ -56,7 +56,6 @@ exports.addObject = (req, res) => {
             console.log(err)
         }
         const exists = showroom.objects.find(obj => obj.modelname === req.body.name)
-        console.log(exists)
         if(exists !== undefined) {
             return res.send('modelname already exists')
         }
@@ -77,6 +76,21 @@ exports.addObject = (req, res) => {
     })
 }
 
+exports.newShowroom = (req, res) => {
+    const userEmail = req.session.email
+    const Showroom = mongoose.model(userEmail, showroomSchema)
+    let newShowroom = new Showroom()
+    newShowroom._id = mongoose.Types.ObjectId()
+    newShowroom.showroomname = req.body.name
+    newShowroom.save((err, _) => {
+        if(err) {
+            console.error("failed to save new Showroom: " + err)
+            return res.status(412).send(err)
+        }
+        res.redirect('/showrooms')
+    })
+}
+
 exports.delete = (req, res) => {
     const userEmail = req.session.email
     const Showroom = mongoose.model(userEmail, showroomSchema)
@@ -85,6 +99,19 @@ exports.delete = (req, res) => {
            return res.status(404).send("not found")
         }
         res.redirect('/showrooms')
+    })
+}
+
+exports.renameShowroom = (req, res) => {
+    const userEmail = req.session.email
+    const Showroom = mongoose.model(userEmail, showroomSchema)
+    Showroom.updateOne({_id: req.params.id},
+        { $set: { showroomname : req.body.sname}  },
+        { safe: true}, (err, _) => {
+            if(err){
+                return res.status(412).send(err)
+            }
+            res.redirect('/showroom/' + req.params.id)
     })
 }
 
@@ -134,22 +161,6 @@ exports.upload = (req, res) => {
         return res.redirect('/showrooms')
     }
     res.redirect('/showrooms?glbalert=1')
-
-}
-
-exports.newShowroom = (req, res) => {
-    const userEmail = req.session.email
-    const Showroom = mongoose.model(userEmail, showroomSchema)
-    let newShowroom = new Showroom()
-    newShowroom._id = mongoose.Types.ObjectId()
-    newShowroom.showroomname = req.body.name
-    newShowroom.save((err, _) => {
-        if(err) {
-            console.error("failed to save new Showroom: " + err)
-            return res.status(412).send(err)
-        }
-        res.redirect('/showrooms')
-    })
 }
 
 // Socket Functions

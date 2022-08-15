@@ -57,6 +57,7 @@ router.route('/upload')
 
 router.route('/showroom/:id')
     .get(ifNotLoggedIn, showroomController.showScene)
+    .post(ifNotLoggedIn, showroomController.renameShowroom)
 
 
 module.exports = router

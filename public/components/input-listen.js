@@ -76,18 +76,3 @@ AFRAME.registerComponent('input-listen', {
     }
 });
 
-function changeskybox() {
-    let elem = document.getElementById("#skybox");
-    let skybox = elem.getAttribute("src");
-    const skyboxes = [
-        "hall",
-        "architecture",
-        "room-parkett",
-        "room-white-wood",
-        "track",
-    ];
-    let index = skyboxes.indexOf(skybox) + 1;
-    if (index >= skyboxes.length) { index = 0; }
-    elem.setAttribute('src', skyboxes[index]);
-}
-

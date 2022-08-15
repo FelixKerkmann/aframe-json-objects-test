@@ -40,6 +40,16 @@ exports.listShowrooms = {
                             'text': 'VR mode'
                         },
                     ]
+                },
+                {
+                    '<>': 'li', 'html': [
+                        {
+                            '<>': 'button',
+                            'class' : 'button button-outline',
+                            'onclick': 'rename(${_id}, ${showroomname})',
+                            'text': 'Rename'
+                        },
+                    ]
                 }
             ]
         }

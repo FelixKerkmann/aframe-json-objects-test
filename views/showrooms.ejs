@@ -58,12 +58,24 @@
                         closeUpdateForm()">Cancel</button>
                     </form>
                 </div>
+
+                <%- glbalert %>
+
             </div>
         </div>
 
     </div>
 </div>
-
-<%- glbalert %>
+<div id="popup">
+    <div class="popup-content">
+        <form action="/showroom/id" class="form-container" method="post" enctype="application/json">
+            <label>Rename Showroom</label>
+            <input type="text" id="sname" name="sname" value="' + old + '" required>
+            <br>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+        <button onclick="togglePopUp()"> Cancel </button>
+    </div>
+</div>
 
 <%- include('footer'); -%>
