@@ -22,52 +22,6 @@
 </head>
 <body>
 
-<script>
-    window.onload = () => {
-        initialiseObjectSelection();
-        setAllBackfaces();
-
-        window.addEventListener("keyup", function (event) {
-            if (event.key === DESELECT_KEY) {
-                const addModelhtmlElement = document.getElementById("popup");
-                addModelhtmlElement.style.visibility = 'hidden';
-            }
-        });
-    }
-
-    function toggleNavbar(elem) {
-        let arr = ['nav-modelView', 'nav-inventory', 'nav-models']
-        arr.forEach((o => {
-            console.log(o)
-            if(elem === o) {
-                let selected = document.getElementById(o)
-                selected.className = 'active'
-                selected = document.getElementById(o.substring(4))
-                selected.style.visibility = 'visible'
-                selected.style.height = 'auto'
-
-            } else {
-                let deselected = document.getElementById(o)
-                deselected.className = ''
-                deselected = document.getElementById(o.substring(4))
-                deselected.style.visibility = 'hidden'
-                deselected.style.height = '0px'
-
-            }
-        }))
-    }
-
-    const addModelId = 'popup';
-    function toggleAddNewObject() {
-        const addModelhtmlElement = document.getElementById(addModelId);
-        if(addModelhtmlElement.style.visibility === 'visible'){
-            addModelhtmlElement.style.visibility = 'hidden';
-        }else{
-            addModelhtmlElement.style.visibility = 'visible';
-        }
-    }
-
-</script>
 <!-- Scene view -->
 <div id="sceneView" class="wide" >
     <a-scene shadow="type: pcfsoft" cursor="rayOrigin: mouse">
@@ -275,6 +229,51 @@
         </form>
     </div>
 </div>
+<script>
+    window.onload = () => {
+        initialiseObjectSelection();
+        setAllBackfaces();
+
+        window.addEventListener("keyup", function (event) {
+            if (event.key === DESELECT_KEY) {
+                const addModelhtmlElement = document.getElementById("popup");
+                addModelhtmlElement.style.visibility = 'hidden';
+            }
+        });
+    }
+
+    function toggleNavbar(elem) {
+        let arr = ['nav-modelView', 'nav-inventory', 'nav-models']
+        arr.forEach((o => {
+            if(elem === o) {
+                let selected = document.getElementById(o)
+                selected.className = 'active'
+                selected = document.getElementById(o.substring(4))
+                selected.style.visibility = 'visible'
+                selected.style.height = 'auto'
+
+            } else {
+                let deselected = document.getElementById(o)
+                deselected.className = ''
+                deselected = document.getElementById(o.substring(4))
+                deselected.style.visibility = 'hidden'
+                deselected.style.height = '0px'
+
+            }
+        }))
+    }
+
+    const addModelId = 'popup';
+    function toggleAddNewObject() {
+        const addModelhtmlElement = document.getElementById(addModelId);
+        if(addModelhtmlElement.style.visibility === 'visible'){
+            addModelhtmlElement.style.visibility = 'hidden';
+        }else{
+            addModelhtmlElement.style.visibility = 'visible';
+        }
+    }
+
+</script>
 </body>
 </html>
 
