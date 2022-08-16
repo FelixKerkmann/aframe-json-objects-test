@@ -10,6 +10,10 @@ body {
     background-color: lightgoldenrodyellow;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 .btn-accept {
     border-width: 0;
     background-color: #04AA6D;
@@ -209,4 +213,8 @@ body {
     border: #606c76 1px solid;
     border-radius: 20px;
     padding: 15px;
+}
+
+.bottom-menu {
+    text-align: center;
 }

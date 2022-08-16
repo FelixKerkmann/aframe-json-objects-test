@@ -167,48 +167,48 @@
     </div>
     <div id="modelView">
         <p id="objectName" class="attributeTitle">Kein Objekt ausgewählt</p>
-        <p class="attributeTitle">Position</p>
+        <p class="attributeTitle clickable" onclick="changeSelection('translation')">Position (key t)</p>
         <label for="positionX">X</label>
-        <input class="inputNumber" type="number" id="positionX" name="positionX"
+        <input class="inputNumber" type="number" id="positionX" name="positionX" step="0.05"
                onfocusin="storeOldValue(this.id)"
                onchange="emitOnValuesChange(this.id)"
                onfocusout="emitOnValueSubmit(this.id)">
         <br>
         <label for="positionY">Y</label>
-        <input class="inputNumber" type="number" id="positionY" name="positionY"
+        <input class="inputNumber" type="number" id="positionY" name="positionY" step="0.05"
                onfocusin="storeOldValue(this.id)"
                onchange="emitOnValuesChange(this.id)"
                onfocusout="emitOnValueSubmit(this.id)">
         <br>
         <label for="positionZ">Z</label>
-        <input class="inputNumber" type="number" id="positionZ" name="positionZ"
+        <input class="inputNumber" type="number" id="positionZ" name="positionZ" step="0.05"
                onfocusin="storeOldValue(this.id)"
                onchange="emitOnValuesChange(this.id)"
                onfocusout="emitOnValueSubmit(this.id)">
         <br>
 
-        <p class="attributeTitle">Rotation</p>
+        <p class="attributeTitle clickable" onclick="changeSelection('rotation')">Rotation (key r)</p>
         <label for="rotationX">X</label>
-        <input class="inputNumber" type="number" id="rotationX" name="rotationX"
+        <input class="inputNumber" type="number" id="rotationX" name="rotationX" step="1"
                onfocusin="storeOldValue(this.id)"
                onchange="emitOnValuesChange(this.id)"
                onfocusout="emitOnValueSubmit(this.id)">
         <br>
         <label for="rotationY">Y</label>
-        <input class="inputNumber" type="number" id="rotationY" name="rotationY"
+        <input class="inputNumber" type="number" id="rotationY" name="rotationY" step="1"
                onfocusin="storeOldValue(this.id)"
                onchange="emitOnValuesChange(this.id)"
                onfocusout="emitOnValueSubmit(this.id)">
         <br>
         <label for="rotationZ">Z</label>
-        <input class="inputNumber" type="number" id="rotationZ" name="rotationZ"
+        <input class="inputNumber" type="number" id="rotationZ" name="rotationZ" step="1"
                onfocusin="storeOldValue(this.id)"
                onchange="emitOnValuesChange(this.id)"
                onfocusout="emitOnValueSubmit(this.id)">
         <br>
-        <p class="attributeTitle">Scale</p>
+        <p class="attributeTitle clickable" onclick="changeSelection('scale')">Scale (key e)</p>
         <label for="scale">X, Y, Z</label>
-        <input class="inputNumber" type="number" id="scale" name="scale"
+        <input class="inputNumber" type="number" id="scale" name="scale" step="0.25"
                onfocusin="storeOldValue(this.id)"
                onchange="emitOnValuesChange(this.id)"
                onfocusout="emitOnValueSubmit(this.id)">
@@ -218,11 +218,11 @@
         </br>
         <button class="btn btn-cancel" type="submit" onclick="emitRemoveObject()">Remove Object</button>
     </div>
-    <div id="models" style="visibility: hidden">
+    <div id="models" style="visibility: hidden; height: 0px;">
         <h3>Models</h3>
         <%- models %>
     </div>
-    <div id="inventory" style="visibility: hidden">
+    <div id="inventory" style="visibility: hidden; height: 0px;">
             <h3>Inventory</h3>
             <%- inventory %>
             <button class="" onclick="function toggleUpdateForm() {
@@ -246,6 +246,12 @@
                         closeUpdateForm()">Cancel</button>
                 </form>
             </div>
+    </div>
+    <div class="bottom-menu">
+        <hr>
+        <a class="button button-clear" href="/vr/<%- showroomid %>"> VR - Mode</a><br>
+        <a class="button button-clear" href="/showrooms"> Back to Showrooms</a><br>
+        <a class="button button-clear" href="/logout"> Logout</a>
     </div>
 </div>
 
