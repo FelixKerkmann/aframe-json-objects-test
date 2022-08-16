@@ -15,7 +15,7 @@ body {
     background-color: #04AA6D;
 }
 .btn-cancel {
-    border-width: 0;
+    border-width: 0 !important;
     background-color: #ff7777 !important;
 }
 
@@ -127,18 +127,18 @@ body {
     margin: 15px 0px 5px 0px;
 }
 
-.inputNumber {
-    width: 64px;
+#modelView label {
+    display: inline;
+    width: 20%;
+    padding-right: 10px;
 }
 
-#addModel{
-    position: absolute;
-    width: 500px;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    background-color: #FFFFFF;
+#modelView input {
+    width: 80%;
+}
+
+.inputNumber {
+    width: 64px;
 }
 
 #addElementButton{
@@ -153,16 +153,6 @@ body {
     color: white;
     text-align: center;
     border-radius: 40px;
-    border: 0 solid black;
-}
-
-#removeObjectButton{
-    margin: 10px 0px;
-    background-color: #ff7777;
-    color: white;
-    border-radius: 5px;
-    width: -webkit-fill-available;
-    height: 30px;
     border: 0 solid black;
 }
 

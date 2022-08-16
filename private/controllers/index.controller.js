@@ -1,3 +1,3 @@
-exports.redirect = (eq, res) => {
-    res.redirect('/showroom')
+exports.redirect = (req, res) => {
+    res.redirect('/showrooms')
 }
