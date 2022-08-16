@@ -3,7 +3,7 @@ body {
 }
 
 .login {
-
+    margin-top: 10px;
 }
 
 .alert {
@@ -28,10 +28,65 @@ body {
     min-height: 35px;
     height: auto;
     border-bottom: #606c76 solid 1px;
-    margin: 0 0 5px 0;
+    padding: 5px 0;
     background-color: #F2F3F4;
-    padding: 0 2rem;
     position: relative;
+    margin-bottom: 25px;
+}
+
+.showrooms {
+    background-color: #f9f9f9;
+    margin-right: 25px;
+    padding: 15px !important;
+}
+
+.inventory {
+    background-color: #f9f9f9;
+    padding: 15px !important;
+}
+
+.showrooms table {
+
+}
+
+.showrooms td {
+    align-content: center;
+    horiz-align: center;
+    vertical-align: center;
+    text-align: center;
+    padding: 1.2rem 0;
+}
+
+.showrooms-table form {
+    margin-bottom: 0;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    margin: 10px;
+}
+
+.grid-container form, .grid-container button, .grid-container a {
+    margin: 0 ;
+}
+
+.grid-item {
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 2px solid rgba(175, 175, 175, 0.8);
+}
+
+.grid-text {
+    text-align: left;
+}
+
+.grid-text p {
+    margin: 0;
+}
+
+.grid-button {
+
 }
 
 .showrooms ul {
@@ -46,24 +101,25 @@ body {
 
 .rooms-ul {
     margin-bottom: 0;
-}
-
-.room {
-    max-height: 40px;
-    height: auto;
-    margin: 0 0 .5rem 0;
+    width: 100%;
 }
 
 .room form {
     margin: 0;
 }
 
-.showrooms .room li {
+.room li {
     display: inline;
     float: left;
-    min-width: 100px;
     width: auto;
     vertical-align: center;
+    margin: 0 5px;
+}
+
+.sname {
+    min-width: 200px;
+    display: grid;
+    align-items: center;
 }
 
 #upload-model {

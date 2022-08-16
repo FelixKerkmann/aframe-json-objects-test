@@ -7,9 +7,30 @@
 <div class="container">
     <div class="row">
         <div class="showrooms column column-75">
-            <h3>Showrooms</h3>
-            <ul class="rooms-ul">
+            <h2>Showrooms</h2>
+            <div class="grid-container">
                 <%- showrooms %>
+            </div>
+            <!--
+            <table class="showrooms-table">
+                <tbody>
+
+                </tbody>
+            </table>
+-->
+            <p>
+                <button class="" onclick="function toggleCreateForm() {
+                            if(document.getElementById('new-showroom').style.display === 'block') {
+                                document.getElementById('new-showroom').style.display = 'none';
+                            } else {
+                                document.getElementById('new-showroom').style.display = 'block';
+                            }
+                        }
+                        toggleCreateForm()">New Showroom</button>
+            </p>
+            <!--
+            <ul class="rooms-ul">
+
                 <li>
                     <button class="" onclick="function toggleCreateForm() {
                             if(document.getElementById('new-showroom').style.display === 'block') {
@@ -21,6 +42,7 @@
                         toggleCreateForm()">New Showroom</button>
                 </li>
             </ul>
+            -->
             <div class="" id="new-showroom">
                 <form action="/showrooms" class="" method="post" enctype="application/json">
                     <label>Name</label>
@@ -37,7 +59,7 @@
 
         <div class="inventory column column-25">
             <div class="">
-                <h3>Inventory</h3>
+                <h2>Inventory</h2>
                 <%- inventory %>
                 <button class="" onclick="function toggleUpdateForm() {
                         if(document.getElementById('upload-model').style.display === 'block') {
