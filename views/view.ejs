@@ -234,6 +234,7 @@
     window.onload = () => {
         initialiseObjectSelection();
         setAllBackfaces();
+        setEventListenerOnModelList();
 
         window.addEventListener("keyup", function (event) {
             if (event.key === DESELECT_KEY) {
