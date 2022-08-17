@@ -89,6 +89,28 @@ function setEventListenerOnModelList(){
         })
         elem.addEventListener('click', () => {
             objectSelector.emit(ON_CHANGE_SELECTION_EVENT, { selectedObject : current})
+
+            // Set Camera look at selected Object
+            let player = document.getElementById('player')
+            player.setAttribute('look-controls', {enabled: false})
+
+            let objPos = new THREE.Vector3()
+            current.object3D.getWorldPosition(objPos)
+
+            let playerPos = new THREE.Vector3()
+            player.object3D.getWorldPosition(playerPos)
+
+            let vector = new THREE.Vector3(objPos.x, objPos.y, objPos.z);
+            vector.subVectors(playerPos, vector).add(playerPos);
+
+            player.object3D.lookAt(vector)
+            player.object3D.updateMatrix();
+
+            let rotation = player.getAttribute('rotation');
+            player.components['look-controls'].pitchObject.rotation.x = THREE.Math.degToRad(rotation.x);
+            player.components['look-controls'].yawObject.rotation.y = THREE.Math.degToRad(rotation.y);
+            player.setAttribute('look-controls', {enabled: true})
+
             toggleNavbar('nav-modelView')
         })
     })
