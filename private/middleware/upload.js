@@ -11,7 +11,7 @@ const multerstorage = multer.diskStorage({
 
 exports.upload = multer({
     storage: multerstorage,
-    // limits: {fileSize: 50*1024*1024}, TODO: Franci Fragen
+    // limits: {fileSize: 50*1024*1024"1024},
     fileFilter: function (req, file, cb) {
         if (path.extname(file.originalname) !== '.glb') {
             return cb(null, false)

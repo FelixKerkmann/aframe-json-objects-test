@@ -1,6 +1,6 @@
 AFRAME.registerComponent('selectable', {
     schema: {
-        name:{type: 'string', default: 'Kein Name'},
+        name:{type: 'string', default: 'None'},
         objectSelectorController: {default: ''},
     },
     init: function(){

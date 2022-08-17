@@ -13,7 +13,7 @@
     <div class="row">
         <div class="showrooms column column-75">
             <h2>Showrooms</h2>
-            <div class="grid-container">
+            <div class="grid-container-sr">
                 <%- showrooms %>
             </div>
             <!--
@@ -65,8 +65,11 @@
         <div class="inventory column column-25">
             <div class="">
                 <h2>Inventory</h2>
-                <%- inventory %>
-                <button class="" onclick="function toggleUpdateForm() {
+                <div class="grid-container-i">
+                    <%- inventory %>
+                </div>
+                <p>
+                    <button class="" onclick="function toggleUpdateForm() {
                         if(document.getElementById('upload-model').style.display === 'block') {
                             document.getElementById('upload-model').style.display = 'none';
                         } else {
@@ -74,6 +77,7 @@
                         }
                     }
                     toggleUpdateForm()">Upload 3D-Modell</button>
+                </p>
                 <div id="upload-model">
                     <form action="/upload" class="" method="post" enctype="multipart/form-data">
                         <label>.glb - file</label>

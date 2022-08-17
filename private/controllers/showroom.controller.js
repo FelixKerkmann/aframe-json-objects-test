@@ -7,6 +7,7 @@ const showroomSchema = require('../models/showroom')
 const modelTemplate = require("../templates/model.template")
 const inventoryTemplate = require("../templates/inventory.template")
 const showroomTemplate = require("../templates/showroom.template")
+const fs = require("fs");
 
 const DEBUG_FLAG_UPDATE_DB = 'debug-updateDB';
 const FLOAT_COMPARING_DIFFERENCE = 0.0001;
@@ -37,7 +38,7 @@ exports.findAllShowrooms = (req, res) => {
             return res.status(500).send('Database error')
         }
         const files = util.getFilesByEmail(req.session.email)
-        const showroomsHtml = json2html.render(showrooms, showroomTemplate.singleShowroomGrid)
+        const showroomsHtml = json2html.render(showrooms, showroomTemplate.showroomGrid)
         const inventoryHtml = json2html.render(files, inventoryTemplate.listModels)
         const message = req.query.glbalert === '1' ? '<p class="alert">Only glb files allowed</p>' : '<br>'
         res.render('showrooms', {
@@ -177,6 +178,31 @@ exports.upload = (req, res) => {
         return res.redirect('/showrooms')
     }
     res.redirect('/showrooms?glbalert=1')
+}
+
+exports.deleteModel = (req, res) => {
+    let mail = req.session.email
+    const Showroom = mongoose.model(mail, showroomSchema);
+    Showroom.findOne(
+        { objects :
+                { $elemMatch :
+                        { filename : req.params.filename }
+                }
+        }, (err, showroom) => {
+        if (err) {
+            console.log(err)
+        }
+        if(showroom !== null) {
+            return res.send('file still in use')
+        }
+        try {
+            fs.unlinkSync('./public/resources/uploads/' + mail + "/" + req.params.filename)
+            //file removed
+        } catch(err) {
+            console.error(err)
+        }
+        res.redirect('/showrooms')
+    })
 }
 
 // Socket Functions

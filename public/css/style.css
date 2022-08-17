@@ -60,48 +60,45 @@ body {
     padding: 15px !important;
 }
 
-.showrooms table {
-
-}
-
-.showrooms td {
-    align-content: center;
-    horiz-align: center;
-    vertical-align: center;
-    text-align: center;
-    padding: 1.2rem 0;
-}
-
-.showrooms-table form {
-    margin-bottom: 0;
-}
-
-.grid-container {
+.grid-container-sr {
     display: grid;
     grid-template-columns: auto auto auto auto;
     margin: 10px;
 }
 
-.grid-container form, .grid-container button, .grid-container a {
+.grid-container-sr form, .grid-container-sr button, .grid-container-sr a {
     margin: 0 ;
 }
 
-.grid-item {
+.grid-item-sr {
     padding: 10px 0;
     text-align: center;
     border-bottom: 2px solid rgba(175, 175, 175, 0.8);
 }
 
-.grid-text {
+.grid-text-sr, .grid-item-i {
     text-align: left;
 }
 
-.grid-text p {
+.grid-text-sr p, .grid-item-i p {
     margin: 0;
 }
 
-.grid-button {
+.grid-container-i {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: 10px;
+}
 
+.grid-item-i {
+    padding: 10px 2px;
+    text-align: center;
+    align-items: center;
+    display: grid;
+}
+
+.grid-container-i form, .grid-container-i button, .grid-container-i a {
+    margin: 0 ;
 }
 
 .showrooms ul {

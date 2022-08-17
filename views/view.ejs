@@ -88,7 +88,7 @@
         <a class="" id="nav-inventory" onclick="toggleNavbar('nav-inventory')">Inventory</a>
     </div>
     <div id="modelView">
-        <p id="objectName" class="attributeTitle">Kein Objekt ausgewählt</p>
+        <p id="objectName" class="attributeTitle"><i>No object selected</i></p>
         <p class="attributeTitle clickable" onclick="changeSelection('translation')">Position (key t)</p>
         <label for="positionX">X</label>
         <input class="inputNumber" type="number" id="positionX" name="positionX" step="0.05"
@@ -192,7 +192,7 @@
             <br>
             <input type="text" id="name" name="name" required>
             <br>
-            <button type="submit" class="btn">Submit</button>
+            <button type="submit" class="btn btn-accept">Add</button>
             <button class="btn btn-cancel float-right" onclick="toggleAddNewObject()">Cancel</button>
         </form>
     </div>
