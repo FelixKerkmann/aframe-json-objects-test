@@ -27,8 +27,11 @@ exports.aframeAssets = {
 }
 
 exports.modelNameList = {
-    '<>' : 'li',
-    'text' : '${modelname}'
+    '<>' : 'li', 'html' : [
+        {
+            '<>' : 'a', 'class' : 'model-selection', 'text' : '${modelname}'
+        }
+    ]
 }
 
 exports.listModelTemplate = {

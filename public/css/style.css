@@ -141,6 +141,9 @@ body {
     width: 80%;
 }
 
+.model-selection:hover {
+    cursor: pointer;
+}
 .inputNumber {
     width: 64px;
 }

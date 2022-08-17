@@ -77,6 +77,22 @@ function changeSelection(select) {
     objectSelector.emit(ON_MANIPULATION_MODE_EVENT, {'mode': select});
 }
 
+function setEventListenerOnModelList(){
+    const modelList = document.querySelectorAll('.model-selection');
+    const entities = document.querySelectorAll('a-entity')
+    modelList.forEach(elem => {
+        elem.addEventListener('click', () => {
+            entities.forEach(e => {
+                if(e.hasAttribute('selectable') && e.getAttribute('selectable').name === elem.textContent) {
+                    objectSelector.emit(ON_CHANGE_SELECTION_EVENT, { selectedObject : e})
+                    toggleNavbar('nav-modelView')
+                }
+            })
+
+        })
+    })
+}
+
 function storeOldValue(key){
     const value = getValueFromField(key);
     if(value === undefined){
