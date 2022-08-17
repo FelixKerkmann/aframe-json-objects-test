@@ -2,6 +2,21 @@ body {
     margin: 0 0 8px 0;
 }
 
+.nav-logo {
+    height: 40px;
+    width: auto;
+}
+
+.nav-bar {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto auto;
+}
+
+.nav-bar p {
+    margin: 0;
+}
+
 .login {
     margin-top: 10px;
 }

@@ -37,8 +37,6 @@ exports.findAllShowrooms = (req, res) => {
             return res.status(500).send('Database error')
         }
         const files = util.getFilesByEmail(req.session.email)
-        let x = json2html.render(showrooms[0], showroomTemplate.singleShowroomGrid)
-        console.log(x)
         const showroomsHtml = json2html.render(showrooms, showroomTemplate.singleShowroomGrid)
         const inventoryHtml = json2html.render(files, inventoryTemplate.listModels)
         const message = req.query.glbalert === '1' ? '<p class="alert">Only glb files allowed</p>' : '<br>'
