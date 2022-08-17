@@ -81,14 +81,15 @@ function setEventListenerOnModelList(){
     const modelList = document.querySelectorAll('.model-selection');
     const entities = document.querySelectorAll('a-entity')
     modelList.forEach(elem => {
+        let current = null
+        entities.forEach(e => {
+            if(e.hasAttribute('selectable') && e.getAttribute('selectable').name === elem.textContent) {
+                current = e;
+            }
+        })
         elem.addEventListener('click', () => {
-            entities.forEach(e => {
-                if(e.hasAttribute('selectable') && e.getAttribute('selectable').name === elem.textContent) {
-                    objectSelector.emit(ON_CHANGE_SELECTION_EVENT, { selectedObject : e})
-                    toggleNavbar('nav-modelView')
-                }
-            })
-
+            objectSelector.emit(ON_CHANGE_SELECTION_EVENT, { selectedObject : current})
+            toggleNavbar('nav-modelView')
         })
     })
 }
