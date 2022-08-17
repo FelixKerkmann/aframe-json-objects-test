@@ -25,7 +25,7 @@
 
 <!-- Scene view -->
 <div id="sceneView" class="wide" >
-    <a-scene shadow="type: pcfsoft" cursor="rayOrigin: mouse">
+    <a-scene shadow="type: pcfsoft" cursor="rayOrigin: mouse" vr-mode-ui="enterVRButton: #myEnterVRButton">
         <a-assets>
             <img id="hall" src="../public/resources/skyboxes/hall.jpg">
             <img id="architecture" src="../public/resources/skyboxes/architecture.jpg">
@@ -70,6 +70,14 @@
         </a-entity>
 
         <%- entities %>
+
+        <a id="myEnterVRButton" href="#">
+            <div class="a-enter-vr">
+                <button class="enter-vr-button" title="Fullscreen">
+                    Fullscreen
+                </button>
+            </div>
+        </a>
 
     </a-scene>
 </div>

@@ -264,6 +264,24 @@ body {
     padding: 15px;
 }
 
+.enter-vr-button {
+    background-size: 90% 90%;
+    border: 0;
+    bottom: 0;
+    cursor: pointer;
+    min-width: 58px;
+    min-height: 34px;
+    position: absolute;
+    right: 0;
+    transition: background-color .05s ease;
+    -webkit-transition: background-color .05s ease;
+    z-index: 9999;
+    border-radius: 8px;
+    touch-action: manipulation;
+    margin: 0;
+    padding: 0;
+}
+
 .rename-form {
     position: absolute;
     left: 0;
