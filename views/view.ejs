@@ -17,6 +17,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/public/js/showroom-client.js"></script>
     <script src="/public/js/objectSelectorController.js"></script>
+    <script src="/public/js/popup.js"></script>
     <link rel="stylesheet" type="text/css" href="../public/css/milligram.min.css">
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
     <link rel="icon" type="image/png" href="../public/resources/icons/favicon.png">
@@ -156,14 +157,7 @@
     <div id="inventory" style="visibility: hidden; height: 0px;">
             <h3>Inventory</h3>
             <%- inventory %>
-            <button class="" onclick="function toggleUpdateForm() {
-                        if(document.getElementById('upload-model').style.display === 'block') {
-                            document.getElementById('upload-model').style.display = 'none';
-                        } else {
-                            document.getElementById('upload-model').style.display = 'block';
-                        }
-                    }
-                    toggleUpdateForm()">Upload 3D-Modell</button>
+            <button class="" onclick="toggleForm('upload-model')">Upload 3D-Modell</button>
             <div id="upload-model">
                 <form action="/upload" class="" method="post" enctype="multipart/form-data">
                     <label>.glb - file</label>
@@ -171,10 +165,7 @@
                     <br>
                     <br>
                     <button type="submit" class="btn-accept">Upload</button>
-                    <button type="button" class="btn-cancel" onclick="function closeUpdateForm() {
-                            document.getElementById('upload-model').style.display = 'none';
-                        }
-                        closeUpdateForm()">Cancel</button>
+                    <button type="button" class="btn-cancel" onclick="closeForm('upload-model')">Cancel</button>
                 </form>
             </div>
     </div>
