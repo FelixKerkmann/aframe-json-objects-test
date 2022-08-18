@@ -58,22 +58,19 @@ function initialiseObjectSelection() {
                     selectedObject: null
                 });
         }
-
         if(event.key === TRANSLATE_KEY){
             objectSelector.emit(ON_MANIPULATION_MODE_EVENT, {'mode': MANIPULATION_TRANSLATION});
         }
-
         if(event.key === ROTATE_KEY){
             objectSelector.emit(ON_MANIPULATION_MODE_EVENT, {'mode': MANIPULATION_ROTATION});
         }
-
         if(event.key === SCALE_KEY){
             objectSelector.emit(ON_MANIPULATION_MODE_EVENT, {'mode': MANIPULATION_SCALE});
         }
     });
 }
 
-function changeSelection(select) {
+function changeTransformMode(select) {
     objectSelector.emit(ON_MANIPULATION_MODE_EVENT, {'mode': select});
 }
 
@@ -116,15 +113,6 @@ function setEventListenerOnModelList(){
     })
 }
 
-function storeOldValue(key){
-    const value = getValueFromField(key);
-    if(value === undefined){
-        return;
-    }
-    oldValue = value;
-    emitOnValueSubmit(key); // If object is moved with gizmo before, all (changed) values should be updated
-}
-
 function emitOnValuesChange(key) {
     const value = getValueFromField(key);
     if(value === undefined){
@@ -152,7 +140,6 @@ function emitRemoveObject() {
 function createEventDetailsForKey(key){
     const newValue  = getValueFromField(key);
     const name      = document.getElementById(OBJECT_NAME_ID).textContent;
-
     return {
             'name' :     name,
             'key':       [key],
@@ -173,7 +160,6 @@ function getValueFromField(key){
     return value;
 }
 
-
 // Handlers for the events
 function changeSelectionHandler(event) {
     const newSelection = event.detail.selectedObject;
@@ -185,7 +171,6 @@ function changeSelectionHandler(event) {
     deselectOldSelection();
     selectObject(newSelection);
 
-    // Disable right panel if no object is selected. Will be removed soon
     if(currentSelection === null){
         hideRightPanel();
     }else{
@@ -222,14 +207,11 @@ function onValuesChangedHandler(event) {
     let oldValues = getAllOldValuesByKeys(keys);
     let newValues = event.detail.newValue;
 
-    // Only true through non UI-interactions
     if (isInvalidSelection(name)) {
         console.error('Ignoring update ' + updateValuesToString(keys, oldValues, newValues) + ' in scene because "'
             + name + '" is not the selected object.');
         return;
     }
-
-    console.log('Update ' + updateValuesToString(keys, oldValues, newValues) +  ' in scene.');
 
     for(let i = 0; i < keys.length; ++i){
         setValueOfCurrentSelection(keys[i], newValues[i])
@@ -281,7 +263,6 @@ function onUpdateValuesFailedHandler(event) {
     }
 
     if(objectToUpdate === null){
-        console.error('Reload because object to redo update is not found in scene.');
         location.reload();
     }else{
         for(let i = 0; i < keys.length; ++i){
@@ -311,7 +292,6 @@ function deselectOldSelection(){
         document.querySelector(OBJECT_SELECTOR).emit('onObjectSubmit', {'name': oldSelection.getAttribute(SELECTABLE_COMPONENT).name});
         transformControls.detach();
         currentSelection = null;
-        console.log(oldSelection.getAttribute(SELECTABLE_COMPONENT).name + ' was de-selected.');
     }
 }
 
@@ -319,14 +299,10 @@ function selectObject(newSelection){
     if(newSelection === null){
         return;
     }
-
     currentSelection = newSelection;
-    transformControls.attach(newSelection.object3D);
+    transformControls.attach(currentSelection.object3D);
 
     updateSelectionCopy();
-
-    console.log(currentSelection.getAttribute(SELECTABLE_COMPONENT).name + ' was selected.');
-
     updateRightPanel();
 }
 
@@ -355,9 +331,7 @@ function updateSelectionCopy(){
 }
 
 function updateRightPanel(){
-    const selection = currentSelection;
-
-    if(selection === null){
+    if(currentSelection === null){
         return;
     }
 
@@ -406,11 +380,9 @@ function getValueByKey(key){
 
 function getAllOldValuesByKeys(keys){
     let oldValues = [];
-
     keys.forEach((key) => {
         oldValues.push(getOldValueByKey(key));
     })
-
     return oldValues;
 }
 
@@ -479,7 +451,6 @@ function updateTextContentIfNotFocused(keys, transformFunction = function(value)
             console.warn('No element with key"' + key +'" in document.')
             return;
         }
-
         if(currentElement !== document.activeElement){
             currentElement.textContent = transformFunction(currentSelection.getAttribute(SELECTABLE_COMPONENT).name);
         }
@@ -494,7 +465,6 @@ function updateValueIfNotFocused(keys, transformFunction = function(value) { ret
             console.warn('No element with key"' + key +'" in document.')
             return;
         }
-
         if(currentElement !== document.activeElement){
             currentElement.value = transformFunction(getValueByKey(key));
         }
@@ -506,9 +476,9 @@ function hideRightPanel(){
     sceneView.className = SCENE_FULLSCREEN;
     const rightPanel = document.getElementById(RIGHT_PANEL_CONTAINER);
     rightPanel.className = RIGHT_PANEL_DISABLED;
-    // TODO: Refactor!
     document.getElementById('modelView').style.visibility = 'hidden';
     document.getElementById('inventory').style.visibility = 'hidden';
+    document.getElementById('models').style.visibility = 'hidden';
 }
 
 function displayRightPanel(){
@@ -516,9 +486,7 @@ function displayRightPanel(){
     sceneView.classList.remove(SCENE_FULLSCREEN);
     const rightPanel = document.getElementById(RIGHT_PANEL_CONTAINER);
     rightPanel.classList.remove(RIGHT_PANEL_DISABLED);
-    // TODO: Refactor! Just disable modelView, or remove inventory?
-    document.getElementById('modelView').style.visibility = 'visible';
-    document.getElementById('inventory').style.visibility = 'hidden';
+    document.getElementById('nav-modelView').dispatchEvent(new Event("click"))
 }
 
 function isInvalidSelection(name){

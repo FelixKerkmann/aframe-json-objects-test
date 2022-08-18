@@ -101,44 +101,13 @@ body {
     margin: 0 ;
 }
 
-.showrooms ul {
-    display: inline-block;
-    list-style-type: none;
-    height: auto;
-}
-
-.showrooms li {
-    height: 40px;
-}
-
-.rooms-ul {
-    margin-bottom: 0;
-    width: 100%;
-}
-
-.room form {
-    margin: 0;
-}
-
-.room li {
-    display: inline;
-    float: left;
-    width: auto;
-    vertical-align: center;
-    margin: 0 5px;
-}
-
 .sname {
     min-width: 200px;
     display: grid;
     align-items: center;
 }
 
-#upload-model {
-    display: none;
-}
-
-#new-showroom {
+#upload-model, #new-showroom {
     display: none;
 }
 
@@ -184,19 +153,12 @@ body {
     right: 0;
     height: 100%;
     width: 25%;
-    padding: 0px 25px 0px 25px;
     box-sizing: border-box;
     background-color: #EEEEEE;
 }
 
 #rightPanel.disabled {
     visibility: hidden;
-}
-
-.attributeTitle {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 15px 0px 5px 0px;
 }
 
 #modelView label {
@@ -207,6 +169,10 @@ body {
 
 #modelView input {
     width: 80%;
+}
+
+#modelView, #models, #inventory {
+    padding: 0 25px;
 }
 
 .model-selection:hover {
@@ -223,7 +189,7 @@ body {
     width: 80px;
     height: 80px;
     background-color: #04AA6D;
-    font-size: 50px;
+    font-size: 40px;
     font-weight: lighter;
     color: white;
     text-align: center;
@@ -232,12 +198,52 @@ body {
 }
 
 .gizmo-mode {
+    position: fixed;
     float: left;
-    top: 5px;
-    position: relative;
+    bottom: 15px;
     width: 75%;
     text-align: center;
     cursor: pointer;
+}
+
+.gizmo-mode .button {
+    width: 60px;
+    height: 60px;
+    padding: 5px;
+    margin: 0 5px;
+    background-color: #EEEEEE;
+}
+
+.gizmo-mode img {
+    width: 50px;
+    height: auto;
+}
+.attributeTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 15px 0px 5px 0px;
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto auto;
+}
+
+.attributeTitle .button {
+    width: 34px;
+    height: 34px;
+    padding: 2px;
+    margin: 0;
+    background-color: #cccccc;
+    float: left;
+}
+
+.attributeTitle img {
+    width: 30px;
+    height: auto;
+}
+
+.attributeTitle .enabled {
+    background-color: #fafafa;
+    border: 1px solid #9b4dca;
 }
 
 #popup {

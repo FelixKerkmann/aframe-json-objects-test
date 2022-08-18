@@ -11,13 +11,8 @@ socket.on("disconnect", () => {
     location.reload()
 })
 
-socket.on('updateValuesSuccess', (name, keys, oldValues, newValues) => {
-    console.log('Update ' + updateValuesToString(keys, oldValues, newValues) + ' deployed successfully in database.');
-})
-
 socket.on('updateValuesFailed', (name, keys, oldValues, newValues) => {
     console.log('Failed to updating values of ' + name + ':\n' + updateValuesToString(keys, oldValues, newValues) + 'in database.')
-
     document.querySelector(OBJECT_SELECTOR).dispatchEvent(createOnFailedUpdateValuesEvent(name, keys, oldValues, newValues));
 })
 
@@ -46,7 +41,6 @@ socket.on('removeFailed', name => {
 })
 
 function sendUpdateValuesToServer(name, keys, oldValues, newValues){
-    console.log('Send update of values of ' + name + ':\n' + updateValuesToString(keys, oldValues, newValues) + 'to server.')
     const mail = document.getElementById(MAIL).value;
     const showroom = document.getElementById(SHOWROOM).value;
     socket.emit('updateValues', mail, showroom, name, keys, oldValues, newValues);

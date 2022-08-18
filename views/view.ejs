@@ -19,7 +19,7 @@
     <script src="/public/js/objectSelectorController.js"></script>
     <link rel="stylesheet" type="text/css" href="../public/css/milligram.min.css">
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
-    <link rel="icon" type="image/png" href="../public/resources/favicon.png">
+    <link rel="icon" type="image/png" href="../public/resources/icons/favicon.png">
 </head>
 <body>
 
@@ -27,19 +27,12 @@
 <div id="sceneView" class="wide" >
     <a-scene shadow="type: pcfsoft" cursor="rayOrigin: mouse" vr-mode-ui="enterVRButton: #myEnterVRButton">
         <a-assets>
-            <img id="hall" src="../public/resources/skyboxes/hall.jpg">
-            <img id="architecture" src="../public/resources/skyboxes/architecture.jpg">
-            <img id="room-parkett" src="../public/resources/skyboxes/room_parkett.jpg">
-            <img id="room-white-wood" src="../public/resources/skyboxes/room_white_wood.jpg">
-            <img id="track" src="../public/resources/skyboxes/track.jpg">
-            <img id="alaskaSkybox" src="../public/resources/skyboxes/alaska.jpg">
-            <img id="lakeSkybox" src="../public/resources/skyboxes/lake.jpeg">
+            <img id="citySkybox" src="../public/resources/skyboxes/citySkybox.jpg">
             <a-asset-item id="roomModel" src="../public/resources/uploads/rooms/DemoRaumDiffuseOnlyCompressed.glb"></a-asset-item>
             <%- assets %>
         </a-assets>
 
-        <a-sky id="skybox" src="#alaskaSkybox"></a-sky>
-
+        <a-sky id="skybox" src="#citySkybox"></a-sky>
 
         <a-entity id="cameraRig" position="0 1.6 0">
             <a-entity id="player"
@@ -53,7 +46,6 @@
 
         <a-entity id="ambientLight"
                   light="type: ambient; color: #FFFFFF; intensity: 0.6;">
-
         </a-entity>
 
         <a-entity id="pointLight"
@@ -82,13 +74,7 @@
     </a-scene>
 </div>
 
-<!-- TODO: Styling, Visibility Problem with Outer and Inner Elements -->
 <!-- Right panel -->
-<div class="gizmo-mode">
-    <a onclick="changeSelection('translation')">Pos</a>
-    <a onclick="changeSelection('rotation')">Rot</a>
-    <a onclick="changeSelection('scale')">Scale</a>
-</div>
 <div id="rightPanel" class="">
     <div class="navbar">
         <a class="active" id="nav-modelView" onclick="toggleNavbar('nav-modelView')">Selected</a>
@@ -97,7 +83,12 @@
     </div>
     <div id="modelView">
         <p id="objectName" class="attributeTitle"><i>No object selected</i></p>
-        <p class="attributeTitle clickable" onclick="changeSelection('translation')">Position (key t)</p>
+        <p class="attributeTitle clickable">
+            Position (T)
+            <a onclick="changeTransformMode('translation')" class="button button-clear enabled">
+                <img src="../public/resources/icons/GizmoTranslate.png">
+            </a>
+        </p>
         <label for="positionX">X</label>
         <input class="inputNumber" type="number" id="positionX" name="positionX" step="0.05"
                onfocusin="storeOldValue(this.id)"
@@ -117,7 +108,12 @@
                onfocusout="emitOnValueSubmit(this.id)">
         <br>
 
-        <p class="attributeTitle clickable" onclick="changeSelection('rotation')">Rotation (key r)</p>
+        <p class="attributeTitle clickable" onclick="changeTransformMode('rotation')">
+            <span>Rotation (R)</span>
+            <a onclick="changeTransformMode('rotation')" class="button button-clear">
+                <img src="../public/resources/icons/GizmoRotation.png">
+            </a>
+        </p>
         <label for="rotationX">X</label>
         <input class="inputNumber" type="number" id="rotationX" name="rotationX" step="1"
                onfocusin="storeOldValue(this.id)"
@@ -136,7 +132,12 @@
                onchange="emitOnValuesChange(this.id)"
                onfocusout="emitOnValueSubmit(this.id)">
         <br>
-        <p class="attributeTitle clickable" onclick="changeSelection('scale')">Scale (key e)</p>
+        <p class="attributeTitle clickable" onclick="changeTransformMode('scale')">
+            Scale (E)
+            <a onclick="changeTransformMode('scale')" class="button button-clear">
+                <img src="../public/resources/icons/GizmoScale.png">
+            </a>
+        </p>
         <label for="scale">X, Y, Z</label>
         <input class="inputNumber" type="number" id="scale" name="scale" step="0.25"
                onfocusin="storeOldValue(this.id)"
@@ -186,7 +187,19 @@
     </div>
 </div>
 
-<button id="addElementButton" onclick="toggleAddNewObject()">+</button>
+<div class="gizmo-mode">
+    <a onclick="changeTransformMode('translation')" class="button">
+        <img src="../public/resources/icons/GizmoTranslate.png">
+    </a>
+    <a onclick="changeTransformMode('rotation')" class="button">
+        <img src="../public/resources/icons/GizmoRotation.png">
+    </a>
+    <a onclick="changeTransformMode('scale')" class="button">
+        <img src="../public/resources/icons/GizmoScale.png">
+    </a>
+</div>
+
+<button id="addElementButton" onclick="togglePopUp()">+</button>
 
 <div id="popup">
     <div class="popup-content">
@@ -202,7 +215,7 @@
             <input type="text" id="name" name="name" required>
             <br>
             <button type="submit" class="btn btn-accept">Add</button>
-            <button class="btn btn-cancel float-right" onclick="toggleAddNewObject()">Cancel</button>
+            <button class="btn btn-cancel float-right" onclick="togglePopUp()">Cancel</button>
         </form>
     </div>
 </div>
@@ -218,37 +231,6 @@
                 addModelhtmlElement.style.visibility = 'hidden';
             }
         });
-    }
-
-    function toggleNavbar(elem) {
-        let arr = ['nav-modelView', 'nav-inventory', 'nav-models']
-        arr.forEach((o => {
-            if(elem === o) {
-                let selected = document.getElementById(o)
-                selected.className = 'active'
-                selected = document.getElementById(o.substring(4))
-                selected.style.visibility = 'visible'
-                selected.style.height = 'auto'
-
-            } else {
-                let deselected = document.getElementById(o)
-                deselected.className = ''
-                deselected = document.getElementById(o.substring(4))
-                deselected.style.visibility = 'hidden'
-                deselected.style.height = '0px'
-
-            }
-        }))
-    }
-
-    const addModelId = 'popup';
-    function toggleAddNewObject() {
-        const addModelhtmlElement = document.getElementById(addModelId);
-        if(addModelhtmlElement.style.visibility === 'visible'){
-            addModelhtmlElement.style.visibility = 'hidden';
-        }else{
-            addModelhtmlElement.style.visibility = 'visible';
-        }
     }
 
 </script>

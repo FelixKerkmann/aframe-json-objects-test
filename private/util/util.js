@@ -1,4 +1,7 @@
 const fs = require('fs');
+const prompt = require("prompt-sync")({ sigint: true });
+
+exports.DEBUG_FLAG_UPDATE_DB = 'debug-updateDB';
 
 exports.createDirectoryFromEmail = (email) => {
     const dir = './public/resources/uploads/' + email;
@@ -23,4 +26,16 @@ exports.updateValuesToString = (keys, oldValues, newValues) => {
         result += keys[i] + ' from ' + oldValues[i] + ' to ' + newValues[i] + '\n';
     }
     return result;
+}
+
+exports.askToThrowExceptionWhenDebuggingFlagIsSet = (flag, text) => {
+    if(debugFlagIsSet(flag)){
+        if(prompt('Throw ' + text + '?[y|any]') === 'y'){
+            throw '[Test] ' + text;
+        }
+    }
+}
+
+debugFlagIsSet = (flag) => {
+    return  process.argv.find((element) => {return element === flag}) !== undefined;
 }

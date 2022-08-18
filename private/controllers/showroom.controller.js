@@ -1,7 +1,6 @@
 const mongoose = require("mongoose")
 const json2html = require("node-json2html")
 const ejs = require("ejs")
-const prompt = require("prompt-sync")({ sigint: true });
 const util = require("../util/util")
 const showroomSchema = require('../models/showroom')
 const modelTemplate = require("../templates/model.template")
@@ -9,7 +8,6 @@ const inventoryTemplate = require("../templates/inventory.template")
 const showroomTemplate = require("../templates/showroom.template")
 const fs = require("fs");
 
-const DEBUG_FLAG_UPDATE_DB = 'debug-updateDB';
 const FLOAT_COMPARING_DIFFERENCE = 0.0001;
 
 exports.findAllShowrooms = (req, res) => {
@@ -36,7 +34,7 @@ exports.renameShowroomView = (req, res) => {
         if(err) {
             return res.status(404).send('not found')
         }
-        res.render('popup', {
+        res.render('renameShowroom', {
             showroomid : req.params.id,
             oldname : showroom.showroomname
         })
@@ -204,7 +202,7 @@ module.exports.updateModel = async function updateModel(mail, showroom, name, ke
     const Showroom = mongoose.model(mail, showroomSchema);
     let caughtError;
 
-    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'Invalid newValue');
+    util.askToThrowExceptionWhenDebuggingFlagIsSet(util.DEBUG_FLAG_UPDATE_DB, 'Invalid newValue');
 
     for(let i = 0; i < keys.length; ++i){
         if (newValues[i] === null || newValues[i] === undefined) {
@@ -220,7 +218,7 @@ module.exports.updateModel = async function updateModel(mail, showroom, name, ke
         caughtError = 'Failed to get showroom for update on ' + mail + ' with showroomId ' + showroom + 'due:\n' + error;
     });
 
-    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'Fail to get showroom');
+    util.askToThrowExceptionWhenDebuggingFlagIsSet(util.DEBUG_FLAG_UPDATE_DB, 'Fail to get showroom');
 
     if (caughtError) {
         throw caughtError;
@@ -237,7 +235,7 @@ module.exports.updateModel = async function updateModel(mail, showroom, name, ke
         }
     });
 
-    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'Failed to update showroom');
+    util.askToThrowExceptionWhenDebuggingFlagIsSet(util.DEBUG_FLAG_UPDATE_DB, 'Failed to update showroom');
 
     if (caughtError) {
         throw caughtError;
@@ -268,28 +266,15 @@ function findObjectAndUpdateAttributes(objects, name, keys, oldValues, newValues
         }
     });
 
-    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'No object with name');
+    util.askToThrowExceptionWhenDebuggingFlagIsSet(util.DEBUG_FLAG_UPDATE_DB, 'No object with name');
 
     if(!found){
         throw 'There is no object with name "' + name + '"';
     }
 
-    askToThrowExceptionWhenDebuggingFlagIsSet(DEBUG_FLAG_UPDATE_DB, 'Old value is incorrect');
+    util.askToThrowExceptionWhenDebuggingFlagIsSet(util.DEBUG_FLAG_UPDATE_DB, 'Old value is incorrect');
 
     if(caughtError){
         throw caughtError;
     }
 }
-
-function askToThrowExceptionWhenDebuggingFlagIsSet(flag, text){
-    if(debugFlagIsSet(flag)){
-        if(prompt('Throw ' + text + '?[y|any]') === 'y'){
-            throw '[Test] ' + text;
-        }
-    }
-}
-
-function debugFlagIsSet(flag){
-    return  process.argv.find((element) => {return element === flag}) !== undefined;
-}
-

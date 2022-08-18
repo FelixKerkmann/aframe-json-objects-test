@@ -16,48 +16,16 @@
             <div class="grid-container-sr">
                 <%- showrooms %>
             </div>
-            <!--
-            <table class="showrooms-table">
-                <tbody>
-
-                </tbody>
-            </table>
--->
             <p>
-                <button class="" onclick="function toggleCreateForm() {
-                            if(document.getElementById('new-showroom').style.display === 'block') {
-                                document.getElementById('new-showroom').style.display = 'none';
-                            } else {
-                                document.getElementById('new-showroom').style.display = 'block';
-                            }
-                        }
-                        toggleCreateForm()">New Showroom</button>
+                <button class="" onclick="toggleForm('new-showroom')">New Showroom</button>
             </p>
-            <!--
-            <ul class="rooms-ul">
-
-                <li>
-                    <button class="" onclick="function toggleCreateForm() {
-                            if(document.getElementById('new-showroom').style.display === 'block') {
-                                document.getElementById('new-showroom').style.display = 'none';
-                            } else {
-                                document.getElementById('new-showroom').style.display = 'block';
-                            }
-                        }
-                        toggleCreateForm()">New Showroom</button>
-                </li>
-            </ul>
-            -->
             <div class="" id="new-showroom">
                 <form action="/showrooms" class="" method="post" enctype="application/json">
                     <label>Name</label>
                     <input type="text" id="name" name="name" required>
                     <br>
                     <button type="submit" class="btn-accept">Add</button>
-                    <button type="button" class="btn-cancel" onclick="function closeCreateForm() {
-                            document.getElementById('new-showroom').style.display = 'none';
-                        }
-                        closeCreateForm()">Cancel</button>
+                    <button type="button" class="btn-cancel" onclick="closeForm('new-showroom')">Cancel</button>
                 </form>
             </div>
         </div>
@@ -69,14 +37,7 @@
                     <%- inventory %>
                 </div>
                 <p>
-                    <button class="" onclick="function toggleUpdateForm() {
-                        if(document.getElementById('upload-model').style.display === 'block') {
-                            document.getElementById('upload-model').style.display = 'none';
-                        } else {
-                            document.getElementById('upload-model').style.display = 'block';
-                        }
-                    }
-                    toggleUpdateForm()">Upload 3D-Modell</button>
+                    <button class="" onclick="toggleForm('upload-model')">Upload 3D-Model</button>
                 </p>
                 <div id="upload-model">
                     <form action="/upload" class="" method="post" enctype="multipart/form-data">
@@ -85,10 +46,7 @@
                         <br>
                         <br>
                         <button type="submit" class="btn-accept">Upload</button>
-                        <button type="button" class="btn-cancel" onclick="function closeUpdateForm() {
-                            document.getElementById('upload-model').style.display = 'none';
-                        }
-                        closeUpdateForm()">Cancel</button>
+                        <button type="button" class="btn-cancel" onclick="closeForm('upload-model')">Cancel</button>
                     </form>
                 </div>
 

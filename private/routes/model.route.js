@@ -35,10 +35,6 @@ router.route('/register')
 router.route('/logout')
     .get(userController.logout)
 
-// used for debug
-//router.route('/users')
-//    .get(ifNotLoggedIn, userController.findAll)
-
 router.route('/showrooms')
     .get(ifNotLoggedIn, showroomController.findAllShowrooms)
     .post(ifNotLoggedIn, showroomController.newShowroom)
