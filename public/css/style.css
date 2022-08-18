@@ -60,45 +60,50 @@ body {
     padding: 15px !important;
 }
 
-.grid-container-sr {
+/* Gridlayout for showrooms*/
+.showroomsContainer {
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    margin: 10px;
+    grid-template-columns: auto max-content max-content max-content;
+    align-items: center;
+    gap: 15px 10px;
+    margin: 0px 0px 25px 0px;
 }
 
-.grid-container-sr form, .grid-container-sr button, .grid-container-sr a {
-    margin: 0 ;
-}
-
-.grid-item-sr {
-    padding: 10px 0;
-    text-align: center;
-    border-bottom: 2px solid rgba(175, 175, 175, 0.8);
-}
-
-.grid-text-sr, .grid-item-i {
+.showroomsName {;
     text-align: left;
+    align-items: center;
+    overflow: auto;
+    width: auto;
 }
 
-.grid-text-sr p, .grid-item-i p {
+.showroomsContainer form, .button, a{
     margin: 0;
 }
 
-.grid-container-i {
-    display: grid;
-    grid-template-columns: auto auto;
-    margin: 10px;
+.showroomsSpacer{
+    grid-column-start: 1;
+    grid-column-end: 5;
+    background-color: #cccccc;
+    height: 2px;
 }
 
-.grid-item-i {
-    padding: 10px 2px;
-    text-align: center;
+/* Gridlayout for inventory */
+.inventoryContainer {
+    display: grid;
+    grid-template-columns: auto max-content;
     align-items: center;
-    display: grid;
+    gap: 10px 10px;
+    margin: 0px 0px 25px 0px;
 }
 
-.grid-container-i form, .grid-container-i button, .grid-container-i a {
-    margin: 0 ;
+.inventoryName {;
+    text-align: left;
+    align-items: center;
+    overflow: auto;
+}
+
+.inventoryContainer form, button{
+    margin: 0;
 }
 
 .sname {

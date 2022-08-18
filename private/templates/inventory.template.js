@@ -1,18 +1,13 @@
 exports.listModels = [
     {
-        '<>': 'div', 'class' : 'grid-item-i grid-text-i', 'html': [
+        '<>': 'div', 'class' : 'inventoryName', 'html': [
             {
-                '<>' : 'p', 'html' : [
-                    {
-                        '<>': 'span',
-                        'text': '${filename}'
-                    },
-                ]
+                'text': '${filename}'
             },
         ]
     },
     {
-        '<>': 'div', 'class': 'grid-item-i grid-button-i', 'html': [
+        '<>': 'div', 'html': [
             {
                 '<>': 'form',
                 'action': '/deletemodel/${filename}',

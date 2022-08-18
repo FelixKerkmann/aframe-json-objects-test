@@ -1,19 +1,15 @@
 exports.showroomGrid = [
     {
-        '<>': 'div', 'class': 'sname grid-item-sr grid-text-sr', 'html': [
+        '<>': 'div', 'class': 'showroomsName', 'html': [
             {
-                '<>' : 'p', 'html' : [
-                    {
-                        '<>': 'a',
-                        'href': '/showroom/${_id}',
-                        'text': '${showroomname}'
-                    },
-                ]
+                '<>': 'a',
+                'href': '/showroom/${_id}',
+                'text': '${showroomname}'
             },
         ],
     },
     {
-        '<>': 'div', 'class': 'grid-item-sr grid-button-sr', 'html': [
+        '<>': 'div', 'html': [
             {
                 '<>': 'a',
                 'class': 'button button-outline',
@@ -23,7 +19,7 @@ exports.showroomGrid = [
         ],
     },
     {
-        '<>': 'div', 'class' : 'grid-item-sr grid-button-sr', 'html': [
+        '<>': 'div', 'html': [
             {
                 '<>': 'a',
                 'class': 'button button-outline',
@@ -33,7 +29,7 @@ exports.showroomGrid = [
         ]
     },
     {
-        '<>': 'div', 'class': 'grid-item-sr grid-button-sr', 'html': [
+        '<>': 'div', 'html': [
             {
                 '<>': 'form',
                 'action': '/delete/${_id}',
@@ -51,5 +47,8 @@ exports.showroomGrid = [
                 ]
             }
         ],
+    },
+    {
+        '<>': 'div', 'class': 'showroomsSpacer', 'html': []
     }
 ]
