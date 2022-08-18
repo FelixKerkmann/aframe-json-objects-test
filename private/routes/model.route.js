@@ -22,7 +22,7 @@ const ifLoggedIn = (req, res, next) => {
 }
 
 router.route('/')
-    .get(ifNotLoggedIn, indexController.redirect)
+    .get(ifNotLoggedIn, indexController.redirectToShowrooms)
 
 router.route('/login')
     .get(ifLoggedIn, userController.login)
@@ -35,8 +35,9 @@ router.route('/register')
 router.route('/logout')
     .get(userController.logout)
 
-router.route('/users')
-    .get(ifNotLoggedIn, userController.findAll)
+// used for debug
+//router.route('/users')
+//    .get(ifNotLoggedIn, userController.findAll)
 
 router.route('/showrooms')
     .get(ifNotLoggedIn, showroomController.findAllShowrooms)
@@ -51,8 +52,7 @@ router.route('/deletemodel/:filename')
 router.route('/rename/:id')
     .get(ifNotLoggedIn, showroomController.renameShowroomView)
 
-router.route('/showroom/:id/edit')
-    .get(ifNotLoggedIn, showroomController.showroomView)
+router.route('/object/:id')
     .post(ifNotLoggedIn, showroomController.addObject)
 
 router.route('/vr/:id')

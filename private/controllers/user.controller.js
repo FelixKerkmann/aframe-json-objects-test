@@ -35,7 +35,6 @@ exports.register = (req, res) => {
     })
 }
 
-
 exports.createUser =(req, res) => {
     User.exists({ email : req.body.email }, (err, result) => {
         if (err) {
@@ -82,13 +81,4 @@ exports.logout = (req, res) => {
 
     })
     res.redirect('/login')
-}
-
-exports.findAll = (req, res) => {
-    User.find((err, users) => {
-      if(err) {
-          return res.status(500).send('database error')
-      }
-      res.status(200).json(users)
-    })
 }

@@ -12,25 +12,6 @@ const fs = require("fs");
 const DEBUG_FLAG_UPDATE_DB = 'debug-updateDB';
 const FLOAT_COMPARING_DIFFERENCE = 0.0001;
 
-//REST Functions
-// response edit-view of a showroom
-exports.showroomView = (req, res) => {
-    const Showroom = mongoose.model(req.session.email, showroomSchema)
-    Showroom.findById(req.params.id, (err, showroom) => {
-        if(err) {
-            return res.status(404).send('not found')
-        }
-        const files = util.getFilesByEmail(req.session.email)
-        const modelsHtml = json2html.render(showroom.objects, modelTemplate.listModelTemplate)
-        const selectionHtml = json2html.render(files, inventoryTemplate.selection)
-        res.render('models', {
-            models: ejs.render(modelsHtml),
-            selection: ejs.render(selectionHtml),
-            id : req.params.id
-        })
-    })
-}
-
 exports.findAllShowrooms = (req, res) => {
     const Showroom = mongoose.model(req.session.email, showroomSchema);
     Showroom.find((err, showrooms) => {

@@ -31,26 +31,4 @@ exports.listModels = [
     }
 ]
 
-    /*{
-    '<>' : 'div', 'html' : [
-        {
-            '<>' : 'span', 'text' : "${filename}"
-        },
-        {
-            '<>': 'form',
-            'action': '/deletemodel/${filename}',
-            'method': 'post',
-            'enctype': 'application/json',
-            'html': [
-                {
-                    '<>': 'button',
-                    'type': 'submit',
-                    'text': 'delete',
-                    'class': 'btn-cancel'
-                }
-            ]
-        }
-    ]
-}*/
-
 exports.selection = {"<>":"option","value":"${filename}","html":"${filename}"}
