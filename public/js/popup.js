@@ -6,6 +6,7 @@ function togglePopUp() {
     }
 }
 
+
 function toggleForm(id) {
     if(document.getElementById(id).style.display === 'block') {
         document.getElementById(id).style.display = 'none';
