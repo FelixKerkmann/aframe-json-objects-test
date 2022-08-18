@@ -161,16 +161,6 @@ body {
     visibility: hidden;
 }
 
-#modelView label {
-    display: inline;
-    width: 20%;
-    padding-right: 10px;
-}
-
-#modelView input {
-    width: 80%;
-}
-
 #modelView, #models, #inventory {
     padding: 0 25px;
 }
@@ -178,8 +168,26 @@ body {
 .model-selection:hover {
     cursor: pointer;
 }
-.inputNumber {
-    width: 64px;
+
+/* Right panel, modelView attributes and inputs */
+.objectAttributeContainer {
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: 10px;
+    margin: 15px 0px;
+    padding: 0px;
+    align-items: center;
+}
+
+.objectAttributeContainer label {
+    margin: 0px;
+    vertical-align: center;
+    height: max-content;
+    text-align: left;
+}
+
+.objectAttributeContainer input {
+    margin: 0px;
 }
 
 #addElementButton{
@@ -197,6 +205,7 @@ body {
     border: 0 solid black;
 }
 
+/* Buttons for gizmo mode change*/
 .gizmo-mode {
     position: fixed;
     float: left;
@@ -211,7 +220,13 @@ body {
     height: 60px;
     padding: 5px;
     margin: 0 5px;
-    background-color: #EEEEEE;
+    background-color: #cccccc;
+    border-color: #cccccc;
+}
+
+.gizmo-mode .enabled {
+    background-color: #fafafa;
+    border-color: #9b4dca;
 }
 
 .gizmo-mode img {
@@ -224,7 +239,7 @@ body {
     margin: 15px 0px 5px 0px;
     display: grid;
     align-items: center;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 40px;
 }
 
 .attributeTitle .button {

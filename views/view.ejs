@@ -3,8 +3,9 @@
 <head>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="../public/js/backsideFixing.js"></script>
+    <script src="../public/js/popup.js"></script>
     <script src="../public/components/input-listen.js"></script>
-    <script src="/public/components/selectable.js"></script>
+    <script src="../public/components/selectable.js"></script>
     <script type="importmap">
       {
       "imports": {
@@ -17,7 +18,6 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/public/js/showroom-client.js"></script>
     <script src="/public/js/objectSelectorController.js"></script>
-    <script src="/public/js/popup.js"></script>
     <link rel="stylesheet" type="text/css" href="../public/css/milligram.min.css">
     <link rel="stylesheet" type="text/css" href="../public/css/style.css">
     <link rel="icon" type="image/png" href="../public/resources/icons/favicon.png">
@@ -84,67 +84,102 @@
     </div>
     <div id="modelView">
         <p id="objectName" class="attributeTitle"><i>No object selected</i></p>
-        <p class="attributeTitle clickable">
+        <p class="attributeTitle">
             Position (T)
-            <a onclick="changeTransformMode('translation')" class="button button-clear enabled">
+            <a id="buttonGizmoTitleTranslation" onclick="changeTransformMode('translation')" class="button button-clear enabled">
                 <img src="../public/resources/icons/GizmoTranslate.png">
             </a>
         </p>
-        <label for="positionX">X</label>
-        <input class="inputNumber" type="number" id="positionX" name="positionX" step="0.05"
-               onfocusin="storeOldValue(this.id)"
-               onchange="emitOnValuesChange(this.id)"
-               onfocusout="emitOnValueSubmit(this.id)">
-        <br>
-        <label for="positionY">Y</label>
-        <input class="inputNumber" type="number" id="positionY" name="positionY" step="0.05"
-               onfocusin="storeOldValue(this.id)"
-               onchange="emitOnValuesChange(this.id)"
-               onfocusout="emitOnValueSubmit(this.id)">
-        <br>
-        <label for="positionZ">Z</label>
-        <input class="inputNumber" type="number" id="positionZ" name="positionZ" step="0.05"
-               onfocusin="storeOldValue(this.id)"
-               onchange="emitOnValuesChange(this.id)"
-               onfocusout="emitOnValueSubmit(this.id)">
-        <br>
+        <div class="objectAttributeContainer">
+            <label for="positionX">X</label>
+            <input type="number"
+                   id="positionX"
+                   name="positionX"
+                   step="0.05"
+                   onfocusin="storeOldValue(this.id)"
+                   onchange="emitOnValuesChange(this.id)"
+                   onfocusout="emitOnValueSubmit(this.id)">
+        </div>
 
-        <p class="attributeTitle clickable" onclick="changeTransformMode('rotation')">
-            <span>Rotation (R)</span>
-            <a onclick="changeTransformMode('rotation')" class="button button-clear">
+        <div class="objectAttributeContainer">
+            <label for="positionY">Y</label>
+            <input type="number"
+                   id="positionY"
+                   name="positionY"
+                   step="0.05"
+                   onfocusin="storeOldValue(this.id)"
+                   onchange="emitOnValuesChange(this.id)"
+                   onfocusout="emitOnValueSubmit(this.id)">
+        </div>
+
+        <div class="objectAttributeContainer">
+            <label for="positionZ">Z</label>
+            <input type="number"
+                   id="positionZ"
+                   name="positionZ"
+                   step="0.05"
+                   onfocusin="storeOldValue(this.id)"
+                   onchange="emitOnValuesChange(this.id)"
+                   onfocusout="emitOnValueSubmit(this.id)">
+        </div>
+
+        <p class="attributeTitle">
+            Rotation (R)
+            <a id="buttonGizmoTitleRotation" onclick="changeTransformMode('rotation')" class="button button-clear">
                 <img src="../public/resources/icons/GizmoRotation.png">
             </a>
         </p>
-        <label for="rotationX">X</label>
-        <input class="inputNumber" type="number" id="rotationX" name="rotationX" step="1"
-               onfocusin="storeOldValue(this.id)"
-               onchange="emitOnValuesChange(this.id)"
-               onfocusout="emitOnValueSubmit(this.id)">
-        <br>
-        <label for="rotationY">Y</label>
-        <input class="inputNumber" type="number" id="rotationY" name="rotationY" step="1"
-               onfocusin="storeOldValue(this.id)"
-               onchange="emitOnValuesChange(this.id)"
-               onfocusout="emitOnValueSubmit(this.id)">
-        <br>
-        <label for="rotationZ">Z</label>
-        <input class="inputNumber" type="number" id="rotationZ" name="rotationZ" step="1"
-               onfocusin="storeOldValue(this.id)"
-               onchange="emitOnValuesChange(this.id)"
-               onfocusout="emitOnValueSubmit(this.id)">
-        <br>
-        <p class="attributeTitle clickable" onclick="changeTransformMode('scale')">
+        <div class="objectAttributeContainer">
+            <label for="rotationX">X</label>
+            <input type="number"
+                   id="rotationX"
+                   name="rotationX"
+                   step="1"
+                   onfocusin="storeOldValue(this.id)"
+                   onchange="emitOnValuesChange(this.id)"
+                   onfocusout="emitOnValueSubmit(this.id)">
+        </div>
+
+        <div class="objectAttributeContainer">
+            <label for="rotationY">Y</label>
+            <input ctype="number"
+                   id="rotationY"
+                   name="rotationY"
+                   step="1"
+                   onfocusin="storeOldValue(this.id)"
+                   onchange="emitOnValuesChange(this.id)"
+                   onfocusout="emitOnValueSubmit(this.id)">
+        </div>
+
+        <div class="objectAttributeContainer">
+            <label for="rotationZ">Z</label>
+            <input type="number"
+                   id="rotationZ"
+                   name="rotationZ"
+                   step="1"
+                   onfocusin="storeOldValue(this.id)"
+                   onchange="emitOnValuesChange(this.id)"
+                   onfocusout="emitOnValueSubmit(this.id)">
+        </div>
+
+        <p class="attributeTitle" >
             Scale (E)
-            <a onclick="changeTransformMode('scale')" class="button button-clear">
+            <a id="buttonGizmoTitleScale" onclick="changeTransformMode('scale')" class="button button-clear">
                 <img src="../public/resources/icons/GizmoScale.png">
             </a>
         </p>
-        <label for="scale">X, Y, Z</label>
-        <input class="inputNumber" type="number" id="scale" name="scale" step="0.25"
-               onfocusin="storeOldValue(this.id)"
-               onchange="emitOnValuesChange(this.id)"
-               onfocusout="emitOnValueSubmit(this.id)">
-        <br>
+
+        <div class="objectAttributeContainer">
+            <label for="scale">X, Y, Z</label>
+            <input type="number"
+                   id="scale"
+                   name="scale"
+                   step="0.25"
+                   onfocusin="storeOldValue(this.id)"
+                   onchange="emitOnValuesChange(this.id)"
+                   onfocusout="emitOnValueSubmit(this.id)">
+        </div>
+
         <input type="hidden" id="useremail" name="useremail" value="<%- useremail %>"/>
         <input type="hidden" id="showroomid" name="showroomid" value="<%- showroomid %>"/>
         </br>
@@ -157,7 +192,14 @@
     <div id="inventory" style="visibility: hidden; height: 0px;">
             <h3>Inventory</h3>
             <%- inventory %>
-            <button class="" onclick="toggleForm('upload-model')">Upload 3D-Modell</button>
+            <button class="" onclick="function toggleUpdateForm() {
+                        if(document.getElementById('upload-model').style.display === 'block') {
+                            document.getElementById('upload-model').style.display = 'none';
+                        } else {
+                            document.getElementById('upload-model').style.display = 'block';
+                        }
+                    }
+                    toggleUpdateForm()">Upload 3D-Modell</button>
             <div id="upload-model">
                 <form action="/upload" class="" method="post" enctype="multipart/form-data">
                     <label>.glb - file</label>
@@ -165,7 +207,10 @@
                     <br>
                     <br>
                     <button type="submit" class="btn-accept">Upload</button>
-                    <button type="button" class="btn-cancel" onclick="closeForm('upload-model')">Cancel</button>
+                    <button type="button" class="btn-cancel" onclick="function closeUpdateForm() {
+                            document.getElementById('upload-model').style.display = 'none';
+                        }
+                        closeUpdateForm()">Cancel</button>
                 </form>
             </div>
     </div>
@@ -179,13 +224,19 @@
 </div>
 
 <div class="gizmo-mode">
-    <a onclick="changeTransformMode('translation')" class="button">
+    <a id="buttonGizmoViewTranslation"
+       class="button enabled"
+       onclick="changeTransformMode('translation')">
         <img src="../public/resources/icons/GizmoTranslate.png">
     </a>
-    <a onclick="changeTransformMode('rotation')" class="button">
+    <a id="buttonGizmoViewRotation"
+       class="button"
+       onclick="changeTransformMode('rotation')" >
         <img src="../public/resources/icons/GizmoRotation.png">
     </a>
-    <a onclick="changeTransformMode('scale')" class="button">
+    <a id="buttonGizmoViewScale"
+       class="button"
+       onclick="changeTransformMode('scale')">
         <img src="../public/resources/icons/GizmoScale.png">
     </a>
 </div>

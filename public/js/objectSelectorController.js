@@ -183,15 +183,31 @@ function onChangeManipulationModeHandler(event){
     transformControls.showX = true;
     transformControls.showY = true;
 
+    // Buttons on the right panel
+    document.getElementById("buttonGizmoTitleTranslation").classList.remove("enabled");
+    document.getElementById("buttonGizmoTitleRotation").classList.remove("enabled");
+    document.getElementById("buttonGizmoTitleScale").classList.remove("enabled");
+
+    // Buttons on bottom of the main view
+    document.getElementById("buttonGizmoViewTranslation").classList.remove("enabled");
+    document.getElementById("buttonGizmoViewRotation").classList.remove("enabled");
+    document.getElementById("buttonGizmoViewScale").classList.remove("enabled");
+
     switch(mode){
         case MANIPULATION_TRANSLATION:
             transformControls.setMode('translate');
+            document.getElementById("buttonGizmoTitleTranslation").classList.add("enabled");
+            document.getElementById("buttonGizmoViewTranslation").classList.add("enabled");
             break;
         case MANIPULATION_ROTATION:
             transformControls.setMode('rotate');
+            document.getElementById("buttonGizmoTitleRotation").classList.add("enabled");
+            document.getElementById("buttonGizmoViewRotation").classList.add("enabled");
             break;
         case MANIPULATION_SCALE:
             transformControls.setMode('scale');
+            document.getElementById("buttonGizmoTitleScale").classList.add("enabled");
+            document.getElementById("buttonGizmoViewScale").classList.add("enabled");
             transformControls.showX = false;
             transformControls.showY = false;
             break;
