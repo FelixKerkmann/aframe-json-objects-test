@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const showroomSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
     showroomname: String,
-    room: { type: Number, default: ''},
+    room: { type: String, default: ''},
     light: [[String]],
     objects: [{
         entity: { type: String, default: 'a-entity'},
