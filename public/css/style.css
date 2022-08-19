@@ -28,8 +28,9 @@ body {
 .navbar a {
     float: left;
     color: #3A3A3A;
-    border-color: #d1d1d1;
+    border-color: #f1f1f1;
     border-style: hidden solid hidden solid;
+    border-width: 1px;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -200,6 +201,8 @@ body {
 
 #modelView, #models, #inventory {
     padding: 0 25px;
+    max-height: 65%;
+    overflow: auto;
 }
 
 .model-selection:hover {
@@ -336,7 +339,20 @@ body {
 }
 
 .popup-content {
-    position: absolute;
+    position: fixed;
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFFFFF;
+    border: #606c76 1px solid;
+    border-radius: 20px;
+    padding: 15px;
+}
+
+.popup-absolute {
+   position: absolute;
     width: 500px;
     top: 50%;
     left: 50%;

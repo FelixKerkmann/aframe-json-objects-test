@@ -1,4 +1,4 @@
-exports.listModelsOld = [
+exports.listModelsEdit = [
     {
         '<>': 'div', 'class' : 'inventoryName', 'html': [
             {
@@ -7,7 +7,9 @@ exports.listModelsOld = [
         ]
     },
     {
-        '<>': 'div', 'html': [
+        '<>': 'div',
+        'class' : 'listen-delete',
+        'html': [
             {
                 '<>': 'form',
                 'action': '/deletemodel/${filename}',
@@ -15,22 +17,45 @@ exports.listModelsOld = [
                 'enctype': 'application/json',
                 'html': [
                     {
-                        '<>': 'button',
-                        'type': 'submit',
+                        '<>' : 'div',
+                        'class' : 'id-elem',
+                        'id' : '${filename}',
+                        'style' : 'visibility: hidden',
+                        'html' : [
+                            {
+                                '<>' : 'div',
+                                'class' : 'popup-center popup-absolute',
+                                'html' : [
+                                    {
+                                        '<>' : 'p',
+                                        'html' : 'Are you sure you want to delete <b>${filename}</b>?'
+                                    },
+                                    {
+                                        '<>': 'a',
+                                        'text': 'cancel',
+                                        'class': 'button button-delete cancel-delete btn-cancel'
+                                    },
+                                    {
+                                        '<>': 'button',
+                                        'type': 'submit',
+                                        'text': 'delete',
+                                        'class': 'button-delete btn-accept float-right'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        '<>': 'a',
                         'text': 'delete',
-                        'class': 'button-outline button-delete'
+                        'class': 'button button-outline button-delete safe-delete'
                     }
+
                 ]
             }
         ],
     }
 ]
-
-exports.selection = {
-    "<>":"option",
-    "value":"${filename}",
-    "html":"${filename}"
-}
 
 exports.listModels = [
     {
@@ -90,3 +115,9 @@ exports.listModels = [
         ],
     }
 ]
+
+exports.selection = {
+    "<>":"option",
+    "value":"${filename}",
+    "html":"${filename}"
+}
