@@ -1,8 +1,8 @@
-function togglePopUp() {
-    if(document.getElementById("popup").style.visibility === 'hidden')
-        document.getElementById("popup").style.visibility = 'visible'
+function togglePopUp(id) {
+    if(document.getElementById(id).style.visibility === 'visible')
+        document.getElementById(id).style.visibility = 'hidden'
     else {
-        document.getElementById("popup").style.visibility = 'hidden'
+        document.getElementById(id).style.visibility = 'visible'
     }
 }
 
@@ -39,3 +39,34 @@ function toggleNavbar(elem) {
     }))
 }
 
+function setDeleteListener() {
+    const cancelDelete = document.querySelectorAll('.listen-delete')
+    cancelDelete.forEach(elem => {
+        console.log(elem)
+        let id = elem.querySelector('.id-elem').id
+        let safeDelete = elem.querySelector('.safe-delete')
+        let cancelDelete = elem.querySelector('.cancel-delete')
+        console.log(elem)
+        safeDelete.addEventListener('click', () => {
+            toggleDelete(id)
+        })
+        cancelDelete.addEventListener('click', () => {
+            toggleDelete(id)
+        })
+    })
+}
+
+function centeringDeletePopups() {
+    const popup = document.querySelectorAll('.popup-center')
+    popup.forEach(elem => {
+        elem.style.left = '-95%'
+    })
+}
+
+function toggleDelete(elem) {
+    if(document.getElementById(elem).style.visibility === 'visible') {
+        document.getElementById(elem).style.visibility = 'hidden'
+    } else {
+        document.getElementById(elem).style.visibility = 'visible'
+    }
+}

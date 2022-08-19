@@ -82,7 +82,7 @@ body {
     margin: 0;
 }
 
-#removeObjectFromScene{
+.removeObjectFromScene{
     grid-column-start: 1;
     grid-column-end: 3;
 }
@@ -307,6 +307,28 @@ body {
     z-index: 2
 }
 
+#popup-delete {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.6);
+    visibility: hidden;
+    z-index: 2
+}
+
+.id-elem {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.6);
+    visibility: hidden;
+    z-index: 2
+}
+
 .popup-content {
     position: absolute;
     width: 500px;
@@ -362,4 +384,8 @@ body {
 
 .bottom-menu {
     text-align: center;
+}
+
+#test {
+    visibility: hidden;
 }

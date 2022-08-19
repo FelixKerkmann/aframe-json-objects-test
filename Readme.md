@@ -28,3 +28,7 @@ Application runs local on [127.0.0.1:8888](http://127.0.0.1:8888)
 #### Connect own MongoDB
 
 Edit the Variables in the [.env](.env) file to your DB and check in the [db.config.js](db.config.js) the Connection String
+
+### Documentation
+
+See documentation [here](documents/Readme.md) 

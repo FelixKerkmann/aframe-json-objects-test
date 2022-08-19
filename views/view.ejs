@@ -75,7 +75,7 @@
     </a-scene>
 
     <div id="bottomMenu">
-        <button id="addElementButton" onclick="togglePopUp()">Insert new object</button>
+        <button id="addElementButton" onclick="togglePopUp('popup')">Insert new object</button>
         <div class="gizmo-mode">
             <a id="buttonGizmoViewTranslation"
                class="button enabled"
@@ -209,7 +209,7 @@
         <input type="hidden" id="showroomid" name="showroomid" value="<%- showroomid %>"/>
         </br>
         <div class="objectAttributeContainer">
-            <button id="removeObjectFromScene" class="button-outline button-delete" type="submit" onclick="emitRemoveObject()">Remove Object</button>
+            <button class="button-outline button-delete removeObjectFromScene" type="submit" onclick="togglePopUp('popup-delete')">Remove Object</button>
         </div>
     </div>
     <div id="models" style="visibility: hidden; height: 0px;">
@@ -265,9 +265,16 @@
             <br>
             <input type="text" id="name" name="name" required>
             <br>
-            <button class="btn btn-cancel float-left" onclick="togglePopUp()">Cancel</button>
+            <button class="btn btn-cancel float-left" onclick="togglePopUp('popup')">Cancel</button>
             <button class="btn btn-accept float-right" type="submit">Add</button>
         </form>
+    </div>
+</div>
+<div id="popup-delete">
+    <div class="popup-content">
+        <p> Are you sure you want to remove the selected object </p>
+        <a class="button button-delete cancel-delete btn-cancel" onclick="togglePopUp('popup-delete')">cancel</a>
+        <button class="btn-accept button-delete float-right" type="submit" onclick="emitRemoveObject()">Remove</button>
     </div>
 </div>
 <script>
@@ -275,6 +282,8 @@
         initialiseObjectSelection();
         setAllBackfaces();
         setEventListenerOnModelList();
+        setDeleteListener()
+        centeringDeletePopups()
 
         window.addEventListener("keyup", function (event) {
             if (event.key === DESELECT_KEY) {

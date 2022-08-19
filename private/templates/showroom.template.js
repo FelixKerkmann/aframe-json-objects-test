@@ -29,7 +29,9 @@ exports.showroomGrid = [
         ]
     },
     {
-        '<>': 'div', 'html': [
+        '<>': 'div',
+        'class' : 'listen-delete',
+        'html': [
             {
                 '<>': 'form',
                 'action': '/delete/${_id}',
@@ -37,13 +39,46 @@ exports.showroomGrid = [
                 'enctype': 'application/json',
                 'html': [
                     {
+                        '<>' : 'div',
+                        'class' : 'id-elem',
+                        'id' : '${_id}',
+                        'style' : 'visibility: hidden',
+                        'html' : [
+                            {
+                                '<>': 'div',
+                                'class': 'popup-content',
+                                'html': [
+                                    {
+                                        '<>' : 'p',
+                                        'html' : 'Are you sure you want to delete <b>${showroomname}</b>?'
+                                    },
+                                    {
+                                        '<>': 'a',
+                                        'text': 'cancel',
+                                        'class': 'button button-delete cancel-delete btn-cancel'
+                                    },
+                                    {
+                                        '<>': 'button',
+                                        'type': 'submit',
+                                        'text': 'delete',
+                                        'class': 'button-delete btn-accept float-right'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         '<>': 'input',
                         'type': 'hidden',
                         'name': 'id',
                         'value': '${_id}',
                         'style': 'visibility: hidden;'
                     },
-                    {'<>': 'button', 'type': 'submit', 'text': 'delete', 'class': 'button-outline button-delete'}
+                    {
+                        '<>': 'a',
+                        'text': 'delete',
+                        'class': 'button button-outline button-delete safe-delete'
+                    }
                 ]
             }
         ],
