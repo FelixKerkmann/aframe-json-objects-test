@@ -122,7 +122,7 @@ exports.showScene = (req, res) => {
         const modelListHtml = json2html.render(result, modelTemplate.modelNameList)
         const files = util.getFilesByEmail(req.session.email)
         const selectionHtml = json2html.render(files, inventoryTemplate.selection)
-        const inventoryHtml = json2html.render(files, inventoryTemplate.listModels)
+        const inventoryHtml = json2html.render(files, inventoryTemplate.listModelsEdit)
         res.render('view', {
             assets : ejs.render(assetHtml),
             selection: ejs.render(selectionHtml),
