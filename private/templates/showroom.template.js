@@ -43,7 +43,7 @@ exports.showroomGrid = [
                         'value': '${_id}',
                         'style': 'visibility: hidden;'
                     },
-                    {'<>': 'button', 'type': 'submit', 'text': 'delete', 'class': 'btn-cancel'}
+                    {'<>': 'button', 'type': 'submit', 'text': 'delete', 'class': 'button-outline button-delete'}
                 ]
             }
         ],

@@ -18,7 +18,7 @@ exports.listModels = [
                         '<>': 'button',
                         'type': 'submit',
                         'text': 'delete',
-                        'class': 'btn-cancel'
+                        'class': 'button-outline button-delete'
                     }
                 ]
             }
