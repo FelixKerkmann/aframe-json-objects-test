@@ -199,17 +199,7 @@ body {
     visibility: hidden;
 }
 
-#modelView{
-    padding: 0 25px;
-}
-
-#models {
-    padding: 0 25px;
-    max-height: 65%;
-    overflow: auto;
-}
-
-#inventory {
+#modelView, #models, #inventory {
     padding: 0 25px;
     max-height: 65%;
     overflow: auto;
