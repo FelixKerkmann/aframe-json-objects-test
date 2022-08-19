@@ -42,11 +42,9 @@ function toggleNavbar(elem) {
 function setDeleteListener() {
     const cancelDelete = document.querySelectorAll('.listen-delete')
     cancelDelete.forEach(elem => {
-        console.log(elem)
         let id = elem.querySelector('.id-elem').id
         let safeDelete = elem.querySelector('.safe-delete')
         let cancelDelete = elem.querySelector('.cancel-delete')
-        console.log(elem)
         safeDelete.addEventListener('click', () => {
             toggleDelete(id)
         })

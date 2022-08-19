@@ -2,6 +2,8 @@
 <html>
 <head>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
     <script src="../public/js/backsideFixing.js"></script>
     <script src="../public/components/input-listen.js"></script>
     <link rel="icon" type="image/png" href="../public/resources/icons/favicon.png">
@@ -32,7 +34,11 @@
             </a-entity>
             <a-entity id="ctlL"
                       teleport-controls="cameraRig: #cameraRig; teleportOrigin: #player; startEvents: teleportstart; endEvents: teleportend"
+                      raycaster="objects: .collidable; far:1.2;" laser-controls="hand: left"
+                      vive-controls="hand: left"
                       oculus-touch-controls="hand: left"
+                      microsoft-motion-controls="hand: left"
+                      daydream-controls="left" gearvr-controls="left"
                       input-listen>
                 <a-text value="X: Teleport"
                         position="0 0.08 0"
@@ -46,7 +52,11 @@
             </a-entity>
             <a-entity id="ctlR"
                       teleport-controls="cameraRig: #cameraRig; teleportOrigin: #player; startEvents: teleportstart; endEvents: teleportend"
+                      raycaster="objects: .collidable; far:1.2;" laser-controls="hand: right"
+                      vive-controls="hand: right"
+                      microsoft-motion-controls="hand: right"
                       oculus-touch-controls="hand: right"
+                      daydream-controls="right" gearvr-controls="right"
                       input-listen>
                 <a-text value="A: Teleport"
                         position="0 0.08 0"
