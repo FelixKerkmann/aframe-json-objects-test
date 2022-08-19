@@ -1,8 +1,8 @@
-#Architektur
+# Architektur
 
-##Server
+## Server
 
-###Konfigurationsdateien
+### Konfigurationsdateien
 - [package.json](package.json): Applikations Spezifikationen
 - [.env](.env): Environment Variablen (Datenbank)
 - [.cpanel.yml](.cpanel.yml): Deployment file für den host von innology.ch
@@ -11,7 +11,7 @@
   - definieren der Applikationsstruktur, Bodyparser, Express-Session, öffentliche Ordner
   - öffnen des Websockets auf der Serverseite
 
-###private
+### private
 - **configs**: Serverspezifische Konfigurationsdateien
 - **controller**: 
   - Logik der Komponenten User und Showroom
@@ -23,13 +23,13 @@
 - **util**: nützliche sonstige Funktionen z.B. Filesystemcalls
 
 
-###views:
+### views:
 - alle unterschiedlichen ejs-Templates
 - showrooms: Startseite
 - view: Konfigurator
 
-##Client
-###public
+## Client
+### public
 - **components**: A-Frame Komponenten
 - **css**: CSS Stylesheets
 - **js**:
@@ -38,7 +38,7 @@
   - **backsideFixing**: Schattenkorrekturen für alle 3D-Modelle
   - **popup**: sonstige JavaScript Funktionen (Hauptsächlich Popups) auf Clientseite
 
-####resources:
+#### resources:
 - icons
 - **skyboxes**: 360° Bilder für die Umgebung ausserhalb des Showrooms
 - **uploads**: 
