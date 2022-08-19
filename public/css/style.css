@@ -339,7 +339,7 @@ body {
 }
 
 .popup-content {
-    position: absolute;
+    position: fixed;
     width: 500px;
     top: 50%;
     left: 50%;
@@ -349,6 +349,10 @@ body {
     border: #606c76 1px solid;
     border-radius: 20px;
     padding: 15px;
+}
+
+.popup-absolute {
+   position: absolute;
 }
 
 .enter-vr-button {

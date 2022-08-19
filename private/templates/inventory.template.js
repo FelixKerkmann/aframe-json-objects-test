@@ -58,7 +58,7 @@ exports.listModels = [
                         'html' : [
                             {
                                 '<>' : 'div',
-                                'class' : 'popup-content popup-center',
+                                'class' : 'popup-content popup-center popup-absolute',
                                 'html' : [
                                     {
                                         '<>' : 'p',
