@@ -9,3 +9,5 @@ Folgende Dokumente wurden im Verlauf des Projekts erstellt und genutzt:
 * Stakeholder-Analyse und Anforderungen: In [Stakeholder-Analyse und Anforderungen](StakeholderanalyseUndAnforderungen.docx) sind alle Informationen enthalten. In der Thesis stehen allerdings die meisten Informationen ebenfalls.
 * Figma Prototypen: In [Figma Protoypen](VSC-WebUI.fig) sind alle Frames und Workflows vorhanden mit denen Usability Tests durchgeführt worden sind.
 * Poster: In [Poster als PDF](Poster_20220814.pdf) ist das Poster als PDF gespeichert.
+* Videos: [Demovideo Konfigurator](demovideo_konfigurator.mp4), [Demovideo VR Showroom](demovideo_vr.mp4)
+

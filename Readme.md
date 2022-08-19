@@ -31,4 +31,8 @@ Edit the Variables in the [.env](.env) file to your DB and check in the [db.conf
 
 ### Documentation
 
-See documentation [here](documents/Readme.md) 
+See documentation [here](documentation.md)
+
+### Report 
+
+Read Report [here](documents/Readme.md)
